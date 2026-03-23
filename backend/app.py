@@ -14,6 +14,7 @@ CORS(app, resources={
             "http://localhost:5173",
             "http://localhost:5174",
             "https://your-vercel-app.vercel.app"
+            "https://surprise-planner-72mpgui7c-bhavesh-kumats-projects.vercel.app"
         ],
         "methods": ["GET", "POST", "OPTIONS"],
         "allow_headers": ["Content-Type"]
