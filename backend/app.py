@@ -13,7 +13,7 @@ CORS(app, resources={
         "origins": [
             "http://localhost:5173",
             "http://localhost:5174",
-            "https://your-vercel-app.vercel.app"
+            "https://your-vercel-app.vercel.app",
             "https://surprise-planner-72mpgui7c-bhavesh-kumats-projects.vercel.app"
         ],
         "methods": ["GET", "POST", "OPTIONS"],
@@ -26,6 +26,10 @@ SUPABASE_KEY = os.environ.get("SUPABASE_KEY", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXV
 supabase: Client = create_client(SUPABASE_URL, SUPABASE_KEY)
 
 chat_client = Groq(api_key=os.getenv("GROQ_API_KEY"))
+
+@app.route('/')
+def index():
+    return jsonify({"status": "Backend is running!", "project": "Surprise Planner"})
 
 
 @app.route("/api/surprise/plan", methods=["POST"])
