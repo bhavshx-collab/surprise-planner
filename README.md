@@ -140,9 +140,10 @@ pip install -r requirements.txt
 
 Create `backend/.env`:
 ```
-SUPABASE_URL=your_supabase_project_url
-SUPABASE_KEY=your_supabase_anon_key
-GROQ_API_KEY=your_groq_api_key
+SUPABASE_URL=supabase_project_url
+SUPABASE_KEY=supabase_anon_key
+GROQ_API_KEY=groq_api_key
+
 ```
 
 ```bash
