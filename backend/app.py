@@ -1,11 +1,20 @@
 import os
 import json
+from dotenv import load_dotenv
+
+load_dotenv()  # ← MUST be here, before everything else
+
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 from groq import Groq
 from groq_service import groq_generate_full_plan
 from supabase import create_client, Client
 
+SUPABASE_URL = os.environ.get("SUPABASE_URL")
+SUPABASE_KEY = os.environ.get("SUPABASE_KEY")
+supabase: Client = create_client(SUPABASE_URL, SUPABASE_KEY)
+
+chat_client = Groq(api_key=os.getenv("GROQ_API_KEY"))
 app = Flask(__name__)
 
 CORS(app, resources={
@@ -13,23 +22,24 @@ CORS(app, resources={
         "origins": [
             "http://localhost:5173",
             "http://localhost:5174",
-            "https://your-vercel-app.vercel.app",
-            "https://surprise-planner-72mpgui7c-bhavesh-kumats-projects.vercel.app"
+            "https://surprise-planner-nu.vercel.app",
+            "https://surprise-planner-nu-*.vercel.app",
         ],
         "methods": ["GET", "POST", "OPTIONS"],
-        "allow_headers": ["Content-Type"]
+        "allow_headers": ["Content-Type", "Authorization"]
     }
 })
 
-SUPABASE_URL = os.environ.get("SUPABASE_URL", "https://eokahkjzoajzrjvmhpzx.supabase.co")
-SUPABASE_KEY = os.environ.get("SUPABASE_KEY", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVva2Foa2p6b2FqenJqdm1ocHp4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM1MDE1MDcsImV4cCI6MjA4OTA3NzUwN30.gnzf7po9fgZiwP3K5VEEeh1QRB4Ph9l7L4XJ9tS_hFA")
+SUPABASE_URL = os.environ.get("SUPABASE_URL")
+SUPABASE_KEY = os.environ.get("SUPABASE_KEY")
 supabase: Client = create_client(SUPABASE_URL, SUPABASE_KEY)
 
 chat_client = Groq(api_key=os.getenv("GROQ_API_KEY"))
 
-@app.route('/')
-def index():
-    return jsonify({"status": "Backend is running!", "project": "Surprise Planner"})
+
+@app.route("/")
+def home():
+    return jsonify({"project": "Surprise Planner", "status": "Backend is running!"})
 
 
 @app.route("/api/surprise/plan", methods=["POST"])

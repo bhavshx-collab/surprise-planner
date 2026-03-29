@@ -1,195 +1,275 @@
-// AdminDashboard.jsx
-// Place in frontend/src/AdminDashboard.jsx
-// Only accessible to you — protected by your email
+// VendorDashboard.jsx
+// Place in frontend/src/VendorDashboard.jsx
+// Shows after a vendor logs in — they manage their listing and see inquiries
 
 import { useState, useEffect } from "react";
 import { supabase } from "./supabase";
 
-// Change this to YOUR email — only you can access admin
-const ADMIN_EMAIL = "bhaveshkumawat330@gmail.com";
+const CATEGORIES = [
+  "Cafe & Restaurant", "Hotel & Resort", "Florist",
+  "Photography Studio", "Spa & Wellness", "Adventure & Experience",
+  "Gift Shop", "Event Venue", "Other",
+];
 
-export default function AdminDashboard({ user, onBack }) {
+const PRICE_RANGES = [
+  "Budget (under Rs 1,000)",
+  "Affordable (Rs 1,000 - Rs 5,000)",
+  "Mid-range (Rs 5,000 - Rs 20,000)",
+  "Premium (Rs 20,000 - Rs 50,000)",
+  "Luxury (Rs 50,000+)",
+];
 
-  const [vendors, setVendors] = useState([]);
+export default function VendorDashboard({ user, onBack }) {
+  const [tab, setTab] = useState("listing");
+  const [listing, setListing] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [filter, setFilter] = useState("pending");
-
-  // Block non-admins
-  if (!user || user.email !== ADMIN_EMAIL) {
-    return (
-      <div style={{ textAlign: "center", padding: "4rem 1rem" }}>
-        <h2 style={{ fontSize: "18px", color: "#333" }}>Access denied</h2>
-        <p style={{ color: "#999", marginTop: "8px" }}>You don't have permission to view this page.</p>
-        <button className="btn-back" onClick={onBack} style={{ marginTop: "1rem" }}>Go back</button>
-      </div>
-    );
-  }
+  const [saving, setSaving] = useState(false);
+  const [saved, setSaved] = useState(false);
+  const [inquiries, setInquiries] = useState([]);
+  const [form, setForm] = useState({
+    name: "", category: "", description: "", city: "",
+    address: "", phone: "", whatsapp: "", email: "",
+    website: "", instagram: "", price_range: "",
+    min_budget: "", max_budget: "",
+  });
 
   useEffect(() => {
-    fetchVendors();
-  }, [filter]);
+    fetchListing();
+  }, [user]);
 
-  const fetchVendors = async () => {
+  const fetchListing = async () => {
     setLoading(true);
     const { data } = await supabase
       .from("vendors")
       .select("*")
-      .eq("status", filter)
-      .order("created_at", { ascending: false });
-    setVendors(data || []);
+      .eq("email", user.email)
+      .single();
+
+    if (data) {
+      setListing(data);
+      setForm({
+        name: data.name || "",
+        category: data.category || "",
+        description: data.description || "",
+        city: data.city || "",
+        address: data.address || "",
+        phone: data.phone || "",
+        whatsapp: data.whatsapp || "",
+        email: data.email || "",
+        website: data.website || "",
+        instagram: data.instagram || "",
+        price_range: data.price_range || "",
+        min_budget: data.min_budget || "",
+        max_budget: data.max_budget || "",
+      });
+    }
     setLoading(false);
   };
 
-  const updateStatus = async (id, status) => {
-    await supabase.from("vendors").update({
-      status,
-      approved_at: status === "approved" ? new Date().toISOString() : null,
-    }).eq("id", id);
-    setVendors(v => v.filter(vendor => vendor.id !== id));
+  const handleSave = async () => {
+    setSaving(true);
+    if (listing) {
+      await supabase.from("vendors").update({
+        ...form,
+        min_budget: form.min_budget ? parseInt(form.min_budget) : null,
+        max_budget: form.max_budget ? parseInt(form.max_budget) : null,
+      }).eq("id", listing.id);
+    } else {
+      await supabase.from("vendors").insert({
+        ...form,
+        min_budget: form.min_budget ? parseInt(form.min_budget) : null,
+        max_budget: form.max_budget ? parseInt(form.max_budget) : null,
+        status: "pending",
+      });
+    }
+    setSaved(true);
+    setTimeout(() => setSaved(false), 2000);
+    fetchListing();
+    setSaving(false);
   };
 
-  const deleteVendor = async (id) => {
-    if (!confirm("Delete this vendor permanently?")) return;
-    await supabase.from("vendors").delete().eq("id", id);
-    setVendors(v => v.filter(vendor => vendor.id !== id));
+  const update = (f, v) => setForm(p => ({ ...p, [f]: v }));
+
+  const statusColor = {
+    approved: { bg: "#E1F5EE", color: "#0F6E56" },
+    pending: { bg: "#FAEEDA", color: "#854F0B" },
+    rejected: { bg: "#FCEBEB", color: "#A32D2D" },
   };
+
+  if (loading) return (
+    <div style={{ textAlign: "center", padding: "4rem", color: "#999" }}>
+      <div className="loading-spinner" style={{ margin: "0 auto 1rem" }} />
+      Loading your dashboard...
+    </div>
+  );
 
   return (
-    <div style={{ maxWidth: "800px", margin: "0 auto", padding: "1.5rem 1rem 4rem" }}>
+    <div style={{ maxWidth: "700px", margin: "0 auto", padding: "1.5rem 1rem 4rem" }}>
 
-      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "1.5rem" }}>
-        <div>
-          <button onClick={onBack} style={{ background: "none", border: "none", fontSize: "13px", color: "#999", cursor: "pointer", marginBottom: "6px", padding: 0 }}>← Back</button>
-          <h1 style={{ fontFamily: "'Playfair Display', serif", fontSize: "22px", fontWeight: "500" }}>Vendor dashboard</h1>
+      {/* Header */}
+      <div style={{ marginBottom: "1.5rem" }}>
+        <button onClick={onBack} style={{ background: "none", border: "none", fontSize: "13px", color: "#999", cursor: "pointer", marginBottom: "8px", padding: 0 }}>
+          ← Back
+        </button>
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+          <div>
+            <h1 style={{ fontFamily: "'Playfair Display', serif", fontSize: "22px", fontWeight: "500", marginBottom: "4px" }}>
+              {listing ? listing.name : "My Business"}
+            </h1>
+            <p style={{ fontSize: "13px", color: "#999" }}>{user.email}</p>
+          </div>
+          {listing && (
+            <span style={{
+              fontSize: "12px", fontWeight: "500", padding: "4px 12px",
+              borderRadius: "20px",
+              background: statusColor[listing.status]?.bg || "#eee",
+              color: statusColor[listing.status]?.color || "#666",
+            }}>
+              {listing.status}
+            </span>
+          )}
         </div>
-        <div style={{ fontSize: "12px", color: "#999" }}>{vendors.length} {filter}</div>
       </div>
 
-      {/* Filter tabs */}
-      <div style={{ display: "flex", gap: "6px", marginBottom: "1.25rem" }}>
-        {["pending", "approved", "rejected"].map(f => (
-          <button
-            key={f}
-            onClick={() => setFilter(f)}
-            style={{
-              padding: "6px 16px",
-              borderRadius: "20px",
-              border: "0.5px solid",
-              borderColor: filter === f ? "#534AB7" : "#ddd",
-              background: filter === f ? "#EEEDFE" : "transparent",
-              color: filter === f ? "#534AB7" : "#666",
-              fontSize: "13px",
-              fontWeight: filter === f ? "500" : "400",
-              cursor: "pointer",
-              fontFamily: "inherit",
-              textTransform: "capitalize",
-            }}
-          >
-            {f}
+      {/* No listing yet */}
+      {!listing && (
+        <div style={{
+          background: "#EEEDFE", border: "0.5px solid rgba(83,74,183,0.2)",
+          borderRadius: "12px", padding: "1.25rem", marginBottom: "1.5rem",
+          fontSize: "13px", color: "#534AB7", lineHeight: "1.6",
+        }}>
+          You don't have a listing yet. Fill in your business details below and submit — we'll review and approve within 24 hours.
+        </div>
+      )}
+
+      {/* Tabs */}
+      <div style={{ display: "flex", borderBottom: "0.5px solid #eee", marginBottom: "1.5rem" }}>
+        {["listing", "inquiries"].map(t => (
+          <button key={t} onClick={() => setTab(t)} style={{
+            flex: 1, padding: "10px 0", background: "none",
+            border: "none", borderBottom: tab === t ? "2px solid #534AB7" : "2px solid transparent",
+            color: tab === t ? "#534AB7" : "#999", fontSize: "13px",
+            fontWeight: tab === t ? "500" : "400", cursor: "pointer",
+            fontFamily: "inherit", textTransform: "capitalize", marginBottom: "-1px",
+          }}>
+            {t === "listing" ? "My listing" : "Inquiries"}
           </button>
         ))}
       </div>
 
-      {loading && <p style={{ color: "#999", fontSize: "14px" }}>Loading...</p>}
+      {/* LISTING TAB */}
+      {tab === "listing" && (
+        <div style={{ display: "flex", flexDirection: "column", gap: "0" }}>
+          <div className="card">
+            <div className="card-label">Business details</div>
+            <div className="field">
+              <label>Business name</label>
+              <input type="text" value={form.name} onChange={e => update("name", e.target.value)} placeholder="The Cozy Corner Cafe" />
+            </div>
+            <div className="field">
+              <label>Category</label>
+              <div className="pill-group">
+                {CATEGORIES.map(c => (
+                  <span key={c} className={`pill ${form.category === c ? "selected" : ""}`} onClick={() => update("category", c)}>{c}</span>
+                ))}
+              </div>
+            </div>
+            <div className="field-row">
+              <div className="field">
+                <label>City</label>
+                <input type="text" value={form.city} onChange={e => update("city", e.target.value)} placeholder="Mumbai" />
+              </div>
+              <div className="field">
+                <label>Address</label>
+                <input type="text" value={form.address} onChange={e => update("address", e.target.value)} placeholder="Street, area..." />
+              </div>
+            </div>
+            <div className="field">
+              <label>Description</label>
+              <textarea value={form.description} onChange={e => update("description", e.target.value)} placeholder="What makes your place special for surprises and celebrations?" style={{ height: "80px" }} />
+            </div>
+          </div>
 
-      {!loading && vendors.length === 0 && (
-        <div style={{ textAlign: "center", padding: "3rem", color: "#999" }}>
-          <p>No {filter} vendors</p>
+          <div className="card" style={{ marginTop: "10px" }}>
+            <div className="card-label">Contact & pricing</div>
+            <div className="field-row">
+              <div className="field">
+                <label>Phone</label>
+                <input type="tel" value={form.phone} onChange={e => update("phone", e.target.value)} placeholder="+91 98765 43210" />
+              </div>
+              <div className="field">
+                <label>WhatsApp</label>
+                <input type="tel" value={form.whatsapp} onChange={e => update("whatsapp", e.target.value)} placeholder="+91 98765 43210" />
+              </div>
+            </div>
+            <div className="field-row">
+              <div className="field">
+                <label>Instagram</label>
+                <input type="text" value={form.instagram} onChange={e => update("instagram", e.target.value)} placeholder="@yourbusiness" />
+              </div>
+              <div className="field">
+                <label>Website</label>
+                <input type="url" value={form.website} onChange={e => update("website", e.target.value)} placeholder="https://..." />
+              </div>
+            </div>
+            <div className="field">
+              <label>Price range</label>
+              <div className="pill-group">
+                {PRICE_RANGES.map(p => (
+                  <span key={p} className={`pill ${form.price_range === p ? "selected" : ""}`} onClick={() => update("price_range", p)}>{p}</span>
+                ))}
+              </div>
+            </div>
+            <div className="field-row">
+              <div className="field">
+                <label>Min budget (Rs)</label>
+                <input type="number" value={form.min_budget} onChange={e => update("min_budget", e.target.value)} placeholder="500" />
+              </div>
+              <div className="field">
+                <label>Max budget (Rs)</label>
+                <input type="number" value={form.max_budget} onChange={e => update("max_budget", e.target.value)} placeholder="50000" />
+              </div>
+            </div>
+          </div>
+
+          <button
+            onClick={handleSave}
+            disabled={saving || !form.name || !form.category || !form.city}
+            className="btn-generate"
+            style={{ marginTop: "12px", width: "100%", padding: "13px" }}
+          >
+            {saving ? "Saving..." : saved ? "Saved!" : listing ? "Save changes" : "Submit listing"}
+          </button>
+
+          {listing?.status === "pending" && (
+            <p style={{ fontSize: "12px", color: "#999", textAlign: "center", marginTop: "12px" }}>
+              Your listing is under review. We'll notify you once approved.
+            </p>
+          )}
         </div>
       )}
 
-      <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
-        {vendors.map(v => (
-          <div key={v.id} style={{
-            background: "#fff",
-            border: "0.5px solid #eee",
-            borderRadius: "12px",
-            padding: "1.25rem",
-          }}>
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "10px" }}>
-              <div>
-                <div style={{ fontSize: "15px", fontWeight: "500", marginBottom: "4px" }}>{v.name}</div>
-                <div style={{ fontSize: "12px", color: "#888" }}>
-                  {v.category} · {v.city} · {v.price_range || "No price range"}
-                </div>
-              </div>
-              <span style={{
-                fontSize: "11px", fontWeight: "500", padding: "3px 10px",
-                borderRadius: "10px",
-                background: v.status === "approved" ? "#E1F5EE" : v.status === "rejected" ? "#FCEBEB" : "#FAEEDA",
-                color: v.status === "approved" ? "#0F6E56" : v.status === "rejected" ? "#A32D2D" : "#854F0B",
-              }}>
-                {v.status}
-              </span>
-            </div>
-
-            {v.description && (
-              <p style={{ fontSize: "13px", color: "#555", lineHeight: "1.6", marginBottom: "10px" }}>
-                {v.description}
+      {/* INQUIRIES TAB */}
+      {tab === "inquiries" && (
+        <div>
+          {inquiries.length === 0 ? (
+            <div style={{ textAlign: "center", padding: "3rem", color: "#999" }}>
+              <div style={{ fontSize: "32px", marginBottom: "1rem" }}>📬</div>
+              <p style={{ fontSize: "14px" }}>No inquiries yet.</p>
+              <p style={{ fontSize: "13px", marginTop: "6px", color: "#bbb" }}>
+                Once your listing is approved and users find you, inquiries will appear here.
               </p>
-            )}
-
-            <div style={{ fontSize: "12px", color: "#888", marginBottom: "12px", display: "flex", gap: "16px", flexWrap: "wrap" }}>
-              <span>{v.email}</span>
-              <span>{v.phone}</span>
-              {v.instagram && <span>{v.instagram}</span>}
-              {v.min_budget && <span>Rs {v.min_budget.toLocaleString("en-IN")} – Rs {v.max_budget?.toLocaleString("en-IN")}</span>}
             </div>
-
-            <div style={{ display: "flex", gap: "8px" }}>
-              {v.status !== "approved" && (
-                <button
-                  onClick={() => updateStatus(v.id, "approved")}
-                  style={{
-                    padding: "7px 16px", borderRadius: "6px", border: "none",
-                    background: "#1D9E75", color: "#fff", fontSize: "13px",
-                    fontWeight: "500", cursor: "pointer", fontFamily: "inherit",
-                  }}
-                >
-                  Approve
-                </button>
-              )}
-              {v.status !== "rejected" && (
-                <button
-                  onClick={() => updateStatus(v.id, "rejected")}
-                  style={{
-                    padding: "7px 16px", borderRadius: "6px",
-                    border: "0.5px solid #ddd", background: "transparent",
-                    color: "#666", fontSize: "13px", cursor: "pointer", fontFamily: "inherit",
-                  }}
-                >
-                  Reject
-                </button>
-              )}
-              {v.status === "approved" && v.whatsapp && (
-                <a
-                  href={`https://wa.me/${v.whatsapp.replace(/\D/g, "")}?text=Hi ${v.name}, your listing on AI Surprise Planner has been approved!`}
-                  target="_blank"
-                  rel="noreferrer"
-                  style={{
-                    padding: "7px 16px", borderRadius: "6px", border: "none",
-                    background: "#25D366", color: "#fff", fontSize: "13px",
-                    fontWeight: "500", cursor: "pointer", textDecoration: "none", fontFamily: "inherit",
-                  }}
-                >
-                  Notify on WhatsApp
-                </a>
-              )}
-              <button
-                onClick={() => deleteVendor(v.id)}
-                style={{
-                  padding: "7px 12px", borderRadius: "6px",
-                  border: "0.5px solid #fcc", background: "transparent",
-                  color: "#E24B4A", fontSize: "13px", cursor: "pointer",
-                  marginLeft: "auto", fontFamily: "inherit",
-                }}
-              >
-                Delete
-              </button>
-            </div>
-          </div>
-        ))}
-      </div>
+          ) : (
+            inquiries.map((inq, i) => (
+              <div key={i} style={{ background: "#fff", border: "0.5px solid #eee", borderRadius: "10px", padding: "1rem", marginBottom: "8px" }}>
+                <div style={{ fontSize: "14px", fontWeight: "500" }}>{inq.name}</div>
+                <div style={{ fontSize: "12px", color: "#888", marginTop: "4px" }}>{inq.message}</div>
+              </div>
+            ))
+          )}
+        </div>
+      )}
     </div>
   );
 }

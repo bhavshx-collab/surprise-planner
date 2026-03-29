@@ -1,9 +1,12 @@
 import { useEffect, useState } from "react";
+import RatingsWidget from "./RatingsWidget";
 
 export default function LandingPage({ onPlan, onVendor }) {
   const [visible, setVisible] = useState(false);
   const [hoveredCard, setHoveredCard] = useState(null);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  
+
 
   useEffect(() => {
     setTimeout(() => setVisible(true), 80);
@@ -233,7 +236,8 @@ export default function LandingPage({ onPlan, onVendor }) {
             paddingTop: "48px",
             borderTop: "1px solid rgba(255,255,255,0.06)",
           }}>
-            {[["500+", "Surprises planned"], ["50+", "Vendors listed"], ["4.9", "Star rating"]].map(([n, l]) => (
+            
+            {[["500+", "Surprises planned"], ["50+", "Vendors listed"],[<RatingsWidget />]].map(([n, l]) => (
               <div key={l}>
                 <div style={{ fontSize: "32px", fontWeight: "300", color: "#D4AF37", letterSpacing: "0.05em" }}>{n}</div>
                 <div style={{ fontSize: "10px", color: "rgba(255,255,255,0.25)", letterSpacing: "0.15em", textTransform: "uppercase", fontFamily: "'DM Sans', sans-serif", marginTop: "6px" }}>{l}</div>
