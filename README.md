@@ -273,8 +273,7 @@ The prompt includes:
 
 - LinkedIn: [linkedin.com/in/bhavesh-kumar-52b46a301]
 - GitHub: [@bhavshx-collab](https://github.com/bhavshx-collab)
-- Live: [surprise-planner-nu.vercel.app]((https://surprise-planner-bhavesh-kumats-projects.vercel.app))
-
+- Live: [https://surprise-planner-bhavesh-kumats-projects.vercel.app]
 **Rekharam ** - all rounder.
 
 ---
