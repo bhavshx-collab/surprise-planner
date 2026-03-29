@@ -4,7 +4,7 @@
 
 **Plan deeply personal surprises in seconds — powered by AI.**
 
-[![Live Demo](https://img.shields.io/badge/Live%20Demo-Visit%20App-black?style=for-the-badge)]([https://surprise-planner-nu.vercel.app](https://surprise-planner-bhavesh-kumats-projects.vercel.app))
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-Visit%20App-black?style=for-the-badge)](https://surprise-planner-bhavesh-kumats-projects.vercel.app)
 [![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)](https://reactjs.org)
 [![Flask](https://img.shields.io/badge/Flask-000000?style=for-the-badge&logo=flask&logoColor=white)](https://flask.palletsprojects.com)
 [![Supabase](https://img.shields.io/badge/Supabase-3ECF8E?style=for-the-badge&logo=supabase&logoColor=white)](https://supabase.com)
@@ -271,9 +271,9 @@ The prompt includes:
 
 **Bhavesh Kumar** — building AI-powered products.
 
-- LinkedIn: [linkedin.com/in/bhavesh-kumar-52b46a301]
+- - LinkedIn: [linkedin.com/in/bhavesh-kumar-52b46a301](https://linkedin.com/in/bhavesh-kumar-52b46a301)
 - GitHub: [@bhavshx-collab](https://github.com/bhavshx-collab)
-- Live: [https://surprise-planner-bhavesh-kumats-projects.vercel.app]
+- - Live: [surprise-planner-bhavesh-kumats-projects.vercel.app](https://surprise-planner-bhavesh-kumats-projects.vercel.app)
   
 **Rekharam** - all rounder.
 
