@@ -7,68 +7,40 @@ client = Groq(api_key=os.getenv("GROQ_API_KEY"))
 
 def groq_generate_full_plan(occasion, relationship, budget, interests, description, likes, city, tone):
 
-    interests_str = ", ".join(interests) if interests else "Not specified"
-    city_str = city if city else "Not specified"
-    likes_str = likes if likes else "Not specified"
+    interests_str = ", ".join(interests) if interests else "general"
+    city_str = city or "the city"
+    likes_str = likes or "not specified"
 
-    prompt = f"""You are a world-class luxury surprise planner who has planned thousands of deeply personal, emotional, and creative surprises.
+    prompt = f"""You are an expert surprise planner. Create a unique, creative, personalized surprise plan.
 
-User details:
-- Occasion: {occasion}
-- Relationship: {relationship}
-- Budget: Rs {budget}
-- City: {city_str}
-- Interests: {interests_str}
-- Favorite things: {likes_str}
-- Personal description: {description}
-- Tone/Vibe: {tone}
+Details: {occasion} for {relationship} | Budget: Rs {budget} | City: {city_str} | Tone: {tone}
+Interests: {interests_str} | Description: {description} | Favorites: {likes_str}
 
-IMPORTANT RULES:
-1. Make the surprise SPECIFIC to the person's interests and description — avoid generic ideas
-2. The tone must strongly reflect "{tone}" — every word should feel {tone}
-3. Budget breakdown must add up to EXACTLY Rs {budget}
-4. Never suggest "cook dinner at home" or "write a letter" as the main idea — be creative and specific
-5. Timeline steps must be actionable and concrete, not vague
+Rules:
+- Be SPECIFIC to their interests, avoid generic plans
+- Every detail must feel {tone}
+- Budget breakdown must sum to EXACTLY {budget} (numbers only)
+- Give actionable, concrete steps
 
-Respond ONLY in valid JSON with no extra text, no markdown, no code blocks:
-
+Reply ONLY with valid JSON, no markdown:
 {{
-  "idea": "One specific, creative surprise idea title",
-  "message": "A warm, emotional 2-3 sentence message written to the person being surprised",
-  "explanation": "2-3 sentences explaining why this plan is perfect for them specifically",
+  "idea": "Creative surprise title",
+  "message": "Warm 2-3 sentence personal message to the person",
+  "explanation": "2-3 sentences why this plan suits them",
   "timeline": {{
-    "before": [
-      "2 weeks before: specific action",
-      "1 week before: specific action",
-      "2 days before: specific action",
-      "1 day before: specific action"
-    ],
-    "during": [
-      "Morning: specific action",
-      "Afternoon: specific action",
-      "Evening: specific action"
-    ],
-    "after": [
-      "Next day: specific action",
-      "Memory: specific keepsake or follow-up"
-    ]
+    "before": ["2 weeks before: action", "1 week before: action", "2 days before: action", "1 day before: action"],
+    "during": ["Morning: action", "Afternoon: action", "Evening: action"],
+    "after": ["Next day: action", "Memory: keepsake idea"]
   }},
-  "budget_breakdown": {{
-    "Venue": 0,
-    "Food/Drinks": 0,
-    "Decor": 0,
-    "Gifts": 0,
-    "Buffer": 0
-  }}
-}}
-
-All values in budget_breakdown must be numbers (not strings), and must sum to exactly {budget}."""
+  "budget_breakdown": {{"Venue": 0, "Food/Drinks": 0, "Decor": 0, "Gifts": 0, "Buffer": 0}}
+}}"""
 
     try:
         response = client.chat.completions.create(
             model="llama-3.1-8b-instant",
             messages=[{"role": "user", "content": prompt}],
-            temperature=0.9,
+            temperature=0.8,
+            max_tokens=700,
         )
 
         raw = response.choices[0].message.content
@@ -125,3 +97,4 @@ All values in budget_breakdown must be numbers (not strings), and must sum to ex
     except Exception as e:
         print(f"Groq API error: {e}")
         raise
+    
