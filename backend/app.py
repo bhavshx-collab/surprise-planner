@@ -420,6 +420,203 @@ def generate_social_activity():
     return jsonify(plan)
 
 
+# ──────────────────────────────────────────────
+#  AI CONCIERGE — conversational planning
+# ──────────────────────────────────────────────
+
+@app.route("/api/concierge", methods=["POST"])
+def concierge():
+    data = request.get_json()
+    history = data.get("history", [])
+
+    system_prompt = """You are a warm, friendly AI surprise planner having a natural conversation to gather information.
+Your goal: collect these 5 things through natural dialogue:
+1. relationship (who the surprise is for)
+2. occasion (birthday, anniversary, etc.)
+3. interests (what they like)
+4. budget (in Rs)
+5. city (where they are)
+
+Rules:
+- Ask ONE question at a time
+- Be warm, enthusiastic, and brief (1-2 sentences)
+- When you have ALL 5 pieces of info, reply EXACTLY with a JSON block like this and NOTHING else:
+{"ready": true, "reply": "Perfect! Generating your plan...", "formData": {"relationship": "Girlfriend", "occasion": "Birthday", "interests": ["Music", "Food"], "budget": "5000", "city": "Mumbai", "tone": "Romantic", "description": ""}}
+
+Until you have all info, just ask the next question naturally. Never mention you're collecting "data" or "fields".
+Extract anything the user already told you and keep track."""
+
+    messages = [{"role": "system", "content": system_prompt}]
+    for msg in history[-12:]:
+        if msg.get("role") in ["user", "assistant"]:
+            messages.append({"role": msg["role"], "content": msg["content"]})
+
+    try:
+        resp = chat_client.chat.completions.create(
+            model="llama-3.1-8b-instant",
+            messages=messages,
+            temperature=0.75,
+            max_tokens=400,
+        )
+        content = resp.choices[0].message.content.strip()
+
+        # Check if model returned ready JSON
+        if '"ready": true' in content or '"ready":true' in content:
+            try:
+                # Extract JSON block
+                import re
+                json_match = re.search(r'\{.*\}', content, re.DOTALL)
+                if json_match:
+                    parsed = json.loads(json_match.group())
+                    return jsonify({
+                        "reply": parsed.get("reply", "Generating your plan..."),
+                        "formData": parsed.get("formData", {}),
+                        "readyToGenerate": True,
+                    })
+            except Exception as e:
+                print(f"[ConciergeJSON] {e}")
+
+        return jsonify({"reply": content, "formData": {}, "readyToGenerate": False})
+    except Exception as e:
+        print(f"[Concierge] {e}")
+        return jsonify({"reply": "I'm having trouble connecting. What are you planning?", "formData": {}, "readyToGenerate": False})
+
+
+# ──────────────────────────────────────────────
+#  REMINDERS
+# ──────────────────────────────────────────────
+
+@app.route("/api/reminder/schedule", methods=["POST"])
+def schedule_reminder():
+    data = request.get_json()
+    plan_id = data.get("plan_id")
+    user_email = data.get("user_email")
+    whatsapp_number = data.get("whatsapp_number")
+    event_date = data.get("event_date")
+    occasion = data.get("occasion", "surprise")
+    plan_idea = data.get("plan_idea", "")
+
+    if not user_email or not event_date:
+        return jsonify({"error": "Missing required fields"}), 400
+
+    try:
+        supabase.table("reminders").upsert({
+            "plan_id": plan_id,
+            "user_email": user_email,
+            "whatsapp_number": whatsapp_number,
+            "event_date": event_date,
+            "occasion": occasion,
+            "plan_idea": plan_idea,
+            "status": "scheduled",
+        }, on_conflict="plan_id").execute()
+    except Exception as e:
+        print(f"[Reminder insert] {e}")
+
+    # Send confirmation email if SMTP configured
+    SMTP_EMAIL = os.getenv("SMTP_EMAIL")
+    SMTP_PASS = os.getenv("SMTP_PASSWORD")
+    if SMTP_EMAIL and SMTP_PASS:
+        try:
+            import smtplib
+            from email.mime.text import MIMEText
+            from email.mime.multipart import MIMEMultipart
+
+            event_dt = datetime.fromisoformat(event_date)
+            days_until = (event_dt - datetime.now()).days
+
+            body = f"""Hi! 👋
+
+Your reminder has been set for your {occasion} surprise plan.
+
+🎁 Plan: {plan_idea}
+📅 Date: {event_dt.strftime('%A, %B %d, %Y')}
+⏰ Days until event: {days_until} days
+
+We'll remind you:
+• 2 days before — to finalize preparations
+• Morning of the event — to make sure everything is ready
+
+Good luck with your surprise! ✨
+
+— AI Surprise Planner Team
+https://surprise-planner-nu.vercel.app"""
+
+            msg = MIMEMultipart()
+            msg['Subject'] = f"🔔 Reminder set — {occasion} in {days_until} days"
+            msg['From'] = SMTP_EMAIL
+            msg['To'] = user_email
+            msg.attach(MIMEText(body, 'plain'))
+
+            with smtplib.SMTP_SSL('smtp.gmail.com', 465) as s:
+                s.login(SMTP_EMAIL, SMTP_PASS)
+                s.send_message(msg)
+        except Exception as e:
+            print(f"[Reminder email] {e}")
+
+    return jsonify({"success": True, "message": "Reminder scheduled!"})
+
+
+@app.route("/api/reminder/send-due", methods=["POST"])
+def send_due_reminders():
+    """Called by a cron job to send reminders for upcoming events."""
+    today = datetime.now(timezone.utc).date()
+    in_2_days = (today + timedelta(days=2)).isoformat()
+    today_str = today.isoformat()
+
+    sent = []
+    SMTP_EMAIL = os.getenv("SMTP_EMAIL")
+    SMTP_PASS = os.getenv("SMTP_PASSWORD")
+
+    if not SMTP_EMAIL or not SMTP_PASS:
+        return jsonify({"message": "SMTP not configured", "sent": 0})
+
+    try:
+        result = supabase.table("reminders") \
+            .select("*") \
+            .in_("event_date", [in_2_days, today_str]) \
+            .eq("status", "scheduled") \
+            .execute()
+
+        for reminder in (result.data or []):
+            is_today = reminder["event_date"] == today_str
+            subject = f"🎉 Today is the day! Your {reminder['occasion']} surprise" if is_today \
+                else f"⏰ 2 days until your {reminder['occasion']} surprise"
+            body = f"""{"IT'S TODAY! 🎉" if is_today else "Almost time! 🎁"}
+
+Your {reminder['occasion']} surprise is {"TODAY!" if is_today else "in 2 days!"}
+
+Plan: {reminder.get('plan_idea', '')}
+
+{"Make sure everything is ready — flowers ordered, venue booked, phone charged!" if is_today else "Now's a great time to confirm bookings and prep any gifts or decorations."}
+
+Go make it magical ✨
+
+— AI Surprise Planner"""
+
+            try:
+                import smtplib
+                from email.mime.text import MIMEText
+                msg = MIMEText(body)
+                msg['Subject'] = subject
+                msg['From'] = SMTP_EMAIL
+                msg['To'] = reminder['user_email']
+                with smtplib.SMTP_SSL('smtp.gmail.com', 465) as s:
+                    s.login(SMTP_EMAIL, SMTP_PASS)
+                    s.send_message(msg)
+                sent.append(reminder['user_email'])
+
+                # Update status if today
+                if is_today:
+                    supabase.table("reminders").update({"status": "sent"}).eq("id", reminder["id"]).execute()
+            except Exception as e:
+                print(f"[SendReminder] {e}")
+    except Exception as e:
+        print(f"[DueReminders] {e}")
+
+    return jsonify({"sent": len(sent), "emails": sent})
+
+
 if __name__ == "__main__":
     app.run(debug=True)
+
 

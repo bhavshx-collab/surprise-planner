@@ -19,7 +19,6 @@ import FeedbackModal from "./FeedbackModal";
 import InspirationGallery from "./InspirationGallery";
 import Checklist from "./Checklist";
 import PrintablePlan from "./PrintablePlan";
-import { useReactToPrint } from "react-to-print";
 import { downloadCalendar } from "./calendarUtils";
 import MoodBoard from "./MoodBoard";
 import MatchedVendors from "./MatchedVendors";
@@ -28,6 +27,11 @@ import Scrapbook from "./Scrapbook";
 import RequestQuoteModal from "./RequestQuoteModal";
 import PaymentModal from "./PaymentModal";
 import { useProStatus } from "./useProStatus";
+import { usePDFExport } from "./usePDFExport";
+import ConciergeMode from "./ConciergeMode";
+import ReminderSetup from "./ReminderSetup";
+import VendorDashboard from "./VendorDashboard";
+import UserDashboard from "./UserDashboard";
 const INTERESTS = ["Music", "Travel", "Food", "Art", "Movies", "Fitness", "Books", "Nature", "Gaming", "Fashion"];
 const OCCASIONS = ["Birthday", "Anniversary", "Valentine's Day", "Just Because", "Graduation", "Apology"];
 const RELATIONSHIPS = ["Girlfriend", "Boyfriend", "Wife", "Husband", "Best Friend", "Parent", "Sibling"];
@@ -58,8 +62,8 @@ export default function App() {
   const [selectedEvent, setSelectedEvent] = useState(null);
   const printRef = useRef(null);
   const { isPro } = useProStatus(user);
-
-  const handlePrint = useReactToPrint({ contentRef: printRef });
+  const { generatePDF } = usePDFExport(printRef);
+  const [conciergeMode, setConciergeMode] = useState(false);
 
   const [form, setForm] = useState({
     occasion: "Birthday",
@@ -369,10 +373,12 @@ export default function App() {
       )}
       {
         view === "myplans" && user && (
-          <MyPlans
+          <UserDashboard
             user={user}
             onSelectPlan={(p) => { setResult(p.plan_data); setStep(4); setView("app"); }}
             onNewPlan={() => { handleReset(); setView("app"); }}
+            onBack={() => setView("app")}
+            onUpgrade={() => setShowPaymentModal(true)}
           />
         )
       }
@@ -438,9 +444,34 @@ export default function App() {
               </div>
             )}
 
-            {step === 1 && !loading && (
+            {step === 1 && !loading && conciergeMode && (
+              <ConciergeMode
+                onBack={() => setConciergeMode(false)}
+                onComplete={(formData) => {
+                  setConciergeMode(false);
+                  setForm((f) => ({ ...f, ...formData }));
+                  handleGenerate();
+                }}
+              />
+            )}
+
+            {step === 1 && !loading && !conciergeMode && (
               <div className="card">
                 <div className="card-label">Step 1 of 3 — The occasion</div>
+                <div style={{ marginBottom: "14px" }}>
+                  <button
+                    onClick={() => setConciergeMode(true)}
+                    style={{
+                      width: "100%", padding: "12px 16px", borderRadius: "10px",
+                      border: "1px solid rgba(123,110,232,0.35)",
+                      background: "rgba(123,110,232,0.08)",
+                      color: "#9D93F0", fontFamily: "DM Sans, sans-serif",
+                      fontSize: "13px", fontWeight: "600", cursor: "pointer",
+                      display: "flex", alignItems: "center", justifyContent: "center", gap: "8px",
+                      transition: "all 0.2s",
+                    }}
+                  >✨ Plan with AI instead (conversational mode)</button>
+                </div>
                 <div className="field-row">
                   <div className="field">
                     <label>Occasion</label>
@@ -468,6 +499,7 @@ export default function App() {
                 </div>
               </div>
             )}
+            {step === 1 && !loading && !conciergeMode && false && null /* placeholder */}
 
             {step === 2 && !loading && (
               <div className="card">
@@ -669,10 +701,12 @@ export default function App() {
                   </div>
                 </div>
 
+                <ReminderSetup plan={result} user={user} form={form} />
+
                 <div className="action-grid">
                   <button className="action-btn" onClick={copyPlanText}>📋 Copy plan</button>
                   <button className="action-btn" onClick={shareRevealLink}>🎁 Reveal link</button>
-                  <button className="action-btn" onClick={() => isPro ? handlePrint() : setShowPaymentModal(true)}>🖨️ PDF {!isPro && "(Pro)"}</button>
+                  <button className="action-btn" onClick={() => isPro ? generatePDF() : setShowPaymentModal(true)}>🖨️ PDF {!isPro && "(Pro)"}</button>
                   <button className="action-btn" onClick={handleCalendarExport}>📅 Calendar</button>
                   {result.matched_vendors?.filter(v => v.whatsapp || v.phone).length > 0 && (
                     <button className="action-btn" style={{ gridColumn: "1/-1", borderColor: "rgba(212,175,55,0.25)", color: "var(--gold)" }} onClick={() => setShowQuoteModal(true)}>📩 Request quotes from vendors</button>
