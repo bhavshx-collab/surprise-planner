@@ -25,6 +25,10 @@ CORS(app, resources={
             "http://localhost:5174",
             "https://surprise-planner-nu.vercel.app",
             "https://surprise-planner-nu-*.vercel.app",
+            "https://surpriceplanner.in",
+            "https://www.surpriceplanner.in",
+            "http://surpriceplanner.in",
+            "http://www.surpriceplanner.in",
         ],
         "methods": ["GET", "POST", "OPTIONS"],
         "allow_headers": ["Content-Type", "Authorization"]

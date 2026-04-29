@@ -1,7 +1,7 @@
 // TermsOfService.jsx — Legal page
 export default function TermsOfService({ onBack }) {
   return (
-    <div style={{ width: "100vw", minHeight: "100vh", background: "#080808", color: "#fff", fontFamily: "'DM Sans', sans-serif" }}>
+    <div style={{ width: "100%", minHeight: "100vh", overflowX: "hidden", background: "#080808", color: "#fff", fontFamily: "'DM Sans', sans-serif" }}>
       <nav style={{ position: "sticky", top: 0, zIndex: 90, display: "flex", alignItems: "center", justifyContent: "space-between", padding: "20px clamp(24px, 5vw, 80px)", background: "rgba(8,8,8,0.92)", backdropFilter: "blur(24px)", borderBottom: "1px solid rgba(255,255,255,0.05)" }}>
         <div onClick={onBack} style={{ letterSpacing: "0.18em", color: "#D4AF37", cursor: "pointer", textTransform: "uppercase", fontFamily: "'Cormorant Garamond', serif", fontSize: "18px" }}>
           ✦ AI Surprise Planner
@@ -9,7 +9,7 @@ export default function TermsOfService({ onBack }) {
         <button onClick={onBack} style={{ padding: "8px 20px", background: "none", border: "1px solid rgba(255,255,255,0.15)", color: "rgba(255,255,255,0.5)", fontSize: "12px", cursor: "pointer", fontFamily: "inherit", borderRadius: "6px" }}>← Back</button>
       </nav>
 
-      <div style={{ maxWidth: "720px", margin: "0 auto", padding: "60px clamp(24px, 5vw, 80px) 100px" }}>
+      <div style={{ maxWidth: "720px", margin: "0 auto", padding: "60px 24px 100px", boxSizing: "border-box" }}>
         <div style={{ fontSize: "10px", letterSpacing: "0.3em", color: "#D4AF37", textTransform: "uppercase", marginBottom: "16px", opacity: 0.7 }}>Legal</div>
         <h1 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "clamp(36px, 5vw, 52px)", fontWeight: "300", marginBottom: "16px" }}>
           Terms of <span style={{ color: "#D4AF37", fontStyle: "italic" }}>Service</span>
