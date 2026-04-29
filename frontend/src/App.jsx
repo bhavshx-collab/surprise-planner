@@ -32,11 +32,15 @@ import ConciergeMode from "./ConciergeMode";
 import ReminderSetup from "./ReminderSetup";
 import VendorDashboard from "./VendorDashboard";
 import UserDashboard from "./UserDashboard";
+import Toast from "./Toast";
+import PrivacyPolicy from "./PrivacyPolicy";
+import TermsOfService from "./TermsOfService";
+import AboutContact from "./AboutContact";
+import NotFound from "./NotFound";
 const INTERESTS = ["Music", "Travel", "Food", "Art", "Movies", "Fitness", "Books", "Nature", "Gaming", "Fashion"];
 const OCCASIONS = ["Birthday", "Anniversary", "Valentine's Day", "Just Because", "Graduation", "Apology"];
 const RELATIONSHIPS = ["Girlfriend", "Boyfriend", "Wife", "Husband", "Best Friend", "Parent", "Sibling"];
 const TONES = ["Romantic", "Funny", "Luxury", "Minimal", "Emotional", "Adventurous"];
-
 
 const API = import.meta.env.VITE_API_URL || "http://localhost:5000";
 
@@ -64,6 +68,13 @@ export default function App() {
   const { isPro } = useProStatus(user);
   const { generatePDF } = usePDFExport(printRef);
   const [conciergeMode, setConciergeMode] = useState(false);
+  const [toast, setToast] = useState(null);
+  const [showMobileNav, setShowMobileNav] = useState(false);
+
+  const showToast = (message, type = "success") => {
+    setToast({ message, type });
+    setTimeout(() => setToast(null), 3200);
+  };
 
   const [form, setForm] = useState({
     occasion: "Birthday",
@@ -155,7 +166,7 @@ export default function App() {
         setTimeout(() => confetti({ particleCount: 60, spread: 120, origin: { y: 0.4 }, colors: ["#D4AF37", "#fff", "#1DB375"] }), 350);
       }, 200);
     } catch (e) {
-      alert("Something went wrong. Make sure the backend is running.");
+      showToast("Something went wrong. Please try again.", "error");
     }
     setLoading(false);
   };
@@ -173,6 +184,7 @@ export default function App() {
   const copyShareLink = () => {
     navigator.clipboard.writeText(window.location.href);
     setCopied(true);
+    showToast("Link copied!");
     setTimeout(() => setCopied(false), 2000);
   };
 
@@ -180,7 +192,7 @@ export default function App() {
     if (!result) return;
     const text = `AI Surprise Plan\n\n${result.idea}\n\n${result.message}\n\nBefore:\n${(result.timeline?.before || []).join("\n")}\n\nDuring:\n${(result.timeline?.during || []).join("\n")}\n\nAfter:\n${(result.timeline?.after || []).join("\n")}`;
     navigator.clipboard.writeText(text);
-    alert("Plan copied!");
+    showToast("Plan copied to clipboard!");
   };
 
   const whatsappPro = () => {
@@ -237,7 +249,7 @@ export default function App() {
     if (!result?.plan_id) return;
     const link = `${window.location.origin}/plan/${result.plan_id}/reveal`;
     navigator.clipboard.writeText(link);
-    alert(`Reveal link copied! Share it with your special person 🎁\n${link}`);
+    showToast("Reveal link copied! Share it with your special person 🎁");
   };
 
   const menuItemStyle = {
@@ -268,6 +280,9 @@ export default function App() {
         onPricing={() => setView("pricing")}
         onAuth={() => setView("auth")}
         onSocial={() => setView("social")}
+        onPrivacy={() => setView("privacy")}
+        onTerms={() => setView("terms")}
+        onAbout={() => setView("about")}
       />
     );
   }
@@ -318,14 +333,14 @@ export default function App() {
       )}
 
       {/* APP NAVBAR — shown for all non-special views */}
-      {!['landing','auth','pricing','social','social-profile','social-events','social-event-detail'].includes(view) && (
-
+      {!['landing','auth','pricing','social','social-profile','social-events','social-event-detail','privacy','terms','about'].includes(view) && (
         <>
           <nav className="navbar">
             <div className="navbar-logo" onClick={() => setView("app")} style={{ cursor: "pointer" }}>
               ✦ AI Surprise Planner
             </div>
-            <div className="navbar-right">
+            {/* Desktop nav */}
+            <div className="navbar-right navbar-desktop">
               <button className="nav-btn" onClick={() => setView("social")} style={{ color: "#1DB375", borderColor: "rgba(29,179,117,0.3)" }}>🌿 Adventures</button>
               <button className="nav-btn" onClick={() => setView("gallery")}>Inspiration</button>
               <button className="nav-btn" onClick={() => setView("vendors")}>Vendors</button>
@@ -336,7 +351,7 @@ export default function App() {
                     {user.email?.[0]?.toUpperCase() || "U"}
                   </div>
                   {showMenu && (
-                    <div style={{
+                    <div data-menu style={{
                       position: "absolute", top: "44px", right: 0,
                       background: "rgba(13,13,26,0.98)", border: "1px solid rgba(255,255,255,0.1)",
                       borderRadius: "12px", padding: "8px",
@@ -368,7 +383,37 @@ export default function App() {
                 <button className="nav-btn-primary" onClick={() => setView("auth")}>Sign in</button>
               )}
             </div>
+            {/* Mobile hamburger */}
+            <button className="navbar-hamburger" onClick={() => setShowMobileNav(m => !m)}>{showMobileNav ? "✕" : "☰"}</button>
           </nav>
+          {/* Mobile menu overlay */}
+          {showMobileNav && (
+            <div className="mobile-nav-overlay" onClick={() => setShowMobileNav(false)}>
+              <div className="mobile-nav-menu" onClick={e => e.stopPropagation()}>
+                {[
+                  ["🌿 Adventures", () => setView("social")],
+                  ["✨ Inspiration", () => setView("gallery")],
+                  ["🏪 Vendors", () => setView("vendors")],
+                  ["💎 Pricing", () => setView("pricing")],
+                  ...(user ? [
+                    ["📋 My plans", () => setView("myplans")],
+                    ["🏢 My business", () => setView("vendordashboard")],
+                    ["✦ List business", () => setView("vendorsignup")],
+                  ] : []),
+                  ...(user?.email === "bhaveshkumawat330@gmail.com" ? [["⚙️ Admin", () => setView("admin")]] : []),
+                ].map(([label, action]) => (
+                  <button key={label} className="mobile-nav-item" onClick={() => { action(); setShowMobileNav(false); }}>{label}</button>
+                ))}
+                <div style={{ borderTop: "1px solid rgba(255,255,255,0.07)", margin: "8px 0", paddingTop: "8px" }}>
+                  {user ? (
+                    <button className="mobile-nav-item" style={{ color: "#ff6b6b" }} onClick={() => { supabase.auth.signOut(); setShowMobileNav(false); }}>Sign out</button>
+                  ) : (
+                    <button className="mobile-nav-item" style={{ color: "var(--gold)" }} onClick={() => { setView("auth"); setShowMobileNav(false); }}>Sign in</button>
+                  )}
+                </div>
+              </div>
+            </div>
+          )}
         </>
       )}
       {
@@ -499,7 +544,7 @@ export default function App() {
                 </div>
               </div>
             )}
-            {step === 1 && !loading && !conciergeMode && false && null /* placeholder */}
+
 
             {step === 2 && !loading && (
               <div className="card">
@@ -715,19 +760,19 @@ export default function App() {
 
                 {/* Calendar date picker */}
                 {showDatePicker && (
-                  <div style={{ background: "#f7f9ff", border: "0.5px solid #e0def8", borderRadius: "10px", padding: "14px 16px", marginBottom: "10px" }}>
-                    <div style={{ fontSize: "13px", color: "#534AB7", fontWeight: "600", marginBottom: "8px" }}>📅 When is the occasion?</div>
+                  <div style={{ background: "var(--glass)", border: "1px solid var(--glass-border)", borderRadius: "12px", padding: "14px 16px", marginBottom: "10px", backdropFilter: "blur(16px)" }}>
+                    <div style={{ fontSize: "13px", color: "var(--purple-light)", fontWeight: "600", marginBottom: "8px" }}>📅 When is the occasion?</div>
                     <div style={{ display: "flex", gap: "8px", alignItems: "center" }}>
                       <input
                         type="date"
                         value={eventDate}
                         onChange={e => setEventDate(e.target.value)}
-                        style={{ flex: 1, padding: "8px 10px", borderRadius: "6px", border: "0.5px solid #ddd", fontSize: "13px", fontFamily: "inherit" }}
+                        style={{ flex: 1, padding: "8px 10px", borderRadius: "8px", border: "1px solid var(--glass-border)", background: "rgba(255,255,255,0.04)", color: "var(--text-1)", fontSize: "13px", fontFamily: "inherit", colorScheme: "dark" }}
                       />
                       <button
                         onClick={() => { if (eventDate) { downloadCalendar(result, eventDate); setShowDatePicker(false); } }}
                         disabled={!eventDate}
-                        style={{ padding: "8px 14px", borderRadius: "6px", background: "#534AB7", color: "#fff", border: "none", fontSize: "13px", cursor: "pointer", fontFamily: "inherit" }}
+                        style={{ padding: "8px 14px", borderRadius: "8px", background: "var(--purple)", color: "#fff", border: "none", fontSize: "13px", cursor: "pointer", fontFamily: "inherit" }}
                       >
                         Download
                       </button>
@@ -794,6 +839,17 @@ export default function App() {
           </>
         )
       }
+
+      {/* Legal & Info Pages */}
+      {view === "privacy" && <PrivacyPolicy onBack={() => setView("landing")} />}
+      {view === "terms" && <TermsOfService onBack={() => setView("landing")} />}
+      {view === "about" && <AboutContact onBack={() => setView("landing")} />}
+      {view === "404" && <NotFound onHome={() => setView("landing")} />}
+
+      {/* Toast */}
+      <AnimatePresence>
+        {toast && <Toast message={toast.message} type={toast.type} onClose={() => setToast(null)} />}
+      </AnimatePresence>
 
     </div>
   );

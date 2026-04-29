@@ -31,12 +31,6 @@ CORS(app, resources={
     }
 })
 
-SUPABASE_URL = os.environ.get("SUPABASE_URL")
-SUPABASE_KEY = os.environ.get("SUPABASE_KEY")
-supabase: Client = create_client(SUPABASE_URL, SUPABASE_KEY)
-
-chat_client = Groq(api_key=os.getenv("GROQ_API_KEY"))
-
 
 @app.route("/")
 def home():

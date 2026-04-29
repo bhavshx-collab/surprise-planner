@@ -51,7 +51,7 @@ function FAQItem({ q, a }) {
   );
 }
 
-export default function LandingPage({ onPlan, onVendor, onPricing, onAuth }) {
+export default function LandingPage({ onPlan, onVendor, onPricing, onAuth, onPrivacy, onTerms, onAbout }) {
   const [visible, setVisible] = useState(false);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const [activeTestimonial, setActiveTestimonial] = useState(0);
@@ -90,7 +90,7 @@ export default function LandingPage({ onPlan, onVendor, onPricing, onAuth }) {
 
       {/* NAV */}
       <nav style={{ position: "sticky", top: 0, zIndex: 90, display: "flex", alignItems: "center", justifyContent: "space-between", padding: "20px clamp(24px, 5vw, 80px)", background: "rgba(8,8,8,0.82)", backdropFilter: "blur(24px)", borderBottom: "1px solid rgba(255,255,255,0.05)", opacity: visible ? 1 : 0, transform: visible ? "translateY(0)" : "translateY(-20px)", transition: "all 0.8s ease 0.2s" }}>
-        <div style={{ fontSize: "14px", letterSpacing: "0.18em", color: "#D4AF37", fontWeight: "400", textTransform: "uppercase", fontFamily: "'Cormorant Garamond', serif", fontSize: "18px" }}>
+        <div style={{ letterSpacing: "0.18em", color: "#D4AF37", fontWeight: "400", textTransform: "uppercase", fontFamily: "'Cormorant Garamond', serif", fontSize: "18px" }}>
           ✦ AI Surprise Planner
         </div>
 
@@ -397,8 +397,8 @@ export default function LandingPage({ onPlan, onVendor, onPricing, onAuth }) {
             </div>
             {[
               { title: "Product", links: [["Plan a Surprise", onPlan], ["Vendor Directory", onVendor], ["Pricing", onPricing], ["Inspiration Gallery", onPlan]] },
-              { title: "Business", links: [["List Your Business", onVendor], ["Vendor Sign Up", onVendor], ["Admin", null], ["Pro Features", onPricing]] },
-              { title: "Company", links: [["About", null], ["Privacy Policy", null], ["Terms of Service", null], ["Contact", null]] },
+              { title: "Business", links: [["List Your Business", onVendor], ["Vendor Sign Up", onVendor], ["About Us", onAbout], ["Pro Features", onPricing]] },
+              { title: "Company", links: [["About", onAbout], ["Privacy Policy", onPrivacy], ["Terms of Service", onTerms], ["Contact", onAbout]] },
             ].map(col => (
               <div key={col.title}>
                 <div style={{ fontSize: "10px", letterSpacing: "0.25em", color: "#D4AF37", textTransform: "uppercase", marginBottom: "20px", opacity: 0.7 }}>{col.title}</div>
