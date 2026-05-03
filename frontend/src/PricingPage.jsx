@@ -71,15 +71,15 @@ function FAQItem({ q, a }) {
   );
 }
 
-export default function PricingPage({ onBack, user }) {
+export default function PricingPage({ onBack, user, onUpgrade }) {
   const [billing] = useState("monthly");
 
   const handlePro = () => {
-    if (!user) {
-      alert("Please sign in first to go Pro.");
-      return;
+    if (onUpgrade) {
+      onUpgrade();
+    } else {
+      alert("Razorpay integration coming soon! Contact us on WhatsApp to activate Pro manually.");
     }
-    alert("Razorpay integration coming soon! Contact us on WhatsApp to activate Pro manually.");
   };
 
   return (

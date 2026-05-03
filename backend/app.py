@@ -1,5 +1,8 @@
 import os
 import json
+import hmac
+import hashlib
+from datetime import datetime, timedelta, timezone
 from dotenv import load_dotenv
 
 load_dotenv()  # ← MUST be here, before everything else
@@ -10,6 +13,7 @@ from groq import Groq
 from groq_service import groq_generate_full_plan
 from moodboard import generate_moodboard
 from supabase import create_client, Client
+import razorpay
 
 SUPABASE_URL = os.environ.get("SUPABASE_URL")
 SUPABASE_KEY = os.environ.get("SUPABASE_KEY")
@@ -17,6 +21,10 @@ supabase: Client = create_client(SUPABASE_URL, SUPABASE_KEY)
 
 chat_client = Groq(api_key=os.getenv("GROQ_API_KEY"))
 app = Flask(__name__)
+
+RAZORPAY_KEY_ID = os.environ.get("RAZORPAY_KEY_ID")
+RAZORPAY_KEY_SECRET = os.environ.get("RAZORPAY_KEY_SECRET")
+razorpay_client = razorpay.Client(auth=(RAZORPAY_KEY_ID, RAZORPAY_KEY_SECRET)) if RAZORPAY_KEY_ID and RAZORPAY_KEY_SECRET else None
 
 CORS(app, resources={
     r"/api/*": {
@@ -226,19 +234,65 @@ def request_quote():
     return jsonify({"sent": sent, "count": len(sent)})
 
 
+@app.route("/api/payment/create-order", methods=["POST"])
+def create_order():
+    if not razorpay_client:
+        return jsonify({"error": "Razorpay not configured on backend"}), 500
+    
+    data = request.get_json()
+    amount = data.get("amount", 19900) # Amount in paise (default ₹199)
+    
+    if int(amount) < 100:
+        return jsonify({"error": "Minimum amount is 1 INR"}), 400
+
+    try:
+        order = razorpay_client.order.create({
+            "amount": int(amount),
+            "currency": data.get("currency", "INR"),
+            "receipt": data.get("receipt", f"rcpt_{int(datetime.now(timezone.utc).timestamp())}"),
+            "payment_capture": 1
+        })
+        return jsonify(order)
+    except Exception as e:
+        print(f"[CreateOrder] {e}")
+        return jsonify({"error": str(e)}), 500
+
+
 @app.route("/api/payment/verify", methods=["POST"])
 def verify_payment():
     data = request.get_json()
     user_id = data.get("user_id")
     email = data.get("email")
     payment_id = data.get("razorpay_payment_id", "")
+    order_id = data.get("razorpay_order_id", "")
+    signature = data.get("razorpay_signature", "")
+
+    if not razorpay_client:
+        return jsonify({"error": "Razorpay not configured on backend"}), 500
+
+    if not payment_id or not order_id or not signature:
+        return jsonify({"error": "Missing payment signature fields"}), 400
+
     try:
+        # Cryptographically verify the signature
+        razorpay_client.utility.verify_payment_signature({
+            'razorpay_order_id': order_id,
+            'razorpay_payment_id': payment_id,
+            'razorpay_signature': signature
+        })
+
+        # Signature is valid — grant Pro status with 30-day expiry
+        expires_at = (datetime.now(timezone.utc) + timedelta(days=30)).isoformat()
         supabase.table("pro_users").upsert({
             "user_id": user_id, "email": email,
             "razorpay_payment_id": payment_id,
+            "expires_at": expires_at,
         }, on_conflict="user_id").execute()
-        return jsonify({"success": True})
+        return jsonify({"success": True, "expires_at": expires_at})
+    except razorpay.errors.SignatureVerificationError:
+        return jsonify({"error": "Invalid signature"}), 400
     except Exception as e:
+        print(f"[VerifyPayment] {e}")
         return jsonify({"error": str(e)}), 500
 
 
@@ -281,7 +335,6 @@ Write in past tense, first person plural ("We"). Emotional, specific, beautiful.
 
 from social_service import generate_icebreaker, generate_mystery_teaser, compute_match_score, get_activity_info
 import uuid as uuid_lib
-from datetime import datetime, timedelta, timezone
 
 
 # ──────────────────────────────────────────────

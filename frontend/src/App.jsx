@@ -297,7 +297,7 @@ export default function App() {
 
       {/* PRICING VIEW */}
       {view === "pricing" && (
-        <PricingPage onBack={() => setView("landing")} user={user} />
+        <PricingPage onBack={() => setView("landing")} user={user} onUpgrade={() => setShowPaymentModal(true)} />
       )}
 
       {/* INTROVERT ADVENTURES VIEWS */}
@@ -825,17 +825,6 @@ export default function App() {
                 />
               )}
             </AnimatePresence>
-
-            {/* Payment / Pro Modal */}
-            <AnimatePresence>
-              {showPaymentModal && (
-                <PaymentModal
-                  user={user}
-                  onClose={() => setShowPaymentModal(false)}
-                  onSuccess={() => window.location.reload()}
-                />
-              )}
-            </AnimatePresence>
           </>
         )
       }
@@ -845,6 +834,17 @@ export default function App() {
       {view === "terms" && <TermsOfService onBack={() => setView("landing")} />}
       {view === "about" && <AboutContact onBack={() => setView("landing")} />}
       {view === "404" && <NotFound onHome={() => setView("landing")} />}
+
+      {/* Payment / Pro Modal — global so it works from any page */}
+      <AnimatePresence>
+        {showPaymentModal && (
+          <PaymentModal
+            user={user}
+            onClose={() => setShowPaymentModal(false)}
+            onSuccess={() => window.location.reload()}
+          />
+        )}
+      </AnimatePresence>
 
       {/* Toast */}
       <AnimatePresence>
