@@ -289,7 +289,7 @@ export default function App() {
   }
 
   return (
-    <div className="app">
+    <div className={['landing','auth','pricing','social','social-profile','social-events','social-event-detail','adventure-host','privacy','terms','about','404'].includes(view) ? "" : "app"}>
 
       {/* AUTH VIEW — full screen overlay */}
       {view === "auth" && (
