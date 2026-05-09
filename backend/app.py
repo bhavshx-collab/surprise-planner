@@ -472,7 +472,157 @@ def generate_social_activity():
 
 
 # ──────────────────────────────────────────────
+#  ADVENTURES — host / join / complete
+# ──────────────────────────────────────────────
+
+@app.route("/api/adventure/create", methods=["POST"])
+def create_adventure():
+    """Anyone can create an adventure — pay ₹49 deposit to publish."""
+    data = request.get_json()
+
+    title          = data.get("title", "Mystery Adventure")
+    description    = data.get("description", "")
+    city           = data.get("city", "Bangalore")
+    area           = data.get("area", "")
+    activity_type  = data.get("activity_type", "custom")
+    date_time_str  = data.get("date_time", "")
+    max_members    = int(data.get("max_members", 4))
+    energy         = data.get("energy", "medium")
+    tags           = data.get("tags", [])
+    emoji          = data.get("emoji", "🌿")
+    what_to_expect = data.get("what_to_expect", "")
+    what_to_bring  = data.get("what_to_bring", "")
+    host_user_id   = data.get("host_user_id", "")
+    host_name      = data.get("host_name", "Anonymous")
+    host_email     = data.get("host_email", "")
+    deposit_amount = int(data.get("deposit_amount", 49))
+
+    if not title or not date_time_str:
+        return jsonify({"error": "Title and date_time are required"}), 400
+
+    if max_members < 2 or max_members > 10:
+        return jsonify({"error": "Group size must be between 2 and 10"}), 400
+
+    try:
+        result = supabase.table("mystery_events").insert({
+            "title": title,
+            "description": description,
+            "city": city,
+            "area": area,
+            "activity_type": activity_type,
+            "date_time": date_time_str,
+            "max_members": max_members,
+            "energy": energy,
+            "tags": tags,
+            "emoji": emoji,
+            "what_to_expect": what_to_expect,
+            "what_to_bring": what_to_bring,
+            "host_user_id": host_user_id or None,
+            "host_name": host_name,
+            "host_email": host_email,
+            "deposit_amount": deposit_amount,
+            "host_deposit_paid": True,   # simulated — Razorpay in Phase 2
+            "status": "open",
+        }).execute()
+
+        event = result.data[0] if result.data else {}
+        return jsonify({"success": True, "event": event, "message": "Adventure published!"})
+    except Exception as e:
+        print(f"[CreateAdventure] {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/adventure/join", methods=["POST"])
+def join_adventure():
+    """User joins an adventure — pays ₹49 deposit."""
+    data     = request.get_json()
+    event_id = data.get("event_id")
+    user_id  = data.get("user_id")
+    email    = data.get("email", "")
+    name     = data.get("name", "")
+
+    if not event_id or not user_id:
+        return jsonify({"error": "event_id and user_id are required"}), 400
+
+    try:
+        # Check event exists and is open
+        ev_res = supabase.table("mystery_events") \
+            .select("max_members, status, deposit_amount") \
+            .eq("id", event_id).single().execute()
+        event = ev_res.data
+        if not event:
+            return jsonify({"error": "Event not found"}), 404
+        if event.get("status") not in ("open", "draft"):
+            return jsonify({"error": "This adventure is no longer accepting members"}), 400
+
+        # Check capacity
+        members_res = supabase.table("event_members") \
+            .select("id").eq("event_id", event_id).execute()
+        if len(members_res.data or []) >= event.get("max_members", 4):
+            supabase.table("mystery_events").update({"status": "full"}).eq("id", event_id).execute()
+            return jsonify({"error": "Adventure is now full"}), 400
+
+        # Add member
+        supabase.table("event_members").insert({
+            "event_id": event_id,
+            "user_id": user_id,
+            "email": email,
+            "name": name,
+            "deposit_paid": True,  # simulated — Razorpay in Phase 2
+        }).execute()
+
+        # Update status to full if capacity reached
+        new_count = len(members_res.data or []) + 1
+        if new_count >= event.get("max_members", 4):
+            supabase.table("mystery_events").update({"status": "full"}).eq("id", event_id).execute()
+
+        return jsonify({
+            "success": True,
+            "message": "You're in! Venue revealed 30 min before the event.",
+            "deposit_paid": event.get("deposit_amount", 49),
+        })
+    except Exception as e:
+        print(f"[JoinAdventure] {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/adventure/complete", methods=["POST"])
+def complete_adventure():
+    """Admin marks adventure as complete → triggers refunds."""
+    data        = request.get_json()
+    event_id    = data.get("event_id")
+    admin_email = data.get("admin_email", "")
+
+    # Basic admin guard
+    ADMIN_EMAIL = "bhaveshkumawat330@gmail.com"
+    if admin_email != ADMIN_EMAIL:
+        return jsonify({"error": "Unauthorized"}), 403
+
+    if not event_id:
+        return jsonify({"error": "event_id required"}), 400
+
+    try:
+        # Mark event completed
+        supabase.table("mystery_events").update({
+            "status": "completed",
+            "host_refunded": True,  # simulated — Razorpay refund in Phase 2
+        }).eq("id", event_id).execute()
+
+        # Mark all members as attended + refunded (simulated)
+        supabase.table("event_members").update({
+            "attended": True,
+            "refunded": True,
+        }).eq("event_id", event_id).execute()
+
+        return jsonify({"success": True, "message": "Event marked complete. Refunds processed."})
+    except Exception as e:
+        print(f"[CompleteAdventure] {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+# ──────────────────────────────────────────────
 #  AI CONCIERGE — conversational planning
+
 # ──────────────────────────────────────────────
 
 @app.route("/api/concierge", methods=["POST"])

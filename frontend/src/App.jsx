@@ -37,6 +37,7 @@ import PrivacyPolicy from "./PrivacyPolicy";
 import TermsOfService from "./TermsOfService";
 import AboutContact from "./AboutContact";
 import NotFound from "./NotFound";
+import HostAdventure from "./HostAdventure";
 const INTERESTS = ["Music", "Travel", "Food", "Art", "Movies", "Fitness", "Books", "Nature", "Gaming", "Fashion"];
 const OCCASIONS = ["Birthday", "Anniversary", "Valentine's Day", "Just Because", "Graduation", "Apology"];
 const RELATIONSHIPS = ["Girlfriend", "Boyfriend", "Wife", "Husband", "Best Friend", "Parent", "Sibling"];
@@ -321,6 +322,7 @@ export default function App() {
           onBack={() => setView("social")}
           onEventSelect={(ev) => { setSelectedEvent(ev); setView("social-event-detail"); }}
           onCreateProfile={() => user ? setView("social-profile") : setView("auth")}
+          onHostAdventure={() => user ? setView("adventure-host") : setView("auth")}
         />
       )}
       {view === "social-event-detail" && (
@@ -331,9 +333,16 @@ export default function App() {
           onJoin={() => setView("auth")}
         />
       )}
+      {view === "adventure-host" && (
+        <HostAdventure
+          user={user}
+          onBack={() => setView("social-events")}
+          onSuccess={() => setView("social-events")}
+        />
+      )}
 
       {/* APP NAVBAR — shown for all non-special views */}
-      {!['landing','auth','pricing','social','social-profile','social-events','social-event-detail','privacy','terms','about'].includes(view) && (
+      {!['landing','auth','pricing','social','social-profile','social-events','social-event-detail','adventure-host','privacy','terms','about'].includes(view) && (
         <>
           <nav className="navbar">
             <div className="navbar-logo" onClick={() => setView("app")} style={{ cursor: "pointer" }}>
