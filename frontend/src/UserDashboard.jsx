@@ -10,8 +10,6 @@ export default function UserDashboard({ user, onSelectPlan, onNewPlan, onBack, o
   const [isPro, setIsPro] = useState(false);
   const [stats, setStats] = useState({ total: 0, occasions: {}, topOccasion: "", saved: 0 });
 
-  useEffect(() => { fetchData(); }, [user]);
-
   const fetchData = async () => {
     setLoading(true);
     try {
