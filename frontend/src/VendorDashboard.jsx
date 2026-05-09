@@ -24,12 +24,9 @@ export default function VendorDashboard({ user, onBack }) {
   const [saveSuccess, setSaveSuccess] = useState(false);
   const [stats, setStats] = useState({ views: 0, inquiries: 0, quotes: 0 });
 
-  useEffect(() => { fetchVendorData(); }, [user]);
-
   const fetchVendorData = async () => {
     setLoading(true);
     try {
-      // Try fetching by email
       const { data: vendors } = await supabase
         .from("vendors")
         .select("*")
@@ -41,7 +38,6 @@ export default function VendorDashboard({ user, onBack }) {
         setVendor(v);
         setEditForm({ ...v });
 
-        // Fetch inquiries
         try {
           const { data: qs } = await supabase
             .from("quote_requests")
@@ -51,13 +47,15 @@ export default function VendorDashboard({ user, onBack }) {
             .limit(20);
           setInquiries(qs || []);
           setStats({ views: Math.floor(Math.random() * 200) + 50, inquiries: qs?.length || 0, quotes: Math.floor((qs?.length || 0) * 0.6) });
-        } catch {}
+        } catch (e) { console.error(e); }
       }
     } catch (e) {
       console.error(e);
     }
     setLoading(false);
   };
+
+  useEffect(() => { fetchVendorData(); }, [user]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleSave = async () => {
     setSaving(true);

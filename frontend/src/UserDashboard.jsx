@@ -35,9 +35,12 @@ export default function UserDashboard({ user, onSelectPlan, onNewPlan, onBack, o
         const expires = new Date(pro.expires_at.replace("Z", "+00:00"));
         setIsPro(expires > new Date());
       }
-    } catch {}
+    } catch (e) { console.error(e); }
     setLoading(false);
   };
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(() => { fetchData(); }, [user]);
 
   const deletePlan = async (id, e) => {
     e.stopPropagation();

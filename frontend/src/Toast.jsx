@@ -1,5 +1,4 @@
 // Toast.jsx — Minimal toast notification (success/error/info)
-import { motion } from "framer-motion";
 
 const COLORS = {
   success: { bg: "rgba(29,179,117,0.15)", border: "rgba(29,179,117,0.35)", text: "#1DB375", icon: "✓" },
@@ -10,11 +9,7 @@ const COLORS = {
 export default function Toast({ message, type = "success", onClose }) {
   const c = COLORS[type] || COLORS.success;
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 40, scale: 0.95 }}
-      animate={{ opacity: 1, y: 0, scale: 1 }}
-      exit={{ opacity: 0, y: 20, scale: 0.95 }}
-      transition={{ duration: 0.25, ease: "easeOut" }}
+    <div
       onClick={onClose}
       style={{
         position: "fixed", bottom: "28px", left: "50%", transform: "translateX(-50%)",
@@ -26,6 +21,7 @@ export default function Toast({ message, type = "success", onClose }) {
         boxShadow: "0 8px 32px rgba(0,0,0,0.4)",
         fontFamily: "'DM Sans', sans-serif",
         maxWidth: "90vw",
+        animation: "fadeInUp 0.25s ease-out",
       }}
     >
       <span style={{
@@ -34,6 +30,6 @@ export default function Toast({ message, type = "success", onClose }) {
         display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0,
       }}>{c.icon}</span>
       <span style={{ fontSize: "13px", color: c.text, fontWeight: "600", lineHeight: 1.4 }}>{message}</span>
-    </motion.div>
+    </div>
   );
 }

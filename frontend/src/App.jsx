@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { AnimatePresence } from "framer-motion";
 import confetti from "canvas-confetti";
 import { supabase } from "./supabase";
 import AuthPage from "./AuthPage";
@@ -48,7 +48,6 @@ const API = import.meta.env.VITE_API_URL || "http://localhost:5000";
 export default function App() {
   const [step, setStep] = useState(1);
   const [showMenu, setShowMenu] = useState(false);
-  const [showMobileMenu, setShowMobileMenu] = useState(false);
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState(null);
   const [activeTab, setActiveTab] = useState("timeline");
@@ -63,6 +62,7 @@ export default function App() {
   const [tweaking, setTweaking] = useState(false);
   const [showQuoteModal, setShowQuoteModal] = useState(false);
   const [showPaymentModal, setShowPaymentModal] = useState(false);
+  // eslint-disable-next-line no-unused-vars
   const [revealPlanId, setRevealPlanId] = useState(null);
   const [selectedEvent, setSelectedEvent] = useState(null);
   const printRef = useRef(null);
@@ -166,8 +166,9 @@ export default function App() {
         confetti({ particleCount: 120, spread: 80, origin: { y: 0.5 }, colors: ["#D4AF37", "#E8C84A", "#7B6EE8", "#9D93F0", "#fff"] });
         setTimeout(() => confetti({ particleCount: 60, spread: 120, origin: { y: 0.4 }, colors: ["#D4AF37", "#fff", "#1DB375"] }), 350);
       }, 200);
-    } catch (e) {
+    } catch (err) {
       showToast("Something went wrong. Please try again.", "error");
+      console.error(err);
     }
     setLoading(false);
   };
@@ -220,7 +221,7 @@ export default function App() {
         setResult(data);
         setActiveTab("timeline");
         if (data.plan_id) window.history.pushState({}, "", `/plan/${data.plan_id}`);
-      } catch {}
+      } catch (err) { console.error(err); }
       setRemixing(false);
     }, 300);
   };
@@ -253,6 +254,7 @@ export default function App() {
     showToast("Reveal link copied! Share it with your special person 🎁");
   };
 
+  // eslint-disable-next-line no-unused-vars
   const menuItemStyle = {
     display: "block", width: "100%", padding: "8px 12px",
     background: "none", border: "none", borderRadius: "6px",

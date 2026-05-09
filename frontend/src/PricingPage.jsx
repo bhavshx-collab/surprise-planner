@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { supabase } from "./supabase";
 
 const PLANS = [
   {
@@ -71,8 +70,9 @@ function FAQItem({ q, a }) {
   );
 }
 
-export default function PricingPage({ onBack, user, onUpgrade }) {
-  const [billing] = useState("monthly");
+export default function PricingPage({ onBack, onUpgrade }) {
+  // billing toggle placeholder for future annual plans
+  const billing = "monthly"; // eslint-disable-line no-unused-vars
 
   const handlePro = () => {
     if (onUpgrade) {

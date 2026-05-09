@@ -15,10 +15,6 @@ export default function InspirationGallery({ onUsePlan, onBack }) {
   const [tone, setTone] = useState("All");
   const [expanded, setExpanded] = useState(null);
 
-  useEffect(() => {
-    fetchPlans();
-  }, []);
-
   const fetchPlans = async () => {
     setLoading(true);
     const { data } = await supabase
@@ -30,6 +26,10 @@ export default function InspirationGallery({ onUsePlan, onBack }) {
     setPlans(data || []);
     setLoading(false);
   };
+
+  useEffect(() => {
+    fetchPlans();
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const filtered = plans.filter(p => {
     const matchOccasion = occasion === "All" || p.occasion === occasion;

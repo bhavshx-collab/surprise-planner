@@ -8,10 +8,6 @@ export default function MyPlans({ user, onSelectPlan, onNewPlan }) {
   const [plans, setPlans] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    fetchPlans();
-  }, [user]);
-
   const fetchPlans = async () => {
     setLoading(true);
     const { data, error } = await supabase
@@ -23,6 +19,10 @@ export default function MyPlans({ user, onSelectPlan, onNewPlan }) {
     if (!error) setPlans(data || []);
     setLoading(false);
   };
+
+  useEffect(() => {
+    fetchPlans();
+  }, [user]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const deletePlan = async (id, e) => {
     e.stopPropagation();

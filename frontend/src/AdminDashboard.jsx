@@ -25,6 +25,7 @@ export default function VendorDashboard({ user, onBack }) {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
+  // eslint-disable-next-line no-unused-vars
   const [inquiries, setInquiries] = useState([]);
   const [form, setForm] = useState({
     name: "", category: "", description: "", city: "",
@@ -32,10 +33,6 @@ export default function VendorDashboard({ user, onBack }) {
     website: "", instagram: "", price_range: "",
     min_budget: "", max_budget: "",
   });
-
-  useEffect(() => {
-    fetchListing();
-  }, [user]);
 
   const fetchListing = async () => {
     setLoading(true);
@@ -65,6 +62,10 @@ export default function VendorDashboard({ user, onBack }) {
     }
     setLoading(false);
   };
+
+  useEffect(() => {
+    fetchListing();
+  }, [user]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleSave = async () => {
     setSaving(true);

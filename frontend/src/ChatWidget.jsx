@@ -63,7 +63,7 @@ export default function ChatWidget({ plan }) {
         ...prev,
         { role: "assistant", content: data.answer },
       ]);
-    } catch (e) {
+    } catch {
       setMessages((prev) => [
         ...prev,
         { role: "assistant", content: "Sorry, something went wrong. Please try again!" },

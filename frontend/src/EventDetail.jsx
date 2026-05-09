@@ -53,7 +53,7 @@ export default function EventDetail({ event, onBack, onJoin, user }) {
       // Simulate payment (₹49)
       await new Promise(r => setTimeout(r, 1000));
       setJoined(true);
-    } catch (e) {
+    } catch {
       setErr("Connection error. Please try again.");
     }
     setJoining(false);

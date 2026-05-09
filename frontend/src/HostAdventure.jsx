@@ -79,7 +79,7 @@ export default function HostAdventure({ user, onBack, onSuccess }) {
       const data = await res.json();
       if (data.error) { setErr(data.error); setSubmitting(false); return; }
       setSubmitted(true);
-    } catch (e) {
+    } catch {
       setErr("Connection error. Please check your backend is running.");
     }
     setSubmitting(false);

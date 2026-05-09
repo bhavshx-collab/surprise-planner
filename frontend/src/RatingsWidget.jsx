@@ -11,10 +11,6 @@ export default function RatingsWidget() {
   const [reviews, setReviews] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    fetchRatings();
-  }, []);
-
   const fetchRatings = async () => {
     const { data } = await supabase
       .from("ratings")
@@ -29,6 +25,10 @@ export default function RatingsWidget() {
     }
     setLoading(false);
   };
+
+  useEffect(() => {
+    fetchRatings();
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   if (loading || stats.count === 0) return null;
 

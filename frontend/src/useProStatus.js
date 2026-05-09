@@ -7,6 +7,7 @@ export function useProStatus(user) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     if (!user) { setIsPro(false); setLoading(false); return; }
     supabase
       .from("pro_users")

@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { supabase } from "./supabase";
 
 const ENERGY_LEVELS = [
   { id: "low", label: "🌙 Low key", desc: "I prefer quiet places and small groups" },

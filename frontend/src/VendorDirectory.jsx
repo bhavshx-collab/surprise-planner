@@ -23,10 +23,6 @@ export default function VendorDirectory({ city, onBack }) {
   const [category, setCategory] = useState("All");
   const [search, setSearch] = useState("");
 
-  useEffect(() => {
-    fetchVendors();
-  }, [city]);
-
   const fetchVendors = async () => {
     setLoading(true);
     let query = supabase
@@ -44,6 +40,10 @@ export default function VendorDirectory({ city, onBack }) {
     setVendors(data || []);
     setLoading(false);
   };
+
+  useEffect(() => {
+    fetchVendors();
+  }, [city]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const filtered = vendors.filter(v => {
     const matchCat = category === "All" || v.category === category;
@@ -242,7 +242,7 @@ export default function VendorDirectory({ city, onBack }) {
         <button
           className="auth-primary-btn"
           style={{ width: "auto", padding: "8px 20px" }}
-          onClick={() => onVendorSignup && onVendorSignup()}
+          onClick={() => window.dispatchEvent(new CustomEvent("openVendorSignup"))}
         >
           List your business
         </button>
