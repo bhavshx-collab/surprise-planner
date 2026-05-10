@@ -85,7 +85,23 @@ CREATE INDEX IF NOT EXISTS idx_mystery_events_status  ON public.mystery_events(s
 CREATE INDEX IF NOT EXISTS idx_event_members_event_id ON public.event_members(event_id);
 
 -- ─────────────────────────────────────
---  RLS Policies (enable if needed)
+--  RLS Policies
 -- ─────────────────────────────────────
--- ALTER TABLE public.mystery_events ENABLE ROW LEVEL SECURITY;
--- ALTER TABLE public.event_members  ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.mystery_events ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.event_members  ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.social_profiles ENABLE ROW LEVEL SECURITY;
+
+-- Allow read access to everyone
+CREATE POLICY "Allow public read mystery_events" ON public.mystery_events FOR SELECT USING (true);
+CREATE POLICY "Allow public read event_members" ON public.event_members FOR SELECT USING (true);
+CREATE POLICY "Allow public read social_profiles" ON public.social_profiles FOR SELECT USING (true);
+
+-- Allow insert access to authenticated or anon users (since we use anon key)
+CREATE POLICY "Allow public insert mystery_events" ON public.mystery_events FOR INSERT WITH CHECK (true);
+CREATE POLICY "Allow public insert event_members" ON public.event_members FOR INSERT WITH CHECK (true);
+CREATE POLICY "Allow public insert social_profiles" ON public.social_profiles FOR INSERT WITH CHECK (true);
+
+-- Allow update access
+CREATE POLICY "Allow public update mystery_events" ON public.mystery_events FOR UPDATE USING (true);
+CREATE POLICY "Allow public update event_members" ON public.event_members FOR UPDATE USING (true);
+CREATE POLICY "Allow public update social_profiles" ON public.social_profiles FOR UPDATE USING (true);
