@@ -25,12 +25,10 @@ export default function AuthPage({ onAuth }) {
       position: "fixed", inset: 0, zIndex: 200,
       display: "flex", alignItems: "stretch",
       background: "#080808",
-      fontFamily: "'DM Sans', sans-serif",
+      fontFamily: "'Inter', sans-serif",
     }}>
       {/* BG orbs */}
       <div style={{ position: "absolute", inset: 0, pointerEvents: "none", overflow: "hidden" }}>
-        <div style={{ position: "absolute", width: "700px", height: "700px", borderRadius: "50%", top: "-200px", left: "-200px", background: "radial-gradient(circle, rgba(123,110,232,0.12) 0%, transparent 65%)", animation: "authOrb1 12s ease-in-out infinite" }} />
-        <div style={{ position: "absolute", width: "500px", height: "500px", borderRadius: "50%", bottom: "-150px", right: "-100px", background: "radial-gradient(circle, rgba(212,175,55,0.09) 0%, transparent 65%)", animation: "authOrb2 16s ease-in-out infinite" }} />
       </div>
 
       {/* Left panel — brand */}
@@ -43,7 +41,7 @@ export default function AuthPage({ onAuth }) {
         <div style={{ marginBottom: "64px" }}>
           <div style={{ fontSize: "11px", letterSpacing: "0.25em", color: "#D4AF37", textTransform: "uppercase", marginBottom: "24px", opacity: 0.7 }}>✦ AI Surprise Planner</div>
           <h2 style={{
-            fontFamily: "'Cormorant Garamond', serif",
+            fontFamily: "'Outfit', serif",
             fontSize: "clamp(36px, 4vw, 60px)", fontWeight: "300", lineHeight: "1.1",
             color: "#fff", letterSpacing: "-0.01em", marginBottom: "20px",
           }}>
@@ -80,12 +78,12 @@ export default function AuthPage({ onAuth }) {
           backdropFilter: "blur(16px)",
         }}>
           <div style={{ fontSize: "10px", letterSpacing: "0.2em", color: "#D4AF37", textTransform: "uppercase", marginBottom: "10px", opacity: 0.65 }}>Sample plan · Birthday · Mumbai</div>
-          <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "16px", fontStyle: "italic", color: "rgba(255,255,255,0.75)", lineHeight: 1.5 }}>
+          <div style={{ fontFamily: "'Outfit', serif", fontSize: "16px", fontStyle: "italic", color: "rgba(255,255,255,0.75)", lineHeight: 1.5 }}>
             "Rooftop sunset picnic with her favourite playlist, handwritten letters from friends, and a custom stargazing kit."
           </div>
           <div style={{ display: "flex", gap: "4px", marginTop: "12px" }}>
             {["🌅 Timeline", "💸 Budget", "📍 Vendors"].map(tag => (
-              <span key={tag} style={{ fontSize: "10px", padding: "3px 10px", border: "1px solid rgba(212,175,55,0.15)", color: "rgba(212,175,55,0.55)", borderRadius: "20px", fontFamily: "'DM Sans', sans-serif" }}>{tag}</span>
+              <span key={tag} style={{ fontSize: "10px", padding: "3px 10px", border: "1px solid rgba(212,175,55,0.15)", color: "rgba(212,175,55,0.55)", borderRadius: "20px", fontFamily: "'Inter', sans-serif" }}>{tag}</span>
             ))}
           </div>
         </div>
@@ -101,7 +99,7 @@ export default function AuthPage({ onAuth }) {
 
         <div style={{ marginBottom: "48px" }}>
           <div style={{ fontSize: "11px", letterSpacing: "0.22em", color: "rgba(255,255,255,0.25)", textTransform: "uppercase", marginBottom: "16px" }}>Welcome back</div>
-          <h1 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "clamp(28px, 3vw, 40px)", fontWeight: "300", color: "#fff", lineHeight: 1.2, marginBottom: "12px" }}>
+          <h1 style={{ fontFamily: "'Outfit', serif", fontSize: "clamp(28px, 3vw, 40px)", fontWeight: "300", color: "#fff", lineHeight: 1.2, marginBottom: "12px" }}>
             Sign in to your<br /><span style={{ color: "#D4AF37", fontStyle: "italic" }}>account</span>
           </h1>
           <p style={{ fontSize: "14px", color: "rgba(255,255,255,0.3)", lineHeight: 1.7 }}>We'll send you a magic link — no password needed.</p>
@@ -121,7 +119,7 @@ export default function AuthPage({ onAuth }) {
                 style={{
                   width: "100%", padding: "14px 16px",
                   background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.1)",
-                  borderRadius: "2px", color: "#fff", fontFamily: "'DM Sans', sans-serif",
+                  borderRadius: "2px", color: "#fff", fontFamily: "'Inter', sans-serif",
                   fontSize: "15px", outline: "none", transition: "all 0.2s", boxSizing: "border-box",
                 }}
                 onFocus={e => { e.target.style.borderColor = "rgba(212,175,55,0.5)"; e.target.style.background = "rgba(212,175,55,0.03)"; }}
@@ -139,7 +137,7 @@ export default function AuthPage({ onAuth }) {
               width: "100%", padding: "15px",
               background: loading || !email ? "rgba(212,175,55,0.25)" : "linear-gradient(135deg, #E8C84A, #D4AF37)",
               border: "none", color: loading || !email ? "rgba(8,8,8,0.4)" : "#080808",
-              fontFamily: "'DM Sans', sans-serif", fontSize: "13px", fontWeight: "700",
+              fontFamily: "'Inter', sans-serif", fontSize: "13px", fontWeight: "700",
               letterSpacing: "0.1em", textTransform: "uppercase", cursor: loading || !email ? "not-allowed" : "pointer",
               transition: "all 0.25s", marginBottom: "16px",
             }}
@@ -157,12 +155,12 @@ export default function AuthPage({ onAuth }) {
         ) : (
           <div style={{ textAlign: "center", padding: "2rem 0" }}>
             <div style={{ fontSize: "56px", marginBottom: "24px" }}>📬</div>
-            <h3 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "28px", fontWeight: "300", color: "#fff", marginBottom: "12px" }}>Check your inbox</h3>
+            <h3 style={{ fontFamily: "'Outfit', serif", fontSize: "28px", fontWeight: "300", color: "#fff", marginBottom: "12px" }}>Check your inbox</h3>
             <p style={{ fontSize: "14px", color: "rgba(255,255,255,0.4)", lineHeight: "1.75" }}>
               We sent a magic link to<br /><strong style={{ color: "rgba(255,255,255,0.7)" }}>{email}</strong>.<br /><br />
               Click the link to sign in — it expires in 10 minutes.
             </p>
-            <button onClick={() => { setSent(false); setEmail(""); }} style={{ marginTop: "28px", fontSize: "12px", color: "rgba(255,255,255,0.25)", background: "none", border: "none", cursor: "pointer", textDecoration: "underline", textUnderlineOffset: "3px", fontFamily: "'DM Sans', sans-serif" }}>
+            <button onClick={() => { setSent(false); setEmail(""); }} style={{ marginTop: "28px", fontSize: "12px", color: "rgba(255,255,255,0.25)", background: "none", border: "none", cursor: "pointer", textDecoration: "underline", textUnderlineOffset: "3px", fontFamily: "'Inter', sans-serif" }}>
               Try a different email
             </button>
           </div>

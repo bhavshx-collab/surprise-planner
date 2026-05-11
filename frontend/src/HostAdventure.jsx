@@ -21,8 +21,8 @@ const ENERGY_OPTIONS = [
 const STEP_LABELS = ["Activity", "Details", "Rules", "Review & Pay"];
 
 const ACT_COLOR = {
-  coffee_trail: "#D4AF37", board_games: "#7B6EE8", art_workshop: "#E85D75",
-  nature_walk: "#1DB375",  book_swap: "#D4AF37",   cook_together: "#E85D75", custom: "#9D93F0",
+  coffee_trail: "#D4AF37", board_games: "#FFFFFF", art_workshop: "#E85D75",
+  nature_walk: "#FFFFFF",  book_swap: "#D4AF37",   cook_together: "#E85D75", custom: "#9D93F0",
 };
 
 export default function HostAdventure({ user, onBack, onSuccess }) {
@@ -50,7 +50,7 @@ export default function HostAdventure({ user, onBack, onSuccess }) {
   const set = (k, v) => setForm(f => ({ ...f, [k]: v }));
 
   const selectedAct = ACTIVITY_OPTIONS.find(a => a.id === form.activity_type);
-  const color = ACT_COLOR[form.activity_type] || "#1DB375";
+  const color = ACT_COLOR[form.activity_type] || "#FFFFFF";
 
   const canNext1 = !!form.activity_type;
   const canNext2 = form.title.trim() && form.date && form.time && form.area.trim();
@@ -87,17 +87,17 @@ export default function HostAdventure({ user, onBack, onSuccess }) {
 
   if (submitted) {
     return (
-      <div style={{ minHeight: "100vh", background: "#080808", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "'DM Sans', sans-serif", color: "#fff", padding: "24px" }}>
+      <div style={{ minHeight: "100vh", background: "#080808", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "'Inter', sans-serif", color: "#fff", padding: "24px" }}>
         <div style={{ textAlign: "center", maxWidth: "480px" }}>
           <div style={{ fontSize: "64px", marginBottom: "24px" }}>🎉</div>
-          <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "clamp(32px, 4vw, 48px)", fontWeight: "300", marginBottom: "16px" }}>
-            Adventure <span style={{ color: "#1DB375", fontStyle: "italic" }}>Published!</span>
+          <div style={{ fontFamily: "'Outfit', serif", fontSize: "clamp(32px, 4vw, 48px)", fontWeight: "300", marginBottom: "16px" }}>
+            Adventure <span style={{ color: "#FFFFFF", fontStyle: "italic" }}>Published!</span>
           </div>
           <p style={{ fontSize: "15px", color: "rgba(255,255,255,0.45)", lineHeight: "1.8", marginBottom: "32px" }}>
             Your adventure is now live. People can discover and join it. You'll get your ₹49 deposit back after the event is completed. 🙌
           </p>
           <div style={{ display: "flex", gap: "12px", justifyContent: "center", flexWrap: "wrap" }}>
-            <button onClick={onSuccess} style={{ padding: "14px 32px", background: "#1DB375", border: "none", color: "#080808", fontSize: "13px", fontWeight: "700", letterSpacing: "0.1em", textTransform: "uppercase", cursor: "pointer", fontFamily: "DM Sans" }}>
+            <button onClick={onSuccess} style={{ padding: "14px 32px", background: "#FFFFFF", border: "none", color: "#080808", fontSize: "13px", fontWeight: "700", letterSpacing: "0.1em", textTransform: "uppercase", cursor: "pointer", fontFamily: "DM Sans" }}>
               Browse all adventures →
             </button>
             <button onClick={onBack} style={{ padding: "14px 24px", background: "none", border: "1px solid rgba(255,255,255,0.15)", color: "rgba(255,255,255,0.6)", fontSize: "13px", cursor: "pointer", fontFamily: "DM Sans" }}>
@@ -111,12 +111,10 @@ export default function HostAdventure({ user, onBack, onSuccess }) {
   }
 
   return (
-    <div style={{ minHeight: "100vh", background: "#080808", fontFamily: "'DM Sans', sans-serif", color: "#fff" }}>
+    <div style={{ minHeight: "100vh", background: "#080808", fontFamily: "'Inter', sans-serif", color: "#fff" }}>
 
       {/* Ambient BG */}
       <div style={{ position: "fixed", inset: 0, pointerEvents: "none", zIndex: 0 }}>
-        <div style={{ position: "absolute", width: "600px", height: "600px", borderRadius: "50%", top: "-200px", right: "-150px", background: `radial-gradient(circle, ${color}12 0%, transparent 65%)`, transition: "background 0.6s" }} />
-        <div style={{ position: "absolute", width: "500px", height: "500px", borderRadius: "50%", bottom: "-150px", left: "-100px", background: "radial-gradient(circle, rgba(123,110,232,0.07) 0%, transparent 65%)" }} />
       </div>
 
       <div style={{ position: "relative", zIndex: 1, maxWidth: "720px", margin: "0 auto", padding: "clamp(40px,6vh,80px) clamp(20px,5vw,48px) 100px" }}>
@@ -132,7 +130,7 @@ export default function HostAdventure({ user, onBack, onSuccess }) {
           <div style={{ fontSize: "10px", letterSpacing: "0.3em", color: color, textTransform: "uppercase", marginBottom: "12px", transition: "color 0.4s" }}>
             Create · ₹49 deposit · Refundable
           </div>
-          <h1 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "clamp(32px,4vw,52px)", fontWeight: "300", lineHeight: "1.1", marginBottom: "12px" }}>
+          <h1 style={{ fontFamily: "'Outfit', serif", fontSize: "clamp(32px,4vw,52px)", fontWeight: "300", lineHeight: "1.1", marginBottom: "12px" }}>
             Host an <span style={{ color, fontStyle: "italic", transition: "color 0.4s" }}>Adventure</span>
           </h1>
           <p style={{ fontSize: "14px", color: "rgba(255,255,255,0.3)", lineHeight: "1.8" }}>
@@ -299,8 +297,8 @@ export default function HostAdventure({ user, onBack, onSuccess }) {
               style={{ ...inputStyle, marginBottom: "32px" }}
             />
 
-            <div style={{ padding: "20px", background: "rgba(29,179,117,0.05)", border: "1px solid rgba(29,179,117,0.15)", borderRadius: "8px", marginBottom: "32px" }}>
-              <div style={{ fontSize: "12px", color: "#1DB375", fontWeight: "700", marginBottom: "8px" }}>📋 Host Responsibilities</div>
+            <div style={{ padding: "20px", background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.15)", borderRadius: "8px", marginBottom: "32px" }}>
+              <div style={{ fontSize: "12px", color: "#FFFFFF", fontWeight: "700", marginBottom: "8px" }}>📋 Host Responsibilities</div>
               <ul style={{ fontSize: "13px", color: "rgba(255,255,255,0.4)", lineHeight: "2", paddingLeft: "16px", margin: 0 }}>
                 <li>Be present and punctual at the start</li>
                 <li>Ensure everyone feels welcome</li>
@@ -349,7 +347,7 @@ export default function HostAdventure({ user, onBack, onSuccess }) {
                   <div style={{ fontSize: "16px", fontWeight: "600" }}>Host deposit</div>
                   <div style={{ fontSize: "12px", color: "rgba(255,255,255,0.3)", marginTop: "4px" }}>Fully refunded after your event completes</div>
                 </div>
-                <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "36px", color }}>₹49</div>
+                <div style={{ fontFamily: "'Outfit', serif", fontSize: "36px", color }}>₹49</div>
               </div>
               <div style={{ fontSize: "12px", color: "rgba(255,255,255,0.2)", lineHeight: "1.75" }}>
                 ✦ Deposit holds your commitment to host<br />
@@ -391,7 +389,7 @@ export default function HostAdventure({ user, onBack, onSuccess }) {
 // ── Small helpers ──────────────────────────────
 function Label({ children, color }) {
   return (
-    <div style={{ fontSize: "10px", letterSpacing: "0.22em", color: color || "#1DB375", textTransform: "uppercase", marginBottom: "10px", fontWeight: "700", opacity: 0.85 }}>
+    <div style={{ fontSize: "10px", letterSpacing: "0.22em", color: color || "#FFFFFF", textTransform: "uppercase", marginBottom: "10px", fontWeight: "700", opacity: 0.85 }}>
       {children}
     </div>
   );
@@ -423,7 +421,7 @@ function Next({ onClick, disabled, color, children }) {
 const inputStyle = {
   width: "100%", padding: "12px 14px", background: "rgba(255,255,255,0.03)",
   border: "1px solid rgba(255,255,255,0.1)", color: "#fff", fontSize: "14px",
-  fontFamily: "'DM Sans', sans-serif", outline: "none", boxSizing: "border-box",
+  fontFamily: "'Inter', sans-serif", outline: "none", boxSizing: "border-box",
   borderRadius: "4px", transition: "border 0.2s",
 };
 function Style() {

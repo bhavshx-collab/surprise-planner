@@ -16,7 +16,7 @@ const MOCK_EVENTS = [
     id: "evt-2", emoji: "🎲", activity_type: "board_games",
     title: "Board Game Night", area: "Indiranagar",
     datetime: "Sat, May 17 · 7:00 PM", slots_total: 4, slots_taken: 1,
-    energy: "low", color: "#7B6EE8", bg: "rgba(123,110,232,0.06)", price: 49,
+    energy: "low", color: "#FFFFFF", bg: "rgba(255,255,255,0.06)", price: 49,
     teaser: "Curated board games, craft coffee, and no awkward small talk. We handle the rest.",
     tags: ["Board games", "Gaming", "Philosophy"],
     host_name: "Arjun K.",
@@ -34,7 +34,7 @@ const MOCK_EVENTS = [
     id: "evt-4", emoji: "🌿", activity_type: "nature_walk",
     title: "Cubbon Park Sunrise Walk", area: "MG Road",
     datetime: "Sun, May 18 · 6:30 AM", slots_total: 4, slots_taken: 2,
-    energy: "medium", color: "#1DB375", bg: "rgba(29,179,117,0.06)", price: 49,
+    energy: "medium", color: "#FFFFFF", bg: "rgba(255,255,255,0.06)", price: 49,
     teaser: "Golden light through the trees. The city wakes up slowly. You'll be glad you came.",
     tags: ["Nature", "Photography", "Yoga"],
     host_name: "Dev S.",
@@ -98,8 +98,8 @@ export default function EventDiscovery({ onEventSelect, onBack, onCreateProfile,
             slots_total: e.max_members || 4,
             slots_taken: 0,
             energy: e.energy || e.ai_plan?.activity_info?.energy || "medium",
-            color: "#1DB375",
-            bg: "rgba(29,179,117,0.06)",
+            color: "#FFFFFF",
+            bg: "rgba(255,255,255,0.06)",
             price: e.deposit_amount || 49,
             teaser: e.description || e.ai_plan?.teaser || "A mystery event awaits.",
             tags: Array.isArray(e.tags) ? e.tags : [e.activity_type?.replace("_", " ")],
@@ -119,46 +119,45 @@ export default function EventDiscovery({ onEventSelect, onBack, onCreateProfile,
   });
 
   return (
-    <div style={{ minHeight: "100vh", background: "#080808", fontFamily: "'DM Sans', sans-serif", color: "#fff" }}>
+    <div style={{ minHeight: "100vh", background: "#080808", fontFamily: "'Inter', sans-serif", color: "#fff" }}>
 
-      {/* BG */}
-      <div style={{ position: "fixed", inset: 0, pointerEvents: "none", zIndex: 0 }}>
-        <div style={{ position: "absolute", width: "700px", height: "700px", borderRadius: "50%", top: "-300px", right: "-200px", background: "radial-gradient(circle, rgba(29,179,117,0.07) 0%, transparent 65%)", animation: "orb1 14s ease-in-out infinite" }} />
-      </div>
+      {/* BG Image and Overlay */}
+      <div style={{ position: "fixed", inset: 0, backgroundImage: "url('/planner-bg.png')", backgroundSize: "cover", backgroundPosition: "center", zIndex: 0 }} />
+      <div style={{ position: "fixed", inset: 0, background: "linear-gradient(to bottom, rgba(5,5,5,0.4) 0%, rgba(5,5,5,0.8) 60%, #050505 100%)", zIndex: 0 }} />
 
       <div style={{ position: "relative", zIndex: 1, maxWidth: "1200px", margin: "0 auto", padding: "clamp(36px, 5vh, 60px) clamp(24px, 5vw, 60px) clamp(60px, 8vh, 100px)" }}>
 
         {/* Header */}
         <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", marginBottom: "32px", flexWrap: "wrap", gap: "20px" }}>
           <div>
-            <button onClick={onBack} style={{ background: "none", border: "none", color: "rgba(255,255,255,0.3)", fontSize: "13px", cursor: "pointer", fontFamily: "'DM Sans', sans-serif", padding: 0, marginBottom: "20px", display: "flex", alignItems: "center", gap: "6px" }}
+            <button onClick={onBack} style={{ background: "none", border: "none", color: "rgba(255,255,255,0.3)", fontSize: "13px", cursor: "pointer", fontFamily: "'Inter', sans-serif", padding: 0, marginBottom: "20px", display: "flex", alignItems: "center", gap: "6px" }}
               onMouseEnter={e => e.target.style.color = "rgba(255,255,255,0.7)"}
               onMouseLeave={e => e.target.style.color = "rgba(255,255,255,0.3)"}
             >← Back</button>
-            <div style={{ fontSize: "10px", letterSpacing: "0.28em", color: "#1DB375", textTransform: "uppercase", marginBottom: "10px", opacity: 0.8 }}>
+            <div style={{ fontSize: "10px", letterSpacing: "0.28em", color: "#FFFFFF", textTransform: "uppercase", marginBottom: "10px", opacity: 0.8 }}>
               Bangalore · Upcoming adventures
             </div>
-            <h1 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "clamp(32px, 4vw, 52px)", fontWeight: "300", lineHeight: "1.1" }}>
-              Find your <span style={{ color: "#1DB375", fontStyle: "italic" }}>next adventure</span>
+            <h1 style={{ fontFamily: "'Outfit', serif", fontSize: "clamp(32px, 4vw, 52px)", fontWeight: "300", lineHeight: "1.1", textShadow: "0 4px 24px rgba(0,0,0,0.6)" }}>
+              Find your <span style={{ color: "#FFFFFF", fontStyle: "italic" }}>next adventure</span>
             </h1>
           </div>
           <div style={{ display: "flex", gap: "12px", alignSelf: "flex-end", flexWrap: "wrap" }}>
             {user ? (
               <button onClick={onHostAdventure} style={{
-                padding: "12px 24px", background: "#1DB375", border: "none",
+                padding: "12px 24px", background: "#FFFFFF", border: "none",
                 color: "#080808", fontSize: "12px", letterSpacing: "0.12em",
-                textTransform: "uppercase", fontFamily: "'DM Sans', sans-serif",
+                textTransform: "uppercase", fontFamily: "'Inter', sans-serif",
                 fontWeight: "700", cursor: "pointer", transition: "all 0.25s",
               }}
                 onMouseEnter={e => { e.target.style.background = "#22d68a"; e.target.style.transform = "translateY(-2px)"; }}
-                onMouseLeave={e => { e.target.style.background = "#1DB375"; e.target.style.transform = "translateY(0)"; }}
+                onMouseLeave={e => { e.target.style.background = "#FFFFFF"; e.target.style.transform = "translateY(0)"; }}
               >
                 + Host an Adventure
               </button>
             ) : (
-              <button onClick={onCreateProfile} style={{ padding: "12px 24px", background: "#1DB375", border: "none", color: "#080808", fontSize: "12px", letterSpacing: "0.12em", textTransform: "uppercase", fontFamily: "'DM Sans', sans-serif", fontWeight: "700", cursor: "pointer", transition: "all 0.25s" }}
+              <button onClick={onCreateProfile} style={{ padding: "12px 24px", background: "#FFFFFF", border: "none", color: "#080808", fontSize: "12px", letterSpacing: "0.12em", textTransform: "uppercase", fontFamily: "'Inter', sans-serif", fontWeight: "700", cursor: "pointer", transition: "all 0.25s" }}
                 onMouseEnter={e => { e.target.style.background = "#22d68a"; e.target.style.transform = "translateY(-2px)"; }}
-                onMouseLeave={e => { e.target.style.background = "#1DB375"; e.target.style.transform = "translateY(0)"; }}
+                onMouseLeave={e => { e.target.style.background = "#FFFFFF"; e.target.style.transform = "translateY(0)"; }}
               >Join the community →</button>
             )}
           </div>
@@ -167,8 +166,8 @@ export default function EventDiscovery({ onEventSelect, onBack, onCreateProfile,
         {/* ── HOST BANNER ── */}
         <div style={{
           marginBottom: "36px", padding: "20px 24px",
-          background: "linear-gradient(135deg, rgba(29,179,117,0.08) 0%, rgba(123,110,232,0.06) 100%)",
-          border: "1px solid rgba(29,179,117,0.2)", borderRadius: "4px",
+          background: "linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.06) 100%)",
+          border: "1px solid rgba(255,255,255,0.2)", borderRadius: "4px",
           display: "flex", alignItems: "center", justifyContent: "space-between", gap: "20px", flexWrap: "wrap",
         }}>
           <div>
@@ -180,12 +179,12 @@ export default function EventDiscovery({ onEventSelect, onBack, onCreateProfile,
             </div>
           </div>
           <button onClick={user ? onHostAdventure : onCreateProfile} style={{
-            padding: "10px 22px", background: "none", border: "1px solid rgba(29,179,117,0.5)",
-            color: "#1DB375", fontSize: "12px", fontWeight: "700", letterSpacing: "0.1em",
+            padding: "10px 22px", background: "none", border: "1px solid rgba(255,255,255,0.5)",
+            color: "#FFFFFF", fontSize: "12px", fontWeight: "700", letterSpacing: "0.1em",
             textTransform: "uppercase", cursor: "pointer", fontFamily: "DM Sans",
             transition: "all 0.2s", whiteSpace: "nowrap",
           }}
-            onMouseEnter={e => { e.target.style.background = "rgba(29,179,117,0.1)"; }}
+            onMouseEnter={e => { e.target.style.background = "rgba(255,255,255,0.1)"; }}
             onMouseLeave={e => { e.target.style.background = "none"; }}
           >
             {user ? "Create Now →" : "Sign in to host →"}
@@ -198,10 +197,10 @@ export default function EventDiscovery({ onEventSelect, onBack, onCreateProfile,
             {ACTIVITY_FILTERS.map(f => (
               <button key={f.id} onClick={() => setActivityFilter(f.id)} style={{
                 padding: "7px 16px",
-                border: `1px solid ${activityFilter === f.id ? "rgba(29,179,117,0.5)" : "rgba(255,255,255,0.1)"}`,
-                background: activityFilter === f.id ? "rgba(29,179,117,0.08)" : "transparent",
-                color: activityFilter === f.id ? "#1DB375" : "rgba(255,255,255,0.4)",
-                fontSize: "12px", cursor: "pointer", fontFamily: "'DM Sans', sans-serif",
+                border: `1px solid ${activityFilter === f.id ? "rgba(255,255,255,0.5)" : "rgba(255,255,255,0.1)"}`,
+                background: activityFilter === f.id ? "rgba(255,255,255,0.08)" : "transparent",
+                color: activityFilter === f.id ? "#FFFFFF" : "rgba(255,255,255,0.4)",
+                fontSize: "12px", cursor: "pointer", fontFamily: "'Inter', sans-serif",
                 transition: "all 0.2s", borderRadius: "40px",
               }}>{f.label}</button>
             ))}
@@ -211,10 +210,10 @@ export default function EventDiscovery({ onEventSelect, onBack, onCreateProfile,
             {ENERGY_FILTERS.map(f => (
               <button key={f.id} onClick={() => setEnergyFilter(f.id)} style={{
                 padding: "7px 16px",
-                border: `1px solid ${energyFilter === f.id ? "rgba(29,179,117,0.4)" : "rgba(255,255,255,0.08)"}`,
-                background: energyFilter === f.id ? "rgba(29,179,117,0.06)" : "transparent",
-                color: energyFilter === f.id ? "#1DB375" : "rgba(255,255,255,0.35)",
-                fontSize: "12px", cursor: "pointer", fontFamily: "'DM Sans', sans-serif",
+                border: `1px solid ${energyFilter === f.id ? "rgba(255,255,255,0.4)" : "rgba(255,255,255,0.08)"}`,
+                background: energyFilter === f.id ? "rgba(255,255,255,0.06)" : "transparent",
+                color: energyFilter === f.id ? "#FFFFFF" : "rgba(255,255,255,0.35)",
+                fontSize: "12px", cursor: "pointer", fontFamily: "'Inter', sans-serif",
                 transition: "all 0.2s", borderRadius: "40px",
               }}>{f.label}</button>
             ))}

@@ -70,7 +70,7 @@ export default function ReminderSetup({ plan, user, form }) {
           <div style={{ textAlign: "left" }}>
             <div style={{ fontSize: "13px", fontWeight: "600", color: "#fff" }}>
               Set a reminder
-              {saved && <span style={{ marginLeft: "6px", fontSize: "11px", color: "#1DB375" }}>✓ Set</span>}
+              {saved && <span style={{ marginLeft: "6px", fontSize: "11px", color: "#FFFFFF" }}>✓ Set</span>}
             </div>
             <div style={{ fontSize: "11px", color: "rgba(255,255,255,0.4)" }}>
               Get notified before the big day
@@ -84,12 +84,12 @@ export default function ReminderSetup({ plan, user, form }) {
         <div style={{ padding: "0 16px 16px", borderTop: "1px solid rgba(255,255,255,0.06)" }}>
           {saved ? (
             <div style={{
-              padding: "14px", borderRadius: "10px", background: "rgba(29,179,117,0.1)",
-              border: "1px solid rgba(29,179,117,0.25)", textAlign: "center",
+              padding: "14px", borderRadius: "10px", background: "rgba(255,255,255,0.1)",
+              border: "1px solid rgba(255,255,255,0.25)", textAlign: "center",
               marginTop: "12px",
             }}>
               <div style={{ fontSize: "24px", marginBottom: "6px" }}>🎉</div>
-              <div style={{ fontSize: "13px", fontWeight: "600", color: "#1DB375" }}>Reminder set!</div>
+              <div style={{ fontSize: "13px", fontWeight: "600", color: "#FFFFFF" }}>Reminder set!</div>
               <div style={{ fontSize: "12px", color: "rgba(255,255,255,0.4)", marginTop: "4px" }}>
                 We'll remind you 2 days before and on the morning of the event.
               </div>

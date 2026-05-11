@@ -65,7 +65,7 @@ export default function UserDashboard({ user, onSelectPlan, onNewPlan, onBack, o
             <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
               <div style={{
                 width: "44px", height: "44px", borderRadius: "50%",
-                background: "linear-gradient(135deg, rgba(123,110,232,0.3), rgba(212,175,55,0.2))",
+                background: "linear-gradient(135deg, rgba(255,255,255,0.3), rgba(212,175,55,0.2))",
                 border: "1px solid rgba(212,175,55,0.3)",
                 display: "flex", alignItems: "center", justifyContent: "center",
                 fontSize: "18px", fontWeight: "700", color: "#D4AF37",
@@ -159,9 +159,9 @@ export default function UserDashboard({ user, onSelectPlan, onNewPlan, onBack, o
       {!loading && tab === "stats" && (
         <div>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "12px", marginBottom: "20px" }}>
-            <MetricCard icon="🎁" label="Plans Created" value={stats.total} color="#7B6EE8" />
+            <MetricCard icon="🎁" label="Plans Created" value={stats.total} color="#FFFFFF" />
             <MetricCard icon="🎉" label="Top Occasion" value={stats.topOccasion || "—"} color="#D4AF37" small />
-            <MetricCard icon="💰" label="Total Budget" value={stats.saved > 0 ? `Rs ${Math.round(stats.saved / 1000)}k` : "—"} color="#1DB375" />
+            <MetricCard icon="💰" label="Total Budget" value={stats.saved > 0 ? `Rs ${Math.round(stats.saved / 1000)}k` : "—"} color="#FFFFFF" />
           </div>
 
           {/* Occasion breakdown */}
@@ -174,10 +174,10 @@ export default function UserDashboard({ user, onSelectPlan, onNewPlan, onBack, o
                   <div style={{ flex: 1, height: "5px", background: "rgba(255,255,255,0.05)", borderRadius: "99px", overflow: "hidden" }}>
                     <div style={{
                       height: "100%", borderRadius: "99px",
-                      background: "linear-gradient(90deg, #7B6EE8, #D4AF37)",
+                      background: "linear-gradient(90deg, #FFFFFF, #D4AF37)",
                       width: `${(count / stats.total) * 100}%`,
                       transition: "width 0.8s ease",
-                      boxShadow: "0 0 6px rgba(123,110,232,0.4)",
+                      boxShadow: "0 0 6px rgba(255,255,255,0.4)",
                     }} />
                   </div>
                   <div style={{ fontSize: "12px", color: "rgba(255,255,255,0.4)", width: "20px", textAlign: "right", flexShrink: 0 }}>{count}</div>
@@ -202,7 +202,7 @@ export default function UserDashboard({ user, onSelectPlan, onNewPlan, onBack, o
                 >
                   <div style={{
                     width: "36px", height: "36px", borderRadius: "10px", flexShrink: 0,
-                    background: "rgba(123,110,232,0.12)", display: "flex",
+                    background: "rgba(255,255,255,0.12)", display: "flex",
                     alignItems: "center", justifyContent: "center", fontSize: "16px",
                   }}>🎁</div>
                   <div style={{ flex: 1, minWidth: 0 }}>
@@ -238,7 +238,7 @@ export default function UserDashboard({ user, onSelectPlan, onNewPlan, onBack, o
           {!isPro && (
             <div style={{
               ...glassCard,
-              background: "linear-gradient(135deg, rgba(212,175,55,0.08), rgba(123,110,232,0.05))",
+              background: "linear-gradient(135deg, rgba(212,175,55,0.08), rgba(255,255,255,0.05))",
               border: "1px solid rgba(212,175,55,0.2)",
             }}>
               <div style={{ fontSize: "20px", marginBottom: "10px" }}>⭐</div>
@@ -295,7 +295,7 @@ function PlanCard({ plan, onSelect, onDelete }) {
     >
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "10px" }}>
         <div style={{ display: "flex", gap: "6px", flexWrap: "wrap" }}>
-          {plan.occasion && <Badge label={plan.occasion} color="#7B6EE8" />}
+          {plan.occasion && <Badge label={plan.occasion} color="#FFFFFF" />}
           {plan.tone && <Badge label={plan.tone} color="rgba(255,255,255,0.35)" />}
         </div>
         <button
@@ -366,7 +366,7 @@ function LoadingSpinner() {
     <div style={{
       width: "38px", height: "38px", borderRadius: "50%",
       border: "2px solid rgba(255,255,255,0.07)",
-      borderTop: "2px solid #D4AF37", borderRight: "2px solid #7B6EE8",
+      borderTop: "2px solid #D4AF37", borderRight: "2px solid #FFFFFF",
       animation: "spin 0.9s linear infinite", margin: "0 auto",
     }} />
   );

@@ -119,7 +119,7 @@ export default function VendorDashboard({ user, onBack }) {
   }
 
   const statusColor = vendor.status === "approved"
-    ? "#1DB375"
+    ? "#FFFFFF"
     : vendor.status === "pending"
     ? "#D4AF37"
     : "#ff6b6b";
@@ -139,7 +139,7 @@ export default function VendorDashboard({ user, onBack }) {
               <span style={{ fontSize: "12px", color: "rgba(255,255,255,0.4)" }}>{vendor.category} · {vendor.city}</span>
               <span style={{
                 fontSize: "11px", fontWeight: "700", padding: "3px 10px", borderRadius: "20px",
-                background: vendor.status === "approved" ? "rgba(29,179,117,0.12)" : vendor.status === "pending" ? "rgba(212,175,55,0.12)" : "rgba(255,107,107,0.12)",
+                background: vendor.status === "approved" ? "rgba(255,255,255,0.12)" : vendor.status === "pending" ? "rgba(212,175,55,0.12)" : "rgba(255,107,107,0.12)",
                 color: statusColor,
                 border: `1px solid ${statusColor}40`,
                 textTransform: "uppercase", letterSpacing: "0.06em",
@@ -185,9 +185,9 @@ export default function VendorDashboard({ user, onBack }) {
           <div>
             {/* Stats grid */}
             <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "12px", marginBottom: "24px" }}>
-              <MetricCard icon="👁️" label="Profile Views" value={stats.views} color="#7B6EE8" />
+              <MetricCard icon="👁️" label="Profile Views" value={stats.views} color="#FFFFFF" />
               <MetricCard icon="📩" label="Total Inquiries" value={stats.inquiries} color="#D4AF37" />
-              <MetricCard icon="✅" label="Confirmed Quotes" value={stats.quotes} color="#1DB375" />
+              <MetricCard icon="✅" label="Confirmed Quotes" value={stats.quotes} color="#FFFFFF" />
             </div>
 
             {/* Status card */}
@@ -196,15 +196,15 @@ export default function VendorDashboard({ user, onBack }) {
               {vendor.status === "approved" ? (
                 <div>
                   <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "12px" }}>
-                    <div style={{ width: "10px", height: "10px", borderRadius: "50%", background: "#1DB375", boxShadow: "0 0 8px #1DB375" }} />
-                    <span style={{ color: "#1DB375", fontWeight: "700", fontSize: "14px" }}>Your listing is live</span>
+                    <div style={{ width: "10px", height: "10px", borderRadius: "50%", background: "#FFFFFF", boxShadow: "0 0 8px #FFFFFF" }} />
+                    <span style={{ color: "#FFFFFF", fontWeight: "700", fontSize: "14px" }}>Your listing is live</span>
                   </div>
                   <p style={{ color: "rgba(255,255,255,0.45)", fontSize: "13px", lineHeight: "1.7" }}>
                     Your business is visible to users planning surprises in <strong style={{ color: "#fff" }}>{vendor.city}</strong>. 
                     Keep your contact info updated so users can reach you quickly.
                   </p>
-                  <div style={{ marginTop: "14px", padding: "12px 14px", borderRadius: "10px", background: "rgba(29,179,117,0.07)", border: "1px solid rgba(29,179,117,0.15)" }}>
-                    <div style={{ fontSize: "12px", color: "rgba(29,179,117,0.8)", fontWeight: "600" }}>💡 Pro tip</div>
+                  <div style={{ marginTop: "14px", padding: "12px 14px", borderRadius: "10px", background: "rgba(255,255,255,0.07)", border: "1px solid rgba(255,255,255,0.15)" }}>
+                    <div style={{ fontSize: "12px", color: "rgba(255,255,255,0.8)", fontWeight: "600" }}>💡 Pro tip</div>
                     <div style={{ fontSize: "12px", color: "rgba(255,255,255,0.4)", marginTop: "4px" }}>
                       Add your WhatsApp number to get direct inquiries from customers.
                     </div>
@@ -256,7 +256,7 @@ export default function VendorDashboard({ user, onBack }) {
                 {vendor.description && <p style={{ fontSize: "13px", color: "rgba(255,255,255,0.45)", lineHeight: "1.6", marginBottom: "10px" }}>{vendor.description}</p>}
                 <div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}>
                   {vendor.price_range && <InfoPill label={vendor.price_range} />}
-                  {vendor.whatsapp && <InfoPill label="WhatsApp ✓" color="#1DB375" />}
+                  {vendor.whatsapp && <InfoPill label="WhatsApp ✓" color="#FFFFFF" />}
                   {vendor.website && <InfoPill label="Website ✓" />}
                 </div>
               </div>
@@ -338,9 +338,9 @@ export default function VendorDashboard({ user, onBack }) {
           <div>
             {saveSuccess && (
               <div style={{
-                background: "rgba(29,179,117,0.12)", border: "1px solid rgba(29,179,117,0.3)",
+                background: "rgba(255,255,255,0.12)", border: "1px solid rgba(255,255,255,0.3)",
                 borderRadius: "10px", padding: "12px 16px", marginBottom: "16px",
-                fontSize: "13px", color: "#1DB375", fontWeight: "600",
+                fontSize: "13px", color: "#FFFFFF", fontWeight: "600",
               }}>✓ Profile updated successfully!</div>
             )}
 
@@ -492,7 +492,7 @@ function LoadingSpinner() {
     <div style={{
       width: "40px", height: "40px", borderRadius: "50%",
       border: "2px solid rgba(255,255,255,0.07)",
-      borderTop: "2px solid #D4AF37", borderRight: "2px solid #7B6EE8",
+      borderTop: "2px solid #D4AF37", borderRight: "2px solid #FFFFFF",
       animation: "spin 0.9s linear infinite",
       margin: "0 auto",
     }} />

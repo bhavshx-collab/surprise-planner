@@ -98,20 +98,20 @@ export default function ConciergeMode({ onComplete, onBack }) {
       <div style={{
         display: "flex", alignItems: "center", gap: "12px",
         padding: "16px 20px",
-        background: "linear-gradient(135deg, rgba(123,110,232,0.18), rgba(212,175,55,0.1))",
+        background: "linear-gradient(135deg, rgba(255,255,255,0.18), rgba(212,175,55,0.1))",
         borderBottom: "1px solid rgba(255,255,255,0.07)",
         flexShrink: 0,
       }}>
         <div style={{
           width: "40px", height: "40px", borderRadius: "50%",
-          background: "linear-gradient(135deg, #7B6EE8, #D4AF37)",
+          background: "linear-gradient(135deg, #FFFFFF, #D4AF37)",
           display: "flex", alignItems: "center", justifyContent: "center",
           fontSize: "18px", flexShrink: 0,
         }}>✦</div>
         <div style={{ flex: 1 }}>
           <div style={{ fontSize: "14px", fontWeight: "700", color: "#fff", letterSpacing: "0.02em" }}>AI Concierge</div>
           <div style={{ fontSize: "11px", color: "rgba(255,255,255,0.45)", display: "flex", alignItems: "center", gap: "5px" }}>
-            <span style={{ width: "6px", height: "6px", borderRadius: "50%", background: "#1DB375", display: "inline-block", animation: "pulse 2s infinite" }} />
+            <span style={{ width: "6px", height: "6px", borderRadius: "50%", background: "#FFFFFF", display: "inline-block", animation: "pulse 2s infinite" }} />
             Planning your perfect surprise
           </div>
         </div>
@@ -128,11 +128,11 @@ export default function ConciergeMode({ onComplete, onBack }) {
       {/* Detected fields bar */}
       {Object.keys(detectedForm).length > 0 && (
         <div style={{
-          padding: "8px 20px", background: "rgba(29,179,117,0.06)",
-          borderBottom: "1px solid rgba(29,179,117,0.15)",
+          padding: "8px 20px", background: "rgba(255,255,255,0.06)",
+          borderBottom: "1px solid rgba(255,255,255,0.15)",
           display: "flex", gap: "8px", flexWrap: "wrap", alignItems: "center", flexShrink: 0,
         }}>
-          <span style={{ fontSize: "10px", color: "rgba(29,179,117,0.7)", fontWeight: "700", textTransform: "uppercase", letterSpacing: "0.08em" }}>Detected:</span>
+          <span style={{ fontSize: "10px", color: "rgba(255,255,255,0.7)", fontWeight: "700", textTransform: "uppercase", letterSpacing: "0.08em" }}>Detected:</span>
           {detectedForm.relationship && <Tag label={detectedForm.relationship} />}
           {detectedForm.occasion && <Tag label={detectedForm.occasion} />}
           {detectedForm.budget && <Tag label={`Rs ${Number(detectedForm.budget).toLocaleString("en-IN")}`} />}
@@ -159,7 +159,7 @@ export default function ConciergeMode({ onComplete, onBack }) {
               onClick={() => { setInput(q); setTimeout(send, 50); }}
               style={{
                 fontSize: "12px", padding: "6px 13px", borderRadius: "20px",
-                border: "1px solid rgba(123,110,232,0.35)", background: "rgba(123,110,232,0.1)",
+                border: "1px solid rgba(255,255,255,0.35)", background: "rgba(255,255,255,0.1)",
                 color: "rgba(147,133,240,1)", cursor: "pointer", fontFamily: "DM Sans, sans-serif",
                 transition: "all 0.15s",
               }}
@@ -186,7 +186,7 @@ export default function ConciergeMode({ onComplete, onBack }) {
               color: "#fff", fontFamily: "DM Sans, sans-serif", fontSize: "14px", outline: "none",
               transition: "border-color 0.2s",
             }}
-            onFocus={(e) => { e.target.style.borderColor = "rgba(123,110,232,0.5)"; }}
+            onFocus={(e) => { e.target.style.borderColor = "rgba(255,255,255,0.5)"; }}
             onBlur={(e) => { e.target.style.borderColor = "rgba(255,255,255,0.1)"; }}
           />
           <button
@@ -195,8 +195,8 @@ export default function ConciergeMode({ onComplete, onBack }) {
             style={{
               width: "44px", height: "44px", borderRadius: "12px",
               border: "none", background: loading || !input.trim()
-                ? "rgba(123,110,232,0.3)"
-                : "linear-gradient(135deg, #7B6EE8, #5a4fc8)",
+                ? "rgba(255,255,255,0.3)"
+                : "linear-gradient(135deg, #FFFFFF, #5a4fc8)",
               color: "#fff", cursor: loading || !input.trim() ? "not-allowed" : "pointer",
               display: "flex", alignItems: "center", justifyContent: "center",
               fontSize: "18px", flexShrink: 0, transition: "all 0.2s",
@@ -214,7 +214,7 @@ export default function ConciergeMode({ onComplete, onBack }) {
             {[0, 1, 2].map((i) => (
               <div key={i} style={{
                 width: "8px", height: "8px", borderRadius: "50%",
-                background: i === 1 ? "#D4AF37" : "#7B6EE8",
+                background: i === 1 ? "#D4AF37" : "#FFFFFF",
                 animation: `bounce 1.2s ease-in-out ${i * 0.2}s infinite`,
               }} />
             ))}
@@ -235,7 +235,7 @@ function Bubble({ msg }) {
       {!isUser && (
         <div style={{
           width: "28px", height: "28px", borderRadius: "50%", flexShrink: 0, marginRight: "8px",
-          background: "linear-gradient(135deg, #7B6EE8, #D4AF37)",
+          background: "linear-gradient(135deg, #FFFFFF, #D4AF37)",
           display: "flex", alignItems: "center", justifyContent: "center",
           fontSize: "12px", alignSelf: "flex-end",
         }}>✦</div>
@@ -245,7 +245,7 @@ function Bubble({ msg }) {
         padding: "10px 14px",
         borderRadius: isUser ? "16px 16px 4px 16px" : "16px 16px 16px 4px",
         background: isUser
-          ? "linear-gradient(135deg, #7B6EE8, #5a4fc8)"
+          ? "linear-gradient(135deg, #FFFFFF, #5a4fc8)"
           : "rgba(255,255,255,0.06)",
         border: isUser ? "none" : "1px solid rgba(255,255,255,0.08)",
         color: "#fff", fontSize: "14px", lineHeight: "1.6",
@@ -262,7 +262,7 @@ function TypingIndicator() {
     <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
       <div style={{
         width: "28px", height: "28px", borderRadius: "50%",
-        background: "linear-gradient(135deg, #7B6EE8, #D4AF37)",
+        background: "linear-gradient(135deg, #FFFFFF, #D4AF37)",
         display: "flex", alignItems: "center", justifyContent: "center", fontSize: "12px", flexShrink: 0,
       }}>✦</div>
       <div style={{
@@ -285,8 +285,8 @@ function Tag({ label }) {
   return (
     <span style={{
       fontSize: "11px", padding: "3px 10px", borderRadius: "10px",
-      background: "rgba(29,179,117,0.12)", border: "1px solid rgba(29,179,117,0.25)",
-      color: "rgba(29,179,117,0.9)", fontWeight: "600",
+      background: "rgba(255,255,255,0.12)", border: "1px solid rgba(255,255,255,0.25)",
+      color: "rgba(255,255,255,0.9)", fontWeight: "600",
     }}>{label}</span>
   );
 }

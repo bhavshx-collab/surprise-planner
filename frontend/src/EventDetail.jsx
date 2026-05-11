@@ -13,7 +13,7 @@ const ICEBREAKER_DEFAULTS = {
 };
 
 const MEMBER_AVATARS = [
-  { initial: "P", color: "#7B6EE8" },
+  { initial: "P", color: "#FFFFFF" },
   { initial: "A", color: "#D4AF37" },
   { initial: "?", color: "rgba(255,255,255,0.15)" },
 ];
@@ -60,15 +60,14 @@ export default function EventDetail({ event, onBack, onJoin, user }) {
   };
 
   return (
-    <div style={{ minHeight: "100vh", background: "#080808", fontFamily: "'DM Sans', sans-serif", color: "#fff" }}>
+    <div style={{ minHeight: "100vh", background: "#080808", fontFamily: "'Inter', sans-serif", color: "#fff" }}>
 
       {/* BG */}
-      <div style={{ position: "fixed", width: "700px", height: "700px", borderRadius: "50%", top: "-250px", right: "-200px", background: `radial-gradient(circle, ${event.color}12 0%, transparent 65%)`, pointerEvents: "none", animation: "orb1 14s ease-in-out infinite", zIndex: 0 }} />
 
       <div style={{ position: "relative", zIndex: 1, maxWidth: "900px", margin: "0 auto", padding: "clamp(36px, 5vh, 60px) clamp(24px, 5vw, 60px) clamp(80px, 10vh, 120px)" }}>
 
         {/* Back */}
-        <button onClick={onBack} style={{ background: "none", border: "none", color: "rgba(255,255,255,0.3)", fontSize: "13px", cursor: "pointer", fontFamily: "'DM Sans', sans-serif", padding: 0, marginBottom: "40px", display: "flex", alignItems: "center", gap: "6px", transition: "color 0.2s" }}
+        <button onClick={onBack} style={{ background: "none", border: "none", color: "rgba(255,255,255,0.3)", fontSize: "13px", cursor: "pointer", fontFamily: "'Inter', sans-serif", padding: 0, marginBottom: "40px", display: "flex", alignItems: "center", gap: "6px", transition: "color 0.2s" }}
           onMouseEnter={e => e.target.style.color = "rgba(255,255,255,0.7)"}
           onMouseLeave={e => e.target.style.color = "rgba(255,255,255,0.3)"}
         >← All adventures</button>
@@ -85,7 +84,7 @@ export default function EventDetail({ event, onBack, onJoin, user }) {
             {spotsLeft === 1 && <div style={{ fontSize: "11px", letterSpacing: "0.1em", color: "#E85D75", textTransform: "uppercase", padding: "5px 14px", border: "1px solid rgba(232,93,117,0.4)", background: "rgba(232,93,117,0.08)" }}>⚡ 1 spot left!</div>}
           </div>
 
-          <h1 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "clamp(36px, 5vw, 64px)", fontWeight: "300", lineHeight: "1.1", marginBottom: "20px" }}>
+          <h1 style={{ fontFamily: "'Outfit', serif", fontSize: "clamp(36px, 5vw, 64px)", fontWeight: "300", lineHeight: "1.1", marginBottom: "20px" }}>
             {event.teaser}
           </h1>
 
@@ -192,7 +191,7 @@ export default function EventDetail({ event, onBack, onJoin, user }) {
                 <div style={{ marginTop: "20px" }}>
                   <div style={{ marginBottom: "16px" }}>
                     <div style={{ fontSize: "11px", color: "rgba(255,255,255,0.3)", marginBottom: "6px", textTransform: "uppercase", letterSpacing: "0.1em" }}>Starter question</div>
-                    <div style={{ fontSize: "15px", fontStyle: "italic", fontFamily: "'Cormorant Garamond', serif", color: "rgba(255,255,255,0.75)", lineHeight: "1.6" }}>"{ICEBREAKER_DEFAULTS.starter_question}"</div>
+                    <div style={{ fontSize: "15px", fontStyle: "italic", fontFamily: "'Outfit', serif", color: "rgba(255,255,255,0.75)", lineHeight: "1.6" }}>"{ICEBREAKER_DEFAULTS.starter_question}"</div>
                   </div>
                   <div style={{ marginBottom: "16px" }}>
                     <div style={{ fontSize: "11px", color: "rgba(255,255,255,0.3)", marginBottom: "6px", textTransform: "uppercase", letterSpacing: "0.1em" }}>Group challenge</div>
@@ -215,7 +214,7 @@ export default function EventDetail({ event, onBack, onJoin, user }) {
           {/* Right — Join card */}
           <div style={{ position: "sticky", top: "24px" }}>
             <div style={{ padding: "28px", border: `1px solid ${event.color}30`, background: `${event.color}05` }}>
-              <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "40px", color: event.color, marginBottom: "4px" }}>₹{depositAmt}</div>
+              <div style={{ fontFamily: "'Outfit', serif", fontSize: "40px", color: event.color, marginBottom: "4px" }}>₹{depositAmt}</div>
               <div style={{ fontSize: "12px", color: "rgba(255,255,255,0.3)", marginBottom: "24px" }}>
                 refundable deposit · you get it back when you show up
               </div>
@@ -246,7 +245,7 @@ export default function EventDetail({ event, onBack, onJoin, user }) {
                   background: isFull ? "rgba(255,255,255,0.05)" : event.color,
                   border: "none", color: isFull ? "rgba(255,255,255,0.2)" : "#080808",
                   fontSize: "13px", letterSpacing: "0.1em", textTransform: "uppercase",
-                  fontFamily: "'DM Sans', sans-serif", fontWeight: "700",
+                  fontFamily: "'Inter', sans-serif", fontWeight: "700",
                   cursor: isFull || joining ? "not-allowed" : "pointer", transition: "all 0.25s",
                 }}
                   onMouseEnter={e => { if (!isFull && !joining) { e.target.style.opacity = "0.85"; e.target.style.transform = "translateY(-2px)"; e.target.style.boxShadow = `0 8px 24px ${event.color}40`; } }}
@@ -255,9 +254,9 @@ export default function EventDetail({ event, onBack, onJoin, user }) {
                   {joining ? "Reserving..." : isFull ? "Event is full" : !user ? "Sign in to join →" : `Join — ₹${depositAmt} deposit →`}
                 </button>
               ) : (
-                <div style={{ padding: "15px", background: "rgba(29,179,117,0.1)", border: "1px solid rgba(29,179,117,0.3)", textAlign: "center" }}>
+                <div style={{ padding: "15px", background: "rgba(255,255,255,0.1)", border: "1px solid rgba(255,255,255,0.3)", textAlign: "center" }}>
                   <div style={{ fontSize: "20px", marginBottom: "6px" }}>🎉</div>
-                  <div style={{ fontSize: "13px", color: "#1DB375", fontWeight: "600" }}>You're confirmed!</div>
+                  <div style={{ fontSize: "13px", color: "#FFFFFF", fontWeight: "600" }}>You're confirmed!</div>
                   <div style={{ fontSize: "12px", color: "rgba(255,255,255,0.3)", marginTop: "4px" }}>
                     ₹{depositAmt} deposit held · refunded after you attend
                   </div>

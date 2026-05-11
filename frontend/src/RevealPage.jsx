@@ -40,15 +40,12 @@ export default function RevealPage({ planId }) {
   );
 
   return (
-    <div style={{ minHeight: "100vh", background: "#07070f", color: "#fff", fontFamily: "'Cormorant Garamond', Georgia, serif", overflowX: "hidden", position: "relative" }}>
+    <div style={{ minHeight: "100vh", background: "#07070f", color: "#fff", fontFamily: "'Outfit', Georgia, serif", overflowX: "hidden", position: "relative" }}>
 
       {/* Mouse glow */}
-      <div style={{ position: "fixed", left: mousePos.x - 300, top: mousePos.y - 300, width: 600, height: 600, borderRadius: "50%", background: "radial-gradient(circle, rgba(212,175,55,0.05) 0%, transparent 70%)", pointerEvents: "none", zIndex: 0, transition: "left 0.8s ease, top 0.8s ease" }} />
 
       {/* Ambient orbs */}
       <div style={{ position: "fixed", inset: 0, pointerEvents: "none", zIndex: 0 }}>
-        <div style={{ position: "absolute", width: 700, height: 700, borderRadius: "50%", top: "-200px", left: "-150px", background: "radial-gradient(circle, rgba(123,110,232,0.08) 0%, transparent 65%)", animation: "orb1 18s ease-in-out infinite" }} />
-        <div style={{ position: "absolute", width: 500, height: 500, borderRadius: "50%", bottom: "-100px", right: "-100px", background: "radial-gradient(circle, rgba(212,175,55,0.06) 0%, transparent 65%)", animation: "orb2 14s ease-in-out infinite" }} />
       </div>
 
       {/* Gold top line */}
@@ -76,12 +73,12 @@ export default function RevealPage({ planId }) {
                 style={{
                   border: "1px solid rgba(212,175,55,0.3)", borderRadius: 20,
                   padding: "56px 40px", textAlign: "center", cursor: "pointer",
-                  background: "linear-gradient(135deg, rgba(212,175,55,0.05) 0%, rgba(123,110,232,0.04) 100%)",
+                  background: "linear-gradient(135deg, rgba(212,175,55,0.05) 0%, rgba(255,255,255,0.04) 100%)",
                   backdropFilter: "blur(24px)", position: "relative", overflow: "hidden",
                   transition: "all 0.3s",
                 }}
-                onMouseEnter={e => { e.currentTarget.style.borderColor = "rgba(212,175,55,0.6)"; e.currentTarget.style.background = "linear-gradient(135deg, rgba(212,175,55,0.09) 0%, rgba(123,110,232,0.07) 100%)"; }}
-                onMouseLeave={e => { e.currentTarget.style.borderColor = "rgba(212,175,55,0.3)"; e.currentTarget.style.background = "linear-gradient(135deg, rgba(212,175,55,0.05) 0%, rgba(123,110,232,0.04) 100%)"; }}
+                onMouseEnter={e => { e.currentTarget.style.borderColor = "rgba(212,175,55,0.6)"; e.currentTarget.style.background = "linear-gradient(135deg, rgba(212,175,55,0.09) 0%, rgba(255,255,255,0.07) 100%)"; }}
+                onMouseLeave={e => { e.currentTarget.style.borderColor = "rgba(212,175,55,0.3)"; e.currentTarget.style.background = "linear-gradient(135deg, rgba(212,175,55,0.05) 0%, rgba(255,255,255,0.04) 100%)"; }}
               >
                 {/* Corner accents */}
                 <div style={{ position: "absolute", top: 0, left: 0, width: 32, height: 32, borderTop: "1px solid #D4AF37", borderLeft: "1px solid #D4AF37", opacity: 0.6 }} />

@@ -23,14 +23,14 @@ export default function AboutContact({ onBack }) {
   const inputStyle = {
     width: "100%", padding: "12px 14px", borderRadius: "10px",
     border: "1px solid rgba(255,255,255,0.1)", background: "rgba(255,255,255,0.04)",
-    color: "#fff", fontFamily: "'DM Sans', sans-serif", fontSize: "14px",
+    color: "#fff", fontFamily: "'Inter', sans-serif", fontSize: "14px",
     outline: "none", transition: "border-color 0.2s", boxSizing: "border-box",
   };
 
   return (
-    <div style={{ width: "100%", minHeight: "100vh", overflowX: "hidden", background: "#080808", color: "#fff", fontFamily: "'DM Sans', sans-serif" }}>
+    <div style={{ width: "100%", minHeight: "100vh", overflowX: "hidden", background: "#080808", color: "#fff", fontFamily: "'Inter', sans-serif" }}>
       <nav style={{ position: "sticky", top: 0, zIndex: 90, display: "flex", alignItems: "center", justifyContent: "space-between", padding: "20px clamp(24px, 5vw, 80px)", background: "rgba(8,8,8,0.92)", backdropFilter: "blur(24px)", borderBottom: "1px solid rgba(255,255,255,0.05)" }}>
-        <div onClick={onBack} style={{ letterSpacing: "0.18em", color: "#D4AF37", cursor: "pointer", textTransform: "uppercase", fontFamily: "'Cormorant Garamond', serif", fontSize: "18px" }}>
+        <div onClick={onBack} style={{ letterSpacing: "0.18em", color: "#D4AF37", cursor: "pointer", textTransform: "uppercase", fontFamily: "'Outfit', serif", fontSize: "18px" }}>
           ✦ AI Surprise Planner
         </div>
         <button onClick={onBack} style={{ padding: "8px 20px", background: "none", border: "1px solid rgba(255,255,255,0.15)", color: "rgba(255,255,255,0.5)", fontSize: "12px", cursor: "pointer", fontFamily: "inherit", borderRadius: "6px" }}>← Back</button>
@@ -40,7 +40,7 @@ export default function AboutContact({ onBack }) {
 
         {/* About Section */}
         <div style={{ fontSize: "10px", letterSpacing: "0.3em", color: "#D4AF37", textTransform: "uppercase", marginBottom: "16px", opacity: 0.7 }}>About</div>
-        <h1 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "clamp(36px, 5vw, 52px)", fontWeight: "300", marginBottom: "24px" }}>
+        <h1 style={{ fontFamily: "'Outfit', serif", fontSize: "clamp(36px, 5vw, 52px)", fontWeight: "300", marginBottom: "24px" }}>
           Built with <span style={{ color: "#D4AF37", fontStyle: "italic" }}>love</span>, in India
         </h1>
         <p style={{ fontSize: "15px", color: "rgba(255,255,255,0.45)", lineHeight: "1.9", marginBottom: "40px" }}>
@@ -65,7 +65,7 @@ export default function AboutContact({ onBack }) {
             }}>
               <div style={{
                 width: "48px", height: "48px", borderRadius: "50%",
-                background: "linear-gradient(135deg, #D4AF37, #7B6EE8)",
+                background: "linear-gradient(135deg, #D4AF37, #FFFFFF)",
                 display: "flex", alignItems: "center", justifyContent: "center",
                 fontSize: "18px", fontWeight: "700", color: "#080808", marginBottom: "14px",
               }}>{person.name[0]}</div>
@@ -87,17 +87,17 @@ export default function AboutContact({ onBack }) {
         {/* Contact Section */}
         <div style={{ borderTop: "1px solid rgba(255,255,255,0.05)", paddingTop: "48px" }}>
           <div style={{ fontSize: "10px", letterSpacing: "0.3em", color: "#D4AF37", textTransform: "uppercase", marginBottom: "16px", opacity: 0.7 }}>Contact</div>
-          <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "clamp(28px, 4vw, 40px)", fontWeight: "300", marginBottom: "24px" }}>
+          <h2 style={{ fontFamily: "'Outfit', serif", fontSize: "clamp(28px, 4vw, 40px)", fontWeight: "300", marginBottom: "24px" }}>
             Get in <span style={{ color: "#D4AF37", fontStyle: "italic" }}>touch</span>
           </h2>
 
           {sent ? (
             <div style={{
               padding: "32px", borderRadius: "14px", textAlign: "center",
-              background: "rgba(29,179,117,0.08)", border: "1px solid rgba(29,179,117,0.2)",
+              background: "rgba(255,255,255,0.08)", border: "1px solid rgba(255,255,255,0.2)",
             }}>
               <div style={{ fontSize: "32px", marginBottom: "12px" }}>✉️</div>
-              <div style={{ fontSize: "16px", fontWeight: "600", color: "#1DB375", marginBottom: "8px" }}>Message ready!</div>
+              <div style={{ fontSize: "16px", fontWeight: "600", color: "#FFFFFF", marginBottom: "8px" }}>Message ready!</div>
               <p style={{ fontSize: "13px", color: "rgba(255,255,255,0.4)" }}>Your email client should have opened. We'll get back to you soon.</p>
             </div>
           ) : (
@@ -117,7 +117,7 @@ export default function AboutContact({ onBack }) {
               <button type="submit" disabled={sending || !form.name || !form.email || !form.message} style={{
                 padding: "14px", borderRadius: "10px", border: "none",
                 background: sending ? "rgba(212,175,55,0.3)" : "linear-gradient(135deg, #E8C84A, #D4AF37)",
-                color: "#080808", fontFamily: "'DM Sans', sans-serif", fontSize: "14px", fontWeight: "700",
+                color: "#080808", fontFamily: "'Inter', sans-serif", fontSize: "14px", fontWeight: "700",
                 cursor: sending ? "not-allowed" : "pointer", transition: "all 0.2s", letterSpacing: "0.03em",
               }}>
                 {sending ? "Sending..." : "Send message"}

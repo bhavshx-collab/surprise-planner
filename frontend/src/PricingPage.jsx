@@ -60,11 +60,11 @@ function FAQItem({ q, a }) {
   return (
     <div onClick={() => setOpen(o => !o)} style={{ borderBottom: "1px solid rgba(255,255,255,0.07)", cursor: "pointer", padding: "20px 0" }}>
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: "16px" }}>
-        <span style={{ fontSize: "15px", fontWeight: "400", color: open ? "#D4AF37" : "rgba(255,255,255,0.8)", fontFamily: "'DM Sans', sans-serif", transition: "color 0.2s" }}>{q}</span>
+        <span style={{ fontSize: "15px", fontWeight: "400", color: open ? "#D4AF37" : "rgba(255,255,255,0.8)", fontFamily: "'Inter', sans-serif", transition: "color 0.2s" }}>{q}</span>
         <span style={{ fontSize: "20px", color: "#D4AF37", flexShrink: 0, transform: open ? "rotate(45deg)" : "rotate(0)", transition: "transform 0.3s", lineHeight: 1 }}>+</span>
       </div>
       <div style={{ maxHeight: open ? "150px" : "0", overflow: "hidden", transition: "max-height 0.4s ease" }}>
-        <p style={{ fontSize: "14px", color: "rgba(255,255,255,0.4)", lineHeight: "1.8", fontFamily: "'DM Sans', sans-serif", marginTop: "12px", paddingRight: "32px" }}>{a}</p>
+        <p style={{ fontSize: "14px", color: "rgba(255,255,255,0.4)", lineHeight: "1.8", fontFamily: "'Inter', sans-serif", marginTop: "12px", paddingRight: "32px" }}>{a}</p>
       </div>
     </div>
   );
@@ -83,18 +83,16 @@ export default function PricingPage({ onBack, onUpgrade }) {
   };
 
   return (
-    <div style={{ minHeight: "100vh", background: "#080808", fontFamily: "'DM Sans', sans-serif", color: "#fff", position: "relative", overflow: "hidden" }}>
+    <div style={{ minHeight: "100vh", background: "#080808", fontFamily: "'Inter', sans-serif", color: "#fff", position: "relative", overflow: "hidden" }}>
 
       {/* BG orbs */}
       <div style={{ position: "fixed", inset: 0, pointerEvents: "none", zIndex: 0 }}>
-        <div style={{ position: "absolute", width: "800px", height: "800px", borderRadius: "50%", top: "-300px", left: "-200px", background: "radial-gradient(circle, rgba(123,110,232,0.09) 0%, transparent 65%)", animation: "orb1 14s ease-in-out infinite" }} />
-        <div style={{ position: "absolute", width: "600px", height: "600px", borderRadius: "50%", bottom: "-200px", right: "-150px", background: "radial-gradient(circle, rgba(212,175,55,0.07) 0%, transparent 65%)", animation: "orb2 18s ease-in-out infinite" }} />
       </div>
 
       <div style={{ position: "relative", zIndex: 1, maxWidth: "1200px", margin: "0 auto", padding: "clamp(40px, 6vh, 80px) clamp(24px, 5vw, 60px) clamp(60px, 8vh, 100px)" }}>
 
         {/* Back */}
-        <button onClick={onBack} style={{ background: "none", border: "none", color: "rgba(255,255,255,0.35)", fontSize: "13px", cursor: "pointer", fontFamily: "'DM Sans', sans-serif", letterSpacing: "0.05em", marginBottom: "48px", padding: 0, display: "flex", alignItems: "center", gap: "6px", transition: "color 0.2s" }}
+        <button onClick={onBack} style={{ background: "none", border: "none", color: "rgba(255,255,255,0.35)", fontSize: "13px", cursor: "pointer", fontFamily: "'Inter', sans-serif", letterSpacing: "0.05em", marginBottom: "48px", padding: 0, display: "flex", alignItems: "center", gap: "6px", transition: "color 0.2s" }}
           onMouseEnter={e => e.target.style.color = "rgba(255,255,255,0.7)"}
           onMouseLeave={e => e.target.style.color = "rgba(255,255,255,0.35)"}
         >← Back</button>
@@ -102,7 +100,7 @@ export default function PricingPage({ onBack, onUpgrade }) {
         {/* Header */}
         <div style={{ textAlign: "center", marginBottom: "72px" }}>
           <div style={{ display: "inline-block", fontSize: "10px", letterSpacing: "0.3em", color: "#D4AF37", textTransform: "uppercase", marginBottom: "20px", padding: "6px 16px", border: "1px solid rgba(212,175,55,0.2)", borderRadius: "40px", background: "rgba(212,175,55,0.04)" }}>Pricing</div>
-          <h1 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "clamp(40px, 5vw, 72px)", fontWeight: "300", lineHeight: "1.1", marginBottom: "20px" }}>
+          <h1 style={{ fontFamily: "'Outfit', serif", fontSize: "clamp(40px, 5vw, 72px)", fontWeight: "300", lineHeight: "1.1", marginBottom: "20px" }}>
             Simple, honest<br /><span style={{ color: "#D4AF37", fontStyle: "italic" }}>pricing.</span>
           </h1>
           <p style={{ fontSize: "16px", color: "rgba(255,255,255,0.35)", lineHeight: "1.8", maxWidth: "500px", margin: "0 auto" }}>
@@ -119,12 +117,12 @@ export default function PricingPage({ onBack, onUpgrade }) {
               border: plan.badge ? `1px solid ${plan.border}` : "none",
             }}>
               {plan.badge && (
-                <div style={{ position: "absolute", top: "-1px", left: "50%", transform: "translateX(-50%)", background: "#D4AF37", color: "#080808", fontSize: "10px", fontWeight: "700", letterSpacing: "0.15em", textTransform: "uppercase", padding: "5px 16px", fontFamily: "'DM Sans', sans-serif", whiteSpace: "nowrap" }}>{plan.badge}</div>
+                <div style={{ position: "absolute", top: "-1px", left: "50%", transform: "translateX(-50%)", background: "#D4AF37", color: "#080808", fontSize: "10px", fontWeight: "700", letterSpacing: "0.15em", textTransform: "uppercase", padding: "5px 16px", fontFamily: "'Inter', sans-serif", whiteSpace: "nowrap" }}>{plan.badge}</div>
               )}
 
               <div style={{ fontSize: "11px", letterSpacing: "0.2em", color: plan.accent, textTransform: "uppercase", marginBottom: "20px" }}>{plan.name}</div>
               <div style={{ display: "flex", alignItems: "baseline", gap: "4px", marginBottom: "6px" }}>
-                <span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "56px", fontWeight: "300", color: plan.accent, lineHeight: 1 }}>{plan.price}</span>
+                <span style={{ fontFamily: "'Outfit', serif", fontSize: "56px", fontWeight: "300", color: plan.accent, lineHeight: 1 }}>{plan.price}</span>
                 <span style={{ fontSize: "16px", color: `${plan.accent}60` }}>{plan.period}</span>
               </div>
               <div style={{ fontSize: "12px", color: "rgba(255,255,255,0.2)", marginBottom: "36px" }}>{plan.name === "Free" ? "Always free" : "Billed monthly · cancel anytime"}</div>
@@ -132,7 +130,7 @@ export default function PricingPage({ onBack, onUpgrade }) {
               <div style={{ borderTop: "1px solid rgba(255,255,255,0.06)", paddingTop: "28px", marginBottom: "36px" }}>
                 {plan.features.map(feat => (
                   <div key={feat.text} style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "14px", opacity: feat.available ? 1 : 0.3 }}>
-                    <span style={{ color: feat.available ? (plan.accent === "#D4AF37" ? "#D4AF37" : "#1DB375") : "rgba(255,255,255,0.2)", fontSize: "14px", flexShrink: 0 }}>
+                    <span style={{ color: feat.available ? (plan.accent === "#D4AF37" ? "#D4AF37" : "#FFFFFF") : "rgba(255,255,255,0.2)", fontSize: "14px", flexShrink: 0 }}>
                       {feat.available ? (plan.ctaStyle === "fill" ? "✦" : "✓") : "✕"}
                     </span>
                     <span style={{ fontSize: "14px", color: feat.available ? "rgba(255,255,255,0.65)" : "rgba(255,255,255,0.3)" }}>{feat.text}</span>
@@ -146,7 +144,7 @@ export default function PricingPage({ onBack, onUpgrade }) {
                 border: plan.ctaStyle === "fill" ? "none" : "1px solid rgba(255,255,255,0.15)",
                 color: plan.ctaStyle === "fill" ? "#080808" : "rgba(255,255,255,0.5)",
                 fontSize: "12px", letterSpacing: "0.12em", textTransform: "uppercase",
-                cursor: "pointer", fontFamily: "'DM Sans', sans-serif",
+                cursor: "pointer", fontFamily: "'Inter', sans-serif",
                 fontWeight: plan.ctaStyle === "fill" ? "700" : "400",
                 transition: "all 0.25s",
               }}
@@ -172,7 +170,7 @@ export default function PricingPage({ onBack, onUpgrade }) {
 
         {/* FAQ */}
         <div style={{ maxWidth: "700px", margin: "0 auto" }}>
-          <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "clamp(28px, 3vw, 40px)", fontWeight: "300", textAlign: "center", marginBottom: "40px" }}>
+          <h2 style={{ fontFamily: "'Outfit', serif", fontSize: "clamp(28px, 3vw, 40px)", fontWeight: "300", textAlign: "center", marginBottom: "40px" }}>
             Common questions
           </h2>
           {FAQS.map((faq, i) => <FAQItem key={i} {...faq} />)}

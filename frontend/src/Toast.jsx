@@ -1,9 +1,9 @@
 // Toast.jsx — Minimal toast notification (success/error/info)
 
 const COLORS = {
-  success: { bg: "rgba(29,179,117,0.15)", border: "rgba(29,179,117,0.35)", text: "#1DB375", icon: "✓" },
+  success: { bg: "rgba(255,255,255,0.15)", border: "rgba(255,255,255,0.35)", text: "#FFFFFF", icon: "✓" },
   error: { bg: "rgba(255,107,107,0.12)", border: "rgba(255,107,107,0.3)", text: "#ff6b6b", icon: "✕" },
-  info: { bg: "rgba(123,110,232,0.12)", border: "rgba(123,110,232,0.3)", text: "#9D93F0", icon: "ℹ" },
+  info: { bg: "rgba(255,255,255,0.12)", border: "rgba(255,255,255,0.3)", text: "#9D93F0", icon: "ℹ" },
 };
 
 export default function Toast({ message, type = "success", onClose }) {
@@ -19,7 +19,7 @@ export default function Toast({ message, type = "success", onClose }) {
         background: c.bg, border: `1px solid ${c.border}`,
         backdropFilter: "blur(20px)",
         boxShadow: "0 8px 32px rgba(0,0,0,0.4)",
-        fontFamily: "'DM Sans', sans-serif",
+        fontFamily: "'Inter', sans-serif",
         maxWidth: "90vw",
         animation: "fadeInUp 0.25s ease-out",
       }}

@@ -2,10 +2,10 @@ import { useEffect, useState, useRef } from "react";
 
 const FEATURES = [
   { icon: "✨", title: "AI-Crafted Plans", desc: "Tell us about the person. Get a deeply personal surprise idea, emotional message, and full execution timeline — in seconds.", accent: "#D4AF37", size: "large" },
-  { icon: "📅", title: "Before · During · After", desc: "A complete 3-phase timeline so nothing is left to chance.", accent: "#7B6EE8", size: "small" },
-  { icon: "💸", title: "Smart Budget Breakdown", desc: "Every rupee allocated intelligently based on your budget.", accent: "#1DB375", size: "small" },
+  { icon: "📅", title: "Before · During · After", desc: "A complete 3-phase timeline so nothing is left to chance.", accent: "#FFFFFF", size: "small" },
+  { icon: "💸", title: "Smart Budget Breakdown", desc: "Every rupee allocated intelligently based on your budget.", accent: "#FFFFFF", size: "small" },
   { icon: "🏪", title: "Local Vendor Matches", desc: "Florists, cafes, photographers — handpicked for your city and surprise type.", accent: "#D4AF37", size: "small" },
-  { icon: "🎁", title: "Interactive Reveal Link", desc: "Create a beautiful animated reveal page to share with your special person.", accent: "#7B6EE8", size: "small" },
+  { icon: "🎁", title: "Interactive Reveal Link", desc: "Create a beautiful animated reveal page to share with your special person.", accent: "#FFFFFF", size: "small" },
   { icon: "📸", title: "Memory Scrapbook", desc: "After the event, save photos and notes to relive the magic forever.", accent: "#E85D75", size: "large" },
 ];
 
@@ -37,7 +37,7 @@ function FAQItem({ q, a }) {
       }}
     >
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: "16px" }}>
-        <span style={{ fontSize: "16px", fontWeight: "400", color: open ? "#D4AF37" : "rgba(255,255,255,0.85)", fontFamily: "'DM Sans', sans-serif", transition: "color 0.2s", lineHeight: 1.4 }}>{q}</span>
+        <span style={{ fontSize: "16px", fontWeight: "400", color: open ? "#D4AF37" : "rgba(255,255,255,0.85)", fontFamily: "'Inter', sans-serif", transition: "color 0.2s", lineHeight: 1.4 }}>{q}</span>
         <span style={{ fontSize: "20px", color: "#D4AF37", flexShrink: 0, transform: open ? "rotate(45deg)" : "rotate(0deg)", transition: "transform 0.3s ease", lineHeight: 1 }}>+</span>
       </div>
       <div style={{
@@ -45,7 +45,7 @@ function FAQItem({ q, a }) {
         overflow: "hidden",
         transition: "max-height 0.4s ease",
       }}>
-        <p style={{ fontSize: "14px", color: "rgba(255,255,255,0.45)", lineHeight: "1.85", fontFamily: "'DM Sans', sans-serif", marginTop: "14px", paddingRight: "32px" }}>{a}</p>
+        <p style={{ fontSize: "14px", color: "rgba(255,255,255,0.45)", lineHeight: "1.85", fontFamily: "'Inter', sans-serif", marginTop: "14px", paddingRight: "32px" }}>{a}</p>
       </div>
     </div>
   );
@@ -70,27 +70,21 @@ export default function LandingPage({ onPlan, onVendor, onPricing, onAuth, onPri
   }, []);
 
   return (
-    <div style={{ width: "100vw", minHeight: "100vh", background: "#080808", color: "#fff", fontFamily: "'DM Sans', sans-serif", overflowX: "hidden", position: "relative" }}>
+    <div style={{ width: "100vw", minHeight: "100vh", background: "#080808", color: "#fff", fontFamily: "'Inter', sans-serif", overflowX: "hidden", position: "relative" }}>
 
-      {/* Mouse glow */}
-      <div style={{ position: "fixed", left: mousePos.x - 300, top: mousePos.y - 300, width: "600px", height: "600px", borderRadius: "50%", background: "radial-gradient(circle, rgba(123,110,232,0.07) 0%, transparent 70%)", pointerEvents: "none", zIndex: 0, transition: "left 0.9s ease, top 0.9s ease" }} />
-
-      {/* BG orbs */}
-      <div style={{ position: "fixed", inset: 0, pointerEvents: "none", zIndex: 0 }}>
-        <div style={{ position: "absolute", width: "900px", height: "900px", borderRadius: "50%", top: "-350px", left: "-250px", background: "radial-gradient(circle, rgba(123,110,232,0.10) 0%, transparent 65%)", animation: "orb1 12s ease-in-out infinite" }} />
-        <div style={{ position: "absolute", width: "700px", height: "700px", borderRadius: "50%", bottom: "-200px", right: "-150px", background: "radial-gradient(circle, rgba(212,175,55,0.07) 0%, transparent 65%)", animation: "orb2 16s ease-in-out infinite" }} />
-        <div style={{ position: "absolute", width: "500px", height: "500px", borderRadius: "50%", top: "60%", right: "15%", background: "radial-gradient(circle, rgba(232,93,117,0.05) 0%, transparent 65%)", animation: "orb3 9s ease-in-out infinite" }} />
-      </div>
+      {/* BG Image and Overlay */}
+      <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "110vh", backgroundImage: "url('/hero-bg.png')", backgroundSize: "cover", backgroundPosition: "center", zIndex: 0 }} />
+      <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "110vh", background: "linear-gradient(to bottom, rgba(5,5,5,0.3) 0%, rgba(5,5,5,0.8) 60%, #050505 100%)", zIndex: 0 }} />
 
       {/* Noise grain */}
-      <div style={{ position: "fixed", inset: 0, pointerEvents: "none", zIndex: 1, opacity: 0.035, backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`, backgroundSize: "180px" }} />
+      <div style={{ position: "fixed", inset: 0, pointerEvents: "none", zIndex: 1, opacity: 0.04, backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`, backgroundSize: "180px" }} />
 
       {/* Gold top line */}
       <div style={{ position: "fixed", top: 0, left: 0, right: 0, height: "1px", zIndex: 100, background: "linear-gradient(90deg, transparent 0%, #D4AF37 30%, #D4AF37 70%, transparent 100%)", opacity: visible ? 0.55 : 0, transition: "opacity 1.5s ease 0.3s" }} />
 
       {/* NAV */}
-      <nav style={{ position: "sticky", top: 0, zIndex: 90, display: "flex", alignItems: "center", justifyContent: "space-between", padding: "20px clamp(24px, 5vw, 80px)", background: "rgba(8,8,8,0.82)", backdropFilter: "blur(24px)", borderBottom: "1px solid rgba(255,255,255,0.05)", opacity: visible ? 1 : 0, transform: visible ? "translateY(0)" : "translateY(-20px)", transition: "all 0.8s ease 0.2s" }}>
-        <div style={{ letterSpacing: "0.18em", color: "#D4AF37", fontWeight: "400", textTransform: "uppercase", fontFamily: "'Cormorant Garamond', serif", fontSize: "18px" }}>
+      <nav style={{ position: "sticky", top: 0, zIndex: 90, display: "flex", alignItems: "center", justifyContent: "space-between", padding: "20px clamp(24px, 5vw, 80px)", background: "rgba(5,5,5,0.6)", backdropFilter: "blur(24px)", borderBottom: "1px solid rgba(255,255,255,0.05)", opacity: visible ? 1 : 0, transform: visible ? "translateY(0)" : "translateY(-20px)", transition: "all 0.8s ease 0.2s" }}>
+        <div style={{ letterSpacing: "0.18em", color: "#D4AF37", fontWeight: "400", textTransform: "uppercase", fontFamily: "'Outfit', serif", fontSize: "18px" }}>
           ✦ AI Surprise Planner
         </div>
 
@@ -102,11 +96,11 @@ export default function LandingPage({ onPlan, onVendor, onPricing, onAuth, onPri
               onMouseLeave={e => e.target.style.color = "rgba(255,255,255,0.38)"}
             >{label}</span>
           ))}
-          <button onClick={onAuth} style={{ padding: "9px 22px", background: "transparent", border: "1px solid rgba(212,175,55,0.5)", color: "#D4AF37", fontSize: "11px", letterSpacing: "0.14em", textTransform: "uppercase", fontFamily: "'DM Sans', sans-serif", fontWeight: "500", cursor: "pointer", transition: "all 0.25s" }}
+          <button onClick={onAuth} style={{ padding: "9px 22px", background: "transparent", border: "1px solid rgba(212,175,55,0.5)", color: "#D4AF37", fontSize: "11px", letterSpacing: "0.14em", textTransform: "uppercase", fontFamily: "'Inter', sans-serif", fontWeight: "500", cursor: "pointer", transition: "all 0.25s" }}
             onMouseEnter={e => { e.target.style.background = "#D4AF37"; e.target.style.color = "#080808"; }}
             onMouseLeave={e => { e.target.style.background = "transparent"; e.target.style.color = "#D4AF37"; }}
           >Sign in</button>
-          <button onClick={onPlan} style={{ padding: "9px 22px", background: "#D4AF37", border: "none", color: "#080808", fontSize: "11px", letterSpacing: "0.14em", textTransform: "uppercase", fontFamily: "'DM Sans', sans-serif", fontWeight: "700", cursor: "pointer", transition: "all 0.25s" }}
+          <button onClick={onPlan} style={{ padding: "9px 22px", background: "#D4AF37", border: "none", color: "#080808", fontSize: "11px", letterSpacing: "0.14em", textTransform: "uppercase", fontFamily: "'Inter', sans-serif", fontWeight: "700", cursor: "pointer", transition: "all 0.25s" }}
             onMouseEnter={e => { e.target.style.background = "#E8C84A"; e.target.style.transform = "translateY(-2px)"; }}
             onMouseLeave={e => { e.target.style.background = "#D4AF37"; e.target.style.transform = "translateY(0)"; }}
           >Plan free →</button>
@@ -123,7 +117,7 @@ export default function LandingPage({ onPlan, onVendor, onPricing, onAuth, onPri
         <div style={{ position: "fixed", top: 0, left: 0, right: 0, bottom: 0, background: "rgba(8,8,8,0.98)", zIndex: 85, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: "32px" }}>
           <button onClick={() => setMenuOpen(false)} style={{ position: "absolute", top: "24px", right: "24px", background: "none", border: "none", color: "#D4AF37", fontSize: "24px", cursor: "pointer" }}>✕</button>
           {[["Plan a Surprise", onPlan], ["Pricing", onPricing], ["For Business", onVendor], ["Sign In", onAuth]].map(([label, handler]) => (
-            <button key={label} onClick={() => { handler?.(); setMenuOpen(false); }} style={{ background: "none", border: "none", color: "rgba(255,255,255,0.85)", fontSize: "24px", fontFamily: "'Cormorant Garamond', serif", cursor: "pointer", letterSpacing: "0.05em" }}>{label}</button>
+            <button key={label} onClick={() => { handler?.(); setMenuOpen(false); }} style={{ background: "none", border: "none", color: "rgba(255,255,255,0.85)", fontSize: "24px", fontFamily: "'Outfit', serif", cursor: "pointer", letterSpacing: "0.05em" }}>{label}</button>
           ))}
         </div>
       )}
@@ -135,28 +129,28 @@ export default function LandingPage({ onPlan, onVendor, onPricing, onAuth, onPri
         <div style={{ transform: visible ? "translateX(0)" : "translateX(-40px)", transition: "transform 1.2s ease 0.5s" }}>
           <div style={{ display: "inline-flex", alignItems: "center", gap: "12px", marginBottom: "40px", padding: "6px 16px", border: "1px solid rgba(212,175,55,0.2)", borderRadius: "40px", background: "rgba(212,175,55,0.05)" }}>
             <div style={{ width: "6px", height: "6px", borderRadius: "50%", background: "#D4AF37", animation: "pulse 2s infinite" }} />
-            <span style={{ fontSize: "11px", letterSpacing: "0.22em", color: "#D4AF37", textTransform: "uppercase", fontFamily: "'DM Sans', sans-serif" }}>AI-powered · Free to start</span>
+            <span style={{ fontSize: "11px", letterSpacing: "0.22em", color: "#D4AF37", textTransform: "uppercase", fontFamily: "'Inter', sans-serif" }}>AI-powered · Free to start</span>
           </div>
 
-          <h1 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: "clamp(52px, 5.5vw, 90px)", fontWeight: "300", lineHeight: "1.0", letterSpacing: "-0.02em", marginBottom: "36px" }}>
+          <h1 style={{ fontFamily: "'Outfit', Georgia, serif", fontSize: "clamp(52px, 5.5vw, 90px)", fontWeight: "300", lineHeight: "1.0", letterSpacing: "-0.02em", marginBottom: "36px", textShadow: "0 4px 24px rgba(0,0,0,0.6)" }}>
             <span style={{ display: "block", color: "#fff" }}>Craft</span>
             <span style={{ display: "block", color: "#fff" }}>surprises</span>
             <span style={{ display: "block", color: "#D4AF37", fontStyle: "italic" }}>they'll never</span>
             <span style={{ display: "block", color: "#D4AF37", fontStyle: "italic" }}>forget.</span>
           </h1>
 
-          <p style={{ fontSize: "16px", color: "rgba(255,255,255,0.4)", lineHeight: "1.9", maxWidth: "440px", fontWeight: "300", marginBottom: "48px" }}>
+          <p style={{ fontSize: "16px", color: "rgba(255,255,255,0.7)", lineHeight: "1.9", maxWidth: "440px", fontWeight: "400", marginBottom: "48px", textShadow: "0 2px 12px rgba(0,0,0,0.8)" }}>
             Tell us about the person — their interests, your relationship, the occasion. Our AI crafts a deeply personal surprise plan with timeline, budget, and heartfelt message in seconds.
           </p>
 
           <div style={{ display: "flex", gap: "16px", alignItems: "center", flexWrap: "wrap" }}>
-            <button onClick={onPlan} style={{ padding: "16px 48px", background: "#D4AF37", border: "none", color: "#080808", fontSize: "12px", letterSpacing: "0.18em", textTransform: "uppercase", fontFamily: "'DM Sans', sans-serif", fontWeight: "700", cursor: "pointer", transition: "all 0.3s ease" }}
+            <button onClick={onPlan} style={{ padding: "16px 48px", background: "#D4AF37", border: "none", color: "#080808", fontSize: "12px", letterSpacing: "0.18em", textTransform: "uppercase", fontFamily: "'Inter', sans-serif", fontWeight: "700", cursor: "pointer", transition: "all 0.3s ease" }}
               onMouseEnter={e => { e.target.style.background = "#E8C84A"; e.target.style.transform = "translateY(-3px)"; e.target.style.boxShadow = "0 12px 32px rgba(212,175,55,0.28)"; }}
               onMouseLeave={e => { e.target.style.background = "#D4AF37"; e.target.style.transform = "translateY(0)"; e.target.style.boxShadow = "none"; }}
             >
               Start free — no login
             </button>
-            <span style={{ fontSize: "12px", color: "rgba(255,255,255,0.22)", fontFamily: "'DM Sans', sans-serif" }}>or</span>
+            <span style={{ fontSize: "12px", color: "rgba(255,255,255,0.22)", fontFamily: "'Inter', sans-serif" }}>or</span>
             <span onClick={onVendor} style={{ fontSize: "12px", color: "rgba(255,255,255,0.4)", cursor: "pointer", letterSpacing: "0.08em", textDecoration: "underline", textUnderlineOffset: "4px", transition: "color 0.2s" }}
               onMouseEnter={e => e.target.style.color = "rgba(255,255,255,0.8)"}
               onMouseLeave={e => e.target.style.color = "rgba(255,255,255,0.4)"}
@@ -167,8 +161,8 @@ export default function LandingPage({ onPlan, onVendor, onPricing, onAuth, onPri
           <div style={{ display: "flex", gap: "clamp(24px, 4vw, 56px)", marginTop: "64px", paddingTop: "40px", borderTop: "1px solid rgba(255,255,255,0.06)", flexWrap: "wrap" }}>
             {[["500+", "Surprises planned"], ["50+", "Vendors listed"], ["4.9★", "Average rating"], ["🇮🇳", "Made in India"]].map(([n, l]) => (
               <div key={l}>
-                <div style={{ fontSize: "clamp(22px, 3vw, 32px)", fontWeight: "300", color: "#D4AF37", letterSpacing: "0.05em", fontFamily: "'Cormorant Garamond', serif" }}>{n}</div>
-                <div style={{ fontSize: "10px", color: "rgba(255,255,255,0.25)", letterSpacing: "0.14em", textTransform: "uppercase", fontFamily: "'DM Sans', sans-serif", marginTop: "6px" }}>{l}</div>
+                <div style={{ fontSize: "clamp(22px, 3vw, 32px)", fontWeight: "300", color: "#D4AF37", letterSpacing: "0.05em", fontFamily: "'Outfit', serif" }}>{n}</div>
+                <div style={{ fontSize: "10px", color: "rgba(255,255,255,0.25)", letterSpacing: "0.14em", textTransform: "uppercase", fontFamily: "'Inter', sans-serif", marginTop: "6px" }}>{l}</div>
               </div>
             ))}
           </div>
@@ -183,9 +177,9 @@ export default function LandingPage({ onPlan, onVendor, onPricing, onAuth, onPri
           >
             <div style={{ position: "absolute", top: 0, right: 0, width: "40px", height: "40px", borderTop: "1px solid #D4AF37", borderRight: "1px solid #D4AF37", opacity: 0.3 }} />
             <div style={{ fontSize: "28px", marginBottom: "16px" }}>✨</div>
-            <div style={{ fontSize: "11px", letterSpacing: "0.2em", color: "#D4AF37", textTransform: "uppercase", fontFamily: "'DM Sans', sans-serif", marginBottom: "14px", opacity: 0.75 }}>For individuals</div>
-            <div style={{ fontSize: "clamp(20px, 2.5vw, 28px)", fontWeight: "300", color: "#fff", marginBottom: "12px", letterSpacing: "0.02em", fontFamily: "'Cormorant Garamond', serif" }}>Plan a surprise</div>
-            <p style={{ fontSize: "14px", color: "rgba(255,255,255,0.35)", lineHeight: "1.8", fontFamily: "'DM Sans', sans-serif", marginBottom: "24px" }}>
+            <div style={{ fontSize: "11px", letterSpacing: "0.2em", color: "#D4AF37", textTransform: "uppercase", fontFamily: "'Inter', sans-serif", marginBottom: "14px", opacity: 0.75 }}>For individuals</div>
+            <div style={{ fontSize: "clamp(20px, 2.5vw, 28px)", fontWeight: "300", color: "#fff", marginBottom: "12px", letterSpacing: "0.02em", fontFamily: "'Outfit', serif" }}>Plan a surprise</div>
+            <p style={{ fontSize: "14px", color: "rgba(255,255,255,0.35)", lineHeight: "1.8", fontFamily: "'Inter', sans-serif", marginBottom: "24px" }}>
               No account needed. Personalised plan, timeline, budget, and heartfelt message in seconds.
             </p>
             <div style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "11px", letterSpacing: "0.15em", color: "rgba(255,255,255,0.3)", textTransform: "uppercase" }}>
@@ -194,15 +188,15 @@ export default function LandingPage({ onPlan, onVendor, onPricing, onAuth, onPri
           </div>
 
           {/* Vendor card */}
-          <div onClick={onVendor} style={{ border: "1px solid rgba(123,110,232,0.18)", padding: "clamp(28px, 3vw, 44px)", cursor: "pointer", transition: "all 0.35s ease", background: "rgba(123,110,232,0.02)", position: "relative", overflow: "hidden" }}
-            onMouseEnter={e => { e.currentTarget.style.border = "1px solid rgba(123,110,232,0.45)"; e.currentTarget.style.background = "rgba(123,110,232,0.04)"; e.currentTarget.style.transform = "translateY(-4px)"; }}
-            onMouseLeave={e => { e.currentTarget.style.border = "1px solid rgba(123,110,232,0.18)"; e.currentTarget.style.background = "rgba(123,110,232,0.02)"; e.currentTarget.style.transform = "translateY(0)"; }}
+          <div onClick={onVendor} style={{ border: "1px solid rgba(255,255,255,0.18)", padding: "clamp(28px, 3vw, 44px)", cursor: "pointer", transition: "all 0.35s ease", background: "rgba(255,255,255,0.02)", position: "relative", overflow: "hidden" }}
+            onMouseEnter={e => { e.currentTarget.style.border = "1px solid rgba(255,255,255,0.45)"; e.currentTarget.style.background = "rgba(255,255,255,0.04)"; e.currentTarget.style.transform = "translateY(-4px)"; }}
+            onMouseLeave={e => { e.currentTarget.style.border = "1px solid rgba(255,255,255,0.18)"; e.currentTarget.style.background = "rgba(255,255,255,0.02)"; e.currentTarget.style.transform = "translateY(0)"; }}
           >
-            <div style={{ position: "absolute", top: 0, right: 0, width: "40px", height: "40px", borderTop: "1px solid #7B6EE8", borderRight: "1px solid #7B6EE8", opacity: 0.3 }} />
+            <div style={{ position: "absolute", top: 0, right: 0, width: "40px", height: "40px", borderTop: "1px solid #FFFFFF", borderRight: "1px solid #FFFFFF", opacity: 0.3 }} />
             <div style={{ fontSize: "28px", marginBottom: "16px" }}>🏪</div>
-            <div style={{ fontSize: "11px", letterSpacing: "0.2em", color: "#9b6bd4", textTransform: "uppercase", fontFamily: "'DM Sans', sans-serif", marginBottom: "14px" }}>For businesses</div>
-            <div style={{ fontSize: "clamp(20px, 2.5vw, 28px)", fontWeight: "300", color: "#fff", marginBottom: "12px", fontFamily: "'Cormorant Garamond', serif" }}>List my business</div>
-            <p style={{ fontSize: "14px", color: "rgba(255,255,255,0.35)", lineHeight: "1.8", fontFamily: "'DM Sans', sans-serif", marginBottom: "24px" }}>
+            <div style={{ fontSize: "11px", letterSpacing: "0.2em", color: "#9b6bd4", textTransform: "uppercase", fontFamily: "'Inter', sans-serif", marginBottom: "14px" }}>For businesses</div>
+            <div style={{ fontSize: "clamp(20px, 2.5vw, 28px)", fontWeight: "300", color: "#fff", marginBottom: "12px", fontFamily: "'Outfit', serif" }}>List my business</div>
+            <p style={{ fontSize: "14px", color: "rgba(255,255,255,0.35)", lineHeight: "1.8", fontFamily: "'Inter', sans-serif", marginBottom: "24px" }}>
               Reach people actively planning surprises in your city. Florists, cafes, photographers — free to list.
             </p>
             <div style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "11px", letterSpacing: "0.15em", color: "rgba(255,255,255,0.3)", textTransform: "uppercase" }}>
@@ -216,7 +210,7 @@ export default function LandingPage({ onPlan, onVendor, onPricing, onAuth, onPri
       <div style={{ position: "relative", zIndex: 10, borderTop: "1px solid rgba(255,255,255,0.05)", borderBottom: "1px solid rgba(255,255,255,0.05)", padding: "20px clamp(24px, 5vw, 80px)", background: "rgba(255,255,255,0.015)", backdropFilter: "blur(12px)" }}>
         <div style={{ maxWidth: "1400px", margin: "0 auto", display: "flex", alignItems: "center", justifyContent: "center", gap: "clamp(24px, 5vw, 64px)", flexWrap: "wrap" }}>
           {["🎉 500+ surprises planned", "🏪 50+ verified vendors", "⚡ Plans in under 30 seconds", "🔒 No credit card ever needed", "🇮🇳 Built in India"].map(item => (
-            <span key={item} style={{ fontSize: "12px", color: "rgba(255,255,255,0.3)", letterSpacing: "0.08em", fontFamily: "'DM Sans', sans-serif", whiteSpace: "nowrap" }}>{item}</span>
+            <span key={item} style={{ fontSize: "12px", color: "rgba(255,255,255,0.3)", letterSpacing: "0.08em", fontFamily: "'Inter', sans-serif", whiteSpace: "nowrap" }}>{item}</span>
           ))}
         </div>
       </div>
@@ -225,7 +219,7 @@ export default function LandingPage({ onPlan, onVendor, onPricing, onAuth, onPri
       <section style={{ position: "relative", zIndex: 10, maxWidth: "1400px", margin: "0 auto", padding: "clamp(60px, 8vh, 120px) clamp(24px, 5vw, 80px)" }}>
         <div style={{ textAlign: "center", marginBottom: "64px" }}>
           <div style={{ display: "inline-block", fontSize: "10px", letterSpacing: "0.3em", color: "#D4AF37", textTransform: "uppercase", marginBottom: "20px", opacity: 0.7 }}>What you get</div>
-          <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "clamp(36px, 4vw, 64px)", fontWeight: "300", lineHeight: "1.1", letterSpacing: "0.01em" }}>
+          <h2 style={{ fontFamily: "'Outfit', serif", fontSize: "clamp(36px, 4vw, 64px)", fontWeight: "300", lineHeight: "1.1", letterSpacing: "0.01em" }}>
             Everything you need to plan<br /><span style={{ color: "#D4AF37", fontStyle: "italic" }}>something extraordinary</span>
           </h2>
         </div>
@@ -245,7 +239,7 @@ export default function LandingPage({ onPlan, onVendor, onPricing, onAuth, onPri
               <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "1px", background: `linear-gradient(90deg, transparent, ${f.accent}40, transparent)`, opacity: 0 }} className="feature-line" />
               <div style={{ fontSize: "36px", marginBottom: "20px" }}>{f.icon}</div>
               <div style={{ fontSize: "16px", fontWeight: "500", color: "#fff", marginBottom: "12px", letterSpacing: "0.01em" }}>{f.title}</div>
-              <p style={{ fontSize: "14px", color: "rgba(255,255,255,0.35)", lineHeight: "1.8", fontFamily: "'DM Sans', sans-serif" }}>{f.desc}</p>
+              <p style={{ fontSize: "14px", color: "rgba(255,255,255,0.35)", lineHeight: "1.8", fontFamily: "'Inter', sans-serif" }}>{f.desc}</p>
               <div style={{ position: "absolute", bottom: "20px", right: "20px", width: "32px", height: "32px", borderRadius: "50%", background: `${f.accent}15`, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "14px" }}>{f.icon}</div>
             </div>
           ))}
@@ -255,7 +249,7 @@ export default function LandingPage({ onPlan, onVendor, onPricing, onAuth, onPri
       {/* ── HOW IT WORKS ── */}
       <section style={{ position: "relative", zIndex: 10, maxWidth: "1400px", margin: "0 auto", padding: "clamp(60px, 8vh, 100px) clamp(24px, 5vw, 80px)", borderTop: "1px solid rgba(255,255,255,0.05)" }}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", marginBottom: "72px", flexWrap: "wrap", gap: "24px" }}>
-          <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "clamp(36px, 4vw, 56px)", fontWeight: "300", lineHeight: "1.1" }}>
+          <h2 style={{ fontFamily: "'Outfit', serif", fontSize: "clamp(36px, 4vw, 56px)", fontWeight: "300", lineHeight: "1.1" }}>
             Three steps to<br /><span style={{ color: "#D4AF37", fontStyle: "italic" }}>something unforgettable</span>
           </h2>
           <p style={{ fontSize: "14px", color: "rgba(255,255,255,0.28)", maxWidth: "280px", lineHeight: "1.85", textAlign: "right" }}>
@@ -273,10 +267,10 @@ export default function LandingPage({ onPlan, onVendor, onPricing, onAuth, onPri
               onMouseEnter={e => e.currentTarget.style.background = "#0d0d0d"}
               onMouseLeave={e => e.currentTarget.style.background = "#080808"}
             >
-              <div style={{ fontSize: "11px", letterSpacing: "0.28em", color: "#D4AF37", marginBottom: "24px", fontFamily: "'DM Sans', sans-serif", opacity: 0.65 }}>{s.n}</div>
+              <div style={{ fontSize: "11px", letterSpacing: "0.28em", color: "#D4AF37", marginBottom: "24px", fontFamily: "'Inter', sans-serif", opacity: 0.65 }}>{s.n}</div>
               <div style={{ fontSize: "36px", marginBottom: "20px" }}>{s.icon}</div>
-              <div style={{ fontSize: "clamp(18px, 2vw, 24px)", fontWeight: "300", color: "#fff", marginBottom: "16px", letterSpacing: "0.02em", fontFamily: "'Cormorant Garamond', serif" }}>{s.title}</div>
-              <p style={{ fontSize: "14px", color: "rgba(255,255,255,0.32)", lineHeight: "1.9", fontFamily: "'DM Sans', sans-serif" }}>{s.desc}</p>
+              <div style={{ fontSize: "clamp(18px, 2vw, 24px)", fontWeight: "300", color: "#fff", marginBottom: "16px", letterSpacing: "0.02em", fontFamily: "'Outfit', serif" }}>{s.title}</div>
+              <p style={{ fontSize: "14px", color: "rgba(255,255,255,0.32)", lineHeight: "1.9", fontFamily: "'Inter', sans-serif" }}>{s.desc}</p>
             </div>
           ))}
         </div>
@@ -287,7 +281,7 @@ export default function LandingPage({ onPlan, onVendor, onPricing, onAuth, onPri
         <div style={{ maxWidth: "1400px", margin: "0 auto" }}>
           <div style={{ textAlign: "center", marginBottom: "56px" }}>
             <div style={{ fontSize: "10px", letterSpacing: "0.3em", color: "#D4AF37", textTransform: "uppercase", marginBottom: "16px", opacity: 0.7 }}>What people say</div>
-            <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "clamp(32px, 3.5vw, 52px)", fontWeight: "300", lineHeight: "1.1" }}>
+            <h2 style={{ fontFamily: "'Outfit', serif", fontSize: "clamp(32px, 3.5vw, 52px)", fontWeight: "300", lineHeight: "1.1" }}>
               Real moments, <span style={{ color: "#D4AF37", fontStyle: "italic" }}>real magic</span>
             </h2>
           </div>
@@ -300,11 +294,11 @@ export default function LandingPage({ onPlan, onVendor, onPricing, onAuth, onPri
                 <div style={{ display: "flex", gap: "4px", marginBottom: "20px" }}>
                   {Array(t.stars).fill(0).map((_, si) => <span key={si} style={{ color: "#D4AF37", fontSize: "14px" }}>★</span>)}
                 </div>
-                <p style={{ fontSize: "clamp(14px, 1.6vw, 16px)", color: "rgba(255,255,255,0.65)", lineHeight: "1.9", fontFamily: "'Cormorant Garamond', serif", fontStyle: "italic", fontWeight: "300", marginBottom: "28px", letterSpacing: "0.01em" }}>
+                <p style={{ fontSize: "clamp(14px, 1.6vw, 16px)", color: "rgba(255,255,255,0.65)", lineHeight: "1.9", fontFamily: "'Outfit', serif", fontStyle: "italic", fontWeight: "300", marginBottom: "28px", letterSpacing: "0.01em" }}>
                   "{t.quote}"
                 </p>
                 <div style={{ display: "flex", alignItems: "center", gap: "14px" }}>
-                  <div style={{ width: "40px", height: "40px", borderRadius: "50%", background: "linear-gradient(135deg, #D4AF37, #7B6EE8)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "14px", fontWeight: "700", color: "#080808", flexShrink: 0 }}>{t.avatar}</div>
+                  <div style={{ width: "40px", height: "40px", borderRadius: "50%", background: "linear-gradient(135deg, #D4AF37, #FFFFFF)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "14px", fontWeight: "700", color: "#080808", flexShrink: 0 }}>{t.avatar}</div>
                   <div>
                     <div style={{ fontSize: "13px", fontWeight: "600", color: "rgba(255,255,255,0.8)" }}>{t.name}</div>
                     <div style={{ fontSize: "11px", color: "rgba(255,255,255,0.28)", letterSpacing: "0.08em" }}>{t.city}</div>
@@ -320,7 +314,7 @@ export default function LandingPage({ onPlan, onVendor, onPricing, onAuth, onPri
       <section style={{ position: "relative", zIndex: 10, maxWidth: "1400px", margin: "0 auto", padding: "clamp(60px, 8vh, 120px) clamp(24px, 5vw, 80px)" }}>
         <div style={{ textAlign: "center", marginBottom: "64px" }}>
           <div style={{ fontSize: "10px", letterSpacing: "0.3em", color: "#D4AF37", textTransform: "uppercase", marginBottom: "16px", opacity: 0.7 }}>Pricing</div>
-          <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "clamp(32px, 4vw, 56px)", fontWeight: "300", lineHeight: "1.1", marginBottom: "16px" }}>
+          <h2 style={{ fontFamily: "'Outfit', serif", fontSize: "clamp(32px, 4vw, 56px)", fontWeight: "300", lineHeight: "1.1", marginBottom: "16px" }}>
             Start free. <span style={{ color: "#D4AF37", fontStyle: "italic" }}>Upgrade when ready.</span>
           </h2>
           <p style={{ fontSize: "15px", color: "rgba(255,255,255,0.35)", lineHeight: "1.8", maxWidth: "480px", margin: "0 auto" }}>No credit card needed. Generate unlimited plans for free. Go Pro for the full experience.</p>
@@ -330,15 +324,15 @@ export default function LandingPage({ onPlan, onVendor, onPricing, onAuth, onPri
           {/* Free */}
           <div style={{ background: "#080808", padding: "clamp(32px, 4vw, 52px)" }}>
             <div style={{ fontSize: "11px", letterSpacing: "0.2em", color: "rgba(255,255,255,0.3)", textTransform: "uppercase", marginBottom: "16px" }}>Free</div>
-            <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "48px", fontWeight: "300", color: "#fff", marginBottom: "8px" }}>₹0</div>
+            <div style={{ fontFamily: "'Outfit', serif", fontSize: "48px", fontWeight: "300", color: "#fff", marginBottom: "8px" }}>₹0</div>
             <div style={{ fontSize: "12px", color: "rgba(255,255,255,0.25)", marginBottom: "36px" }}>Always free</div>
             {["Unlimited AI plans", "Share plans via link", "3 saved plans", "Vendor directory access", "Reveal link"].map(feat => (
               <div key={feat} style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "14px" }}>
-                <span style={{ color: "#1DB375", fontSize: "14px" }}>✓</span>
+                <span style={{ color: "#FFFFFF", fontSize: "14px" }}>✓</span>
                 <span style={{ fontSize: "14px", color: "rgba(255,255,255,0.5)" }}>{feat}</span>
               </div>
             ))}
-            <button onClick={onPlan} style={{ width: "100%", marginTop: "36px", padding: "14px", border: "1px solid rgba(255,255,255,0.12)", background: "none", color: "rgba(255,255,255,0.55)", fontSize: "12px", letterSpacing: "0.12em", textTransform: "uppercase", cursor: "pointer", fontFamily: "'DM Sans', sans-serif", transition: "all 0.2s" }}
+            <button onClick={onPlan} style={{ width: "100%", marginTop: "36px", padding: "14px", border: "1px solid rgba(255,255,255,0.12)", background: "none", color: "rgba(255,255,255,0.55)", fontSize: "12px", letterSpacing: "0.12em", textTransform: "uppercase", cursor: "pointer", fontFamily: "'Inter', sans-serif", transition: "all 0.2s" }}
               onMouseEnter={e => { e.target.style.borderColor = "rgba(255,255,255,0.3)"; e.target.style.color = "#fff"; }}
               onMouseLeave={e => { e.target.style.borderColor = "rgba(255,255,255,0.12)"; e.target.style.color = "rgba(255,255,255,0.55)"; }}
             >Get started free</button>
@@ -346,9 +340,9 @@ export default function LandingPage({ onPlan, onVendor, onPricing, onAuth, onPri
 
           {/* Pro */}
           <div style={{ background: "rgba(212,175,55,0.04)", padding: "clamp(32px, 4vw, 52px)", position: "relative", border: "1px solid rgba(212,175,55,0.22)" }}>
-            <div style={{ position: "absolute", top: "-1px", left: "50%", transform: "translateX(-50%)", background: "#D4AF37", color: "#080808", fontSize: "10px", fontWeight: "700", letterSpacing: "0.15em", textTransform: "uppercase", padding: "5px 16px", fontFamily: "'DM Sans', sans-serif" }}>Most popular</div>
+            <div style={{ position: "absolute", top: "-1px", left: "50%", transform: "translateX(-50%)", background: "#D4AF37", color: "#080808", fontSize: "10px", fontWeight: "700", letterSpacing: "0.15em", textTransform: "uppercase", padding: "5px 16px", fontFamily: "'Inter', sans-serif" }}>Most popular</div>
             <div style={{ fontSize: "11px", letterSpacing: "0.2em", color: "#D4AF37", textTransform: "uppercase", marginBottom: "16px" }}>Pro</div>
-            <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "48px", fontWeight: "300", color: "#D4AF37", marginBottom: "8px" }}>₹299<span style={{ fontSize: "20px", color: "rgba(212,175,55,0.5)" }}>/mo</span></div>
+            <div style={{ fontFamily: "'Outfit', serif", fontSize: "48px", fontWeight: "300", color: "#D4AF37", marginBottom: "8px" }}>₹299<span style={{ fontSize: "20px", color: "rgba(212,175,55,0.5)" }}>/mo</span></div>
             <div style={{ fontSize: "12px", color: "rgba(212,175,55,0.4)", marginBottom: "36px" }}>Everything in Free, plus</div>
             {["PDF plan export", "Unlimited saved plans", "Priority vendor matching", "Memory Scrapbook", "Custom reveal pages", "Early access to new features"].map(feat => (
               <div key={feat} style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "14px" }}>
@@ -356,7 +350,7 @@ export default function LandingPage({ onPlan, onVendor, onPricing, onAuth, onPri
                 <span style={{ fontSize: "14px", color: "rgba(255,255,255,0.65)" }}>{feat}</span>
               </div>
             ))}
-            <button onClick={onPricing} style={{ width: "100%", marginTop: "36px", padding: "14px", border: "none", background: "#D4AF37", color: "#080808", fontSize: "12px", letterSpacing: "0.14em", textTransform: "uppercase", cursor: "pointer", fontFamily: "'DM Sans', sans-serif", fontWeight: "700", transition: "all 0.25s" }}
+            <button onClick={onPricing} style={{ width: "100%", marginTop: "36px", padding: "14px", border: "none", background: "#D4AF37", color: "#080808", fontSize: "12px", letterSpacing: "0.14em", textTransform: "uppercase", cursor: "pointer", fontFamily: "'Inter', sans-serif", fontWeight: "700", transition: "all 0.25s" }}
               onMouseEnter={e => { e.target.style.background = "#E8C84A"; e.target.style.transform = "translateY(-2px)"; e.target.style.boxShadow = "0 8px 24px rgba(212,175,55,0.3)"; }}
               onMouseLeave={e => { e.target.style.background = "#D4AF37"; e.target.style.transform = "translateY(0)"; e.target.style.boxShadow = "none"; }}
             >Go Pro with Razorpay →</button>
@@ -368,7 +362,7 @@ export default function LandingPage({ onPlan, onVendor, onPricing, onAuth, onPri
       <section style={{ position: "relative", zIndex: 10, maxWidth: "900px", margin: "0 auto", padding: "clamp(40px, 6vh, 80px) clamp(24px, 5vw, 80px)", borderTop: "1px solid rgba(255,255,255,0.05)" }}>
         <div style={{ textAlign: "center", marginBottom: "56px" }}>
           <div style={{ fontSize: "10px", letterSpacing: "0.3em", color: "#D4AF37", textTransform: "uppercase", marginBottom: "16px", opacity: 0.7 }}>FAQ</div>
-          <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "clamp(32px, 3.5vw, 48px)", fontWeight: "300" }}>Questions? <span style={{ color: "#D4AF37", fontStyle: "italic" }}>We've got answers.</span></h2>
+          <h2 style={{ fontFamily: "'Outfit', serif", fontSize: "clamp(32px, 3.5vw, 48px)", fontWeight: "300" }}>Questions? <span style={{ color: "#D4AF37", fontStyle: "italic" }}>We've got answers.</span></h2>
         </div>
         {FAQS.map((faq, i) => <FAQItem key={i} {...faq} />)}
       </section>
@@ -376,12 +370,12 @@ export default function LandingPage({ onPlan, onVendor, onPricing, onAuth, onPri
       {/* ── FINAL CTA ── */}
       <section style={{ position: "relative", zIndex: 10, background: "#D4AF37", padding: "clamp(56px, 8vh, 88px) clamp(24px, 5vw, 80px)", display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: "32px" }}>
         <div>
-          <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "clamp(32px, 4vw, 52px)", fontWeight: "300", color: "#080808", lineHeight: "1.1", marginBottom: "12px" }}>
+          <div style={{ fontFamily: "'Outfit', serif", fontSize: "clamp(32px, 4vw, 52px)", fontWeight: "300", color: "#080808", lineHeight: "1.1", marginBottom: "12px" }}>
             Someone special<br />deserves this.
           </div>
-          <div style={{ fontSize: "14px", color: "rgba(8,8,8,0.5)", fontFamily: "'DM Sans', sans-serif" }}>Free to use. No account. Start in 30 seconds.</div>
+          <div style={{ fontSize: "14px", color: "rgba(8,8,8,0.5)", fontFamily: "'Inter', sans-serif" }}>Free to use. No account. Start in 30 seconds.</div>
         </div>
-        <button onClick={onPlan} style={{ padding: "18px 56px", background: "#080808", border: "none", color: "#D4AF37", fontSize: "12px", letterSpacing: "0.18em", textTransform: "uppercase", fontFamily: "'DM Sans', sans-serif", fontWeight: "700", cursor: "pointer", flexShrink: 0, transition: "all 0.25s" }}
+        <button onClick={onPlan} style={{ padding: "18px 56px", background: "#080808", border: "none", color: "#D4AF37", fontSize: "12px", letterSpacing: "0.18em", textTransform: "uppercase", fontFamily: "'Inter', sans-serif", fontWeight: "700", cursor: "pointer", flexShrink: 0, transition: "all 0.25s" }}
           onMouseEnter={e => { e.target.style.background = "#1a1a1a"; e.target.style.transform = "translateY(-2px)"; }}
           onMouseLeave={e => { e.target.style.background = "#080808"; e.target.style.transform = "translateY(0)"; }}
         >Plan a surprise now →</button>
@@ -392,7 +386,7 @@ export default function LandingPage({ onPlan, onVendor, onPricing, onAuth, onPri
         <div style={{ maxWidth: "1400px", margin: "0 auto" }}>
           <div style={{ display: "grid", gridTemplateColumns: "2fr 1fr 1fr 1fr", gap: "48px", marginBottom: "56px" }} className="lp-footer-grid">
             <div>
-              <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "20px", color: "#D4AF37", marginBottom: "16px", letterSpacing: "0.05em" }}>✦ AI Surprise Planner</div>
+              <div style={{ fontFamily: "'Outfit', serif", fontSize: "20px", color: "#D4AF37", marginBottom: "16px", letterSpacing: "0.05em" }}>✦ AI Surprise Planner</div>
               <p style={{ fontSize: "13px", color: "rgba(255,255,255,0.28)", lineHeight: "1.85", maxWidth: "260px" }}>The AI-powered platform for planning deeply personal surprises. Built with love in India.</p>
             </div>
             {[

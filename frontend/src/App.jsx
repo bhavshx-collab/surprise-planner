@@ -163,8 +163,8 @@ export default function App() {
       }
       // 🎉 Confetti celebration!
       setTimeout(() => {
-        confetti({ particleCount: 120, spread: 80, origin: { y: 0.5 }, colors: ["#D4AF37", "#E8C84A", "#7B6EE8", "#9D93F0", "#fff"] });
-        setTimeout(() => confetti({ particleCount: 60, spread: 120, origin: { y: 0.4 }, colors: ["#D4AF37", "#fff", "#1DB375"] }), 350);
+        confetti({ particleCount: 120, spread: 80, origin: { y: 0.5 }, colors: ["#D4AF37", "#E8C84A", "#FFFFFF", "#9D93F0", "#fff"] });
+        setTimeout(() => confetti({ particleCount: 60, spread: 120, origin: { y: 0.4 }, colors: ["#D4AF37", "#fff", "#FFFFFF"] }), 350);
       }, 200);
     } catch (err) {
       showToast("Something went wrong. Please try again.", "error");
@@ -352,7 +352,7 @@ export default function App() {
             </div>
             {/* Desktop nav */}
             <div className="navbar-right navbar-desktop">
-              <button className="nav-btn" onClick={() => setView("social")} style={{ color: "#1DB375", borderColor: "rgba(29,179,117,0.3)" }}>🌿 Adventures</button>
+              <button className="nav-btn" onClick={() => setView("social")} style={{ color: "#FFFFFF", borderColor: "rgba(255,255,255,0.3)" }}>🌿 Adventures</button>
               <button className="nav-btn" onClick={() => setView("gallery")}>Inspiration</button>
               <button className="nav-btn" onClick={() => setView("vendors")}>Vendors</button>
               <button className="nav-btn" onClick={() => setView("pricing")}>Pricing</button>
@@ -379,13 +379,13 @@ export default function App() {
                         ["✦ List my business", () => setView("vendorsignup")],
                         ...(user.email === "bhaveshkumawat330@gmail.com" ? [["⚙️ Admin panel", () => setView("admin")]] : []),
                       ].map(([label, action]) => (
-                        <button key={label} onClick={() => { action(); setShowMenu(false); }} style={{ display: "block", width: "100%", padding: "9px 12px", background: "none", border: "none", borderRadius: "8px", fontSize: "13px", color: "rgba(255,255,255,0.7)", cursor: "pointer", textAlign: "left", fontFamily: "'DM Sans', sans-serif", transition: "all 0.15s" }}
+                        <button key={label} onClick={() => { action(); setShowMenu(false); }} style={{ display: "block", width: "100%", padding: "9px 12px", background: "none", border: "none", borderRadius: "8px", fontSize: "13px", color: "rgba(255,255,255,0.7)", cursor: "pointer", textAlign: "left", fontFamily: "'Inter', sans-serif", transition: "all 0.15s" }}
                           onMouseEnter={e => { e.target.style.background = "rgba(255,255,255,0.06)"; e.target.style.color = "#fff"; }}
                           onMouseLeave={e => { e.target.style.background = "none"; e.target.style.color = "rgba(255,255,255,0.7)"; }}
                         >{label}</button>
                       ))}
                       <div style={{ borderTop: "1px solid rgba(255,255,255,0.07)", marginTop: "4px", paddingTop: "4px" }}>
-                        <button onClick={() => { supabase.auth.signOut(); setShowMenu(false); }} style={{ display: "block", width: "100%", padding: "9px 12px", background: "none", border: "none", borderRadius: "8px", fontSize: "13px", color: "#ff6b6b", cursor: "pointer", textAlign: "left", fontFamily: "'DM Sans', sans-serif" }}>Sign out</button>
+                        <button onClick={() => { supabase.auth.signOut(); setShowMenu(false); }} style={{ display: "block", width: "100%", padding: "9px 12px", background: "none", border: "none", borderRadius: "8px", fontSize: "13px", color: "#ff6b6b", cursor: "pointer", textAlign: "left", fontFamily: "'Inter', sans-serif" }}>Sign out</button>
                       </div>
                     </div>
                   )}
@@ -519,8 +519,8 @@ export default function App() {
                     onClick={() => setConciergeMode(true)}
                     style={{
                       width: "100%", padding: "12px 16px", borderRadius: "10px",
-                      border: "1px solid rgba(123,110,232,0.35)",
-                      background: "rgba(123,110,232,0.08)",
+                      border: "1px solid rgba(255,255,255,0.35)",
+                      background: "rgba(255,255,255,0.08)",
                       color: "#9D93F0", fontFamily: "DM Sans, sans-serif",
                       fontSize: "13px", fontWeight: "600", cursor: "pointer",
                       display: "flex", alignItems: "center", justifyContent: "center", gap: "8px",

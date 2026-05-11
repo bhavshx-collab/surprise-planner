@@ -3,20 +3,18 @@ export default function NotFound({ onHome }) {
   return (
     <div style={{
       width: "100vw", minHeight: "100vh", background: "#080808", color: "#fff",
-      fontFamily: "'DM Sans', sans-serif",
+      fontFamily: "'Inter', sans-serif",
       display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center",
       textAlign: "center", padding: "40px 24px", position: "relative", overflow: "hidden",
     }}>
       {/* Background orbs */}
-      <div style={{ position: "absolute", width: "600px", height: "600px", borderRadius: "50%", top: "-200px", left: "-200px", background: "radial-gradient(circle, rgba(123,110,232,0.08) 0%, transparent 65%)", animation: "orb1 12s ease-in-out infinite" }} />
-      <div style={{ position: "absolute", width: "500px", height: "500px", borderRadius: "50%", bottom: "-150px", right: "-150px", background: "radial-gradient(circle, rgba(212,175,55,0.06) 0%, transparent 65%)", animation: "orb2 16s ease-in-out infinite" }} />
 
       <div style={{ position: "relative", zIndex: 10 }}>
         <div style={{
-          fontFamily: "'Cormorant Garamond', serif",
+          fontFamily: "'Outfit', serif",
           fontSize: "clamp(100px, 15vw, 180px)",
           fontWeight: "300", lineHeight: 1,
-          background: "linear-gradient(135deg, #D4AF37 0%, #7B6EE8 50%, #D4AF37 100%)",
+          background: "linear-gradient(135deg, #D4AF37 0%, #FFFFFF 50%, #D4AF37 100%)",
           WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent",
           marginBottom: "16px",
           animation: "shimmer 3s ease-in-out infinite",
@@ -26,7 +24,7 @@ export default function NotFound({ onHome }) {
         </div>
 
         <h1 style={{
-          fontFamily: "'Cormorant Garamond', serif", fontSize: "clamp(24px, 4vw, 36px)",
+          fontFamily: "'Outfit', serif", fontSize: "clamp(24px, 4vw, 36px)",
           fontWeight: "300", marginBottom: "16px", color: "rgba(255,255,255,0.85)",
         }}>
           This surprise doesn't exist <span style={{ color: "#D4AF37", fontStyle: "italic" }}>yet</span>
@@ -39,7 +37,7 @@ export default function NotFound({ onHome }) {
         <button onClick={onHome} style={{
           padding: "14px 40px", background: "#D4AF37", border: "none",
           color: "#080808", fontSize: "12px", letterSpacing: "0.14em",
-          textTransform: "uppercase", fontFamily: "'DM Sans', sans-serif",
+          textTransform: "uppercase", fontFamily: "'Inter', sans-serif",
           fontWeight: "700", cursor: "pointer", transition: "all 0.25s",
         }}
           onMouseEnter={e => { e.target.style.background = "#E8C84A"; e.target.style.transform = "translateY(-2px)"; e.target.style.boxShadow = "0 8px 24px rgba(212,175,55,0.3)"; }}

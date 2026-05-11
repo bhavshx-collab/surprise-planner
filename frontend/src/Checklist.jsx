@@ -57,7 +57,7 @@ export default function Checklist({ plan, planId, user }) {
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "10px" }}>
         <div style={{ fontSize: "13px", color: "var(--text-2)" }}>{doneCount} of {allSteps.length} steps done</div>
         <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-          {isLive && <span style={{ fontSize: "10px", fontWeight: "700", color: "var(--green)", background: "rgba(29,179,117,0.12)", border: "1px solid rgba(29,179,117,0.25)", padding: "2px 8px", borderRadius: "20px", letterSpacing: "0.06em" }}>● LIVE</span>}
+          {isLive && <span style={{ fontSize: "10px", fontWeight: "700", color: "var(--green)", background: "rgba(255,255,255,0.12)", border: "1px solid rgba(255,255,255,0.25)", padding: "2px 8px", borderRadius: "20px", letterSpacing: "0.06em" }}>● LIVE</span>}
           <div style={{ fontSize: "13px", fontWeight: "700", color: allDone ? "var(--green)" : "var(--gold)" }}>{percent}%</div>
         </div>
       </div>
@@ -77,7 +77,7 @@ export default function Checklist({ plan, planId, user }) {
         {allDone && (
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0 }}
-            style={{ background: "linear-gradient(135deg, rgba(29,179,117,0.15), rgba(29,179,117,0.08))", border: "1px solid rgba(29,179,117,0.3)", borderRadius: "12px", padding: "16px", marginBottom: "16px", textAlign: "center" }}
+            style={{ background: "linear-gradient(135deg, rgba(255,255,255,0.15), rgba(255,255,255,0.08))", border: "1px solid rgba(255,255,255,0.3)", borderRadius: "12px", padding: "16px", marginBottom: "16px", textAlign: "center" }}
           >
             <div style={{ fontSize: "24px", marginBottom: "6px" }}>🎉</div>
             <div style={{ fontWeight: "700", fontSize: "14px", color: "var(--green)" }}>You did it! The surprise is ready!</div>
