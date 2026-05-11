@@ -257,10 +257,41 @@ body {
 }
 .whatsapp-pro-btn:hover { background: #20BA56; transform: translateY(-2px); }
 
+/* ── MOBILE HAMBURGER NAV ── */
+.navbar-hamburger {
+  display: none;
+  background: none; border: none; color: var(--accent-primary); font-size: 22px;
+  cursor: pointer; padding: 4px 8px; line-height: 1; font-family: inherit;
+}
+.mobile-nav-overlay {
+  position: fixed; inset: 0; background: rgba(0,0,0,0.6);
+  backdrop-filter: blur(8px); z-index: 150;
+  animation: fadeIn 0.2s ease;
+}
+.mobile-nav-menu {
+  position: fixed; top: 0; right: 0; bottom: 0; width: 280px; max-width: 85vw;
+  background: rgba(5,5,5,0.98); border-left: 1px solid var(--border);
+  padding: 80px 20px 40px; display: flex; flex-direction: column; gap: 4px;
+  animation: slideInRight 0.25s ease;
+  overflow-y: auto;
+}
+.mobile-nav-item {
+  display: block; width: 100%; padding: 13px 16px; background: none;
+  border: none; border-radius: 10px; font-size: 15px;
+  color: var(--text-2); cursor: pointer; text-align: left;
+  font-family: 'Inter', sans-serif; transition: all 0.15s; text-transform: uppercase; letter-spacing: 0.05em;
+}
+.mobile-nav-item:hover { background: var(--bg-2); color: var(--text-1); }
+
+@keyframes slideInRight { from { transform: translateX(100%); } to { transform: translateX(0); } }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
 /* ── MOBILE RESPONSIVENESS ── */
 @media (max-width: 768px) {
   .app { padding: 0 16px 60px; }
   .navbar { padding: 16px 20px; }
+  .navbar-right { display: none !important; }
+  .navbar-hamburger { display: block; }
   .card { padding: 1.5rem; }
   .field-row, .nav-row.two, .action-grid { grid-template-columns: 1fr; }
   .hero h1 { font-size: 32px; }

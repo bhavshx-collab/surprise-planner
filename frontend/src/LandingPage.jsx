@@ -89,7 +89,7 @@ export default function LandingPage({ onPlan, onVendor, onPricing, onAuth, onPri
         </div>
 
         {/* Desktop nav */}
-        <div className="lp-nav-desktop" style={{ display: "flex", alignItems: "center", gap: "40px" }}>
+        <div className="navbar-right" style={{ display: "flex", alignItems: "center", gap: "40px" }}>
           {[["How it works", null], ["Pricing", onPricing], ["For Business", onVendor]].map(([label, handler]) => (
             <span key={label} onClick={handler} style={{ fontSize: "12px", letterSpacing: "0.1em", color: "rgba(255,255,255,0.38)", cursor: "pointer", textTransform: "uppercase", transition: "color 0.2s" }}
               onMouseEnter={e => e.target.style.color = "rgba(255,255,255,0.8)"}
@@ -107,7 +107,7 @@ export default function LandingPage({ onPlan, onVendor, onPricing, onAuth, onPri
         </div>
 
         {/* Hamburger */}
-        <button className="lp-hamburger" onClick={() => setMenuOpen(m => !m)} style={{ display: "none", background: "none", border: "none", color: "#D4AF37", fontSize: "22px", cursor: "pointer", padding: "4px" }}>
+        <button className="navbar-hamburger" onClick={() => setMenuOpen(m => !m)}>
           {menuOpen ? "✕" : "☰"}
         </button>
       </nav>
