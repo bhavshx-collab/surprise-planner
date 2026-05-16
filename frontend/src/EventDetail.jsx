@@ -1,5 +1,5 @@
 import { useState } from "react";
-
+import EventChat from "./EventChat";
 const API = import.meta.env.VITE_API_URL || "http://localhost:5000";
 
 const ICEBREAKER_DEFAULTS = {
@@ -209,6 +209,13 @@ export default function EventDetail({ event, onBack, onJoin, user }) {
                 </div>
               )}
             </div>
+
+            {/* Event Chat */}
+            {(joined || (user && event.host_user_id === user.id)) && event.isReal && (
+              <div style={{ marginTop: "40px" }}>
+                <EventChat eventId={event.id} currentUser={user} />
+              </div>
+            )}
           </div>
 
           {/* Right — Join card */}
