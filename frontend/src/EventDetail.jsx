@@ -28,7 +28,8 @@ export default function EventDetail({ event, onBack, onJoin, user }) {
 
   const spotsLeft = event.slots_total - event.slots_taken;
   const isFull = spotsLeft <= 0;
-  const depositAmt = event.price || 49;
+  const isHost = user && event.host_user_id === user.id;
+  const canChat = joined || isHost;
 
   const handleJoin = async () => {
     if (!user) { onJoin?.(); return; }
@@ -36,7 +37,6 @@ export default function EventDetail({ event, onBack, onJoin, user }) {
     setErr("");
     try {
       if (event.isReal) {
-        // Real event — hit the backend
         const res = await fetch(`${API}/api/adventure/join`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -50,8 +50,6 @@ export default function EventDetail({ event, onBack, onJoin, user }) {
         const data = await res.json();
         if (data.error) { setErr(data.error); setJoining(false); return; }
       }
-      // Simulate payment (₹49)
-      await new Promise(r => setTimeout(r, 1000));
       setJoined(true);
     } catch {
       setErr("Connection error. Please try again.");
@@ -210,8 +208,8 @@ export default function EventDetail({ event, onBack, onJoin, user }) {
               )}
             </div>
 
-            {/* Event Chat */}
-            {(joined || (user && event.host_user_id === user.id)) && event.isReal && (
+            {/* Event Chat — visible to joined members and the host */}
+            {canChat && event.isReal && (
               <div style={{ marginTop: "40px" }}>
                 <EventChat eventId={event.id} currentUser={user} />
               </div>

@@ -38,6 +38,7 @@ import TermsOfService from "./TermsOfService";
 import AboutContact from "./AboutContact";
 import NotFound from "./NotFound";
 import HostAdventure from "./HostAdventure";
+import MyAdventures from "./MyAdventures";
 const INTERESTS = ["Music", "Travel", "Food", "Art", "Movies", "Fitness", "Books", "Nature", "Gaming", "Fashion"];
 const OCCASIONS = ["Birthday", "Anniversary", "Valentine's Day", "Just Because", "Graduation", "Apology"];
 const RELATIONSHIPS = ["Girlfriend", "Boyfriend", "Wife", "Husband", "Best Friend", "Parent", "Sibling"];
@@ -291,7 +292,7 @@ export default function App() {
   }
 
   return (
-    <div className={['landing','auth','pricing','social','social-profile','social-events','social-event-detail','adventure-host','privacy','terms','about','404'].includes(view) ? "" : "app"}>
+    <div className={['landing','auth','pricing','social','social-profile','social-events','social-event-detail','adventure-host','my-adventures','privacy','terms','about','404'].includes(view) ? "" : "app"}>
 
       {/* AUTH VIEW — full screen overlay */}
       {view === "auth" && (
@@ -325,6 +326,14 @@ export default function App() {
           onEventSelect={(ev) => { setSelectedEvent(ev); setView("social-event-detail"); }}
           onCreateProfile={() => user ? setView("social-profile") : setView("auth")}
           onHostAdventure={() => user ? setView("adventure-host") : setView("auth")}
+          onMyAdventures={() => setView("my-adventures")}
+        />
+      )}
+      {view === "my-adventures" && user && (
+        <MyAdventures
+          user={user}
+          onBack={() => setView("social-events")}
+          onEventSelect={(ev) => { setSelectedEvent(ev); setView("social-event-detail"); }}
         />
       )}
       {view === "social-event-detail" && (
@@ -344,7 +353,7 @@ export default function App() {
       )}
 
       {/* APP NAVBAR — shown for all non-special views */}
-      {!['landing','auth','pricing','social','social-profile','social-events','social-event-detail','adventure-host','privacy','terms','about'].includes(view) && (
+      {!['landing','auth','pricing','social','social-profile','social-events','social-event-detail','adventure-host','my-adventures','privacy','terms','about'].includes(view) && (
         <>
           <nav className="navbar">
             <div className="navbar-logo" onClick={() => setView("app")} style={{ cursor: "pointer" }}>
