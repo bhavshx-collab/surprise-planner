@@ -141,13 +141,13 @@ export default function EventDetail({ event, onBack, onJoin, user }) {
             {/* Deposit & Refund Policy */}
             <div style={{ marginBottom: "28px", padding: "24px", border: `1px solid ${event.color}25`, background: `${event.color}05` }}>
               <div style={{ fontSize: "11px", letterSpacing: "0.2em", color: event.color, textTransform: "uppercase", marginBottom: "16px", opacity: 0.75 }}>
-                💚 Refund Policy
+                💚 Community Guidelines
               </div>
               <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
                 {[
-                  ["You show up ✓", "₹49 deposit refunded within 48h"],
-                  ["Event cancelled", "Everyone refunded automatically"],
-                  ["You don't show up", "Deposit is forfeited (used for operations)"],
+                  ["You show up ✓", "Great! Connect with others."],
+                  ["Event cancelled", "Everyone notified automatically."],
+                  ["You don't show up", "It hurts the community. Please cancel early."],
                 ].map(([trigger, result]) => (
                   <div key={trigger} style={{ display: "flex", justifyContent: "space-between", gap: "12px", fontSize: "13px" }}>
                     <span style={{ color: "rgba(255,255,255,0.4)" }}>{trigger}</span>
@@ -221,9 +221,9 @@ export default function EventDetail({ event, onBack, onJoin, user }) {
           {/* Right — Join card */}
           <div style={{ position: "sticky", top: "24px" }}>
             <div style={{ padding: "28px", border: `1px solid ${event.color}30`, background: `${event.color}05` }}>
-              <div style={{ fontFamily: "'Outfit', serif", fontSize: "40px", color: event.color, marginBottom: "4px" }}>₹{depositAmt}</div>
+              <div style={{ fontFamily: "'Outfit', serif", fontSize: "40px", color: event.color, marginBottom: "4px" }}>Free</div>
               <div style={{ fontSize: "12px", color: "rgba(255,255,255,0.3)", marginBottom: "24px" }}>
-                refundable deposit · you get it back when you show up
+                100% free community event
               </div>
 
               <div style={{ display: "flex", flexDirection: "column", gap: "10px", marginBottom: "24px" }}>
@@ -258,14 +258,14 @@ export default function EventDetail({ event, onBack, onJoin, user }) {
                   onMouseEnter={e => { if (!isFull && !joining) { e.target.style.opacity = "0.85"; e.target.style.transform = "translateY(-2px)"; e.target.style.boxShadow = `0 8px 24px ${event.color}40`; } }}
                   onMouseLeave={e => { e.target.style.opacity = "1"; e.target.style.transform = "translateY(0)"; e.target.style.boxShadow = "none"; }}
                 >
-                  {joining ? "Reserving..." : isFull ? "Event is full" : !user ? "Sign in to join →" : `Join — ₹${depositAmt} deposit →`}
+                  {joining ? "Reserving..." : isFull ? "Event is full" : !user ? "Sign in to join →" : "Join for free →"}
                 </button>
               ) : (
                 <div style={{ padding: "15px", background: "rgba(255,255,255,0.1)", border: "1px solid rgba(255,255,255,0.3)", textAlign: "center" }}>
                   <div style={{ fontSize: "20px", marginBottom: "6px" }}>🎉</div>
                   <div style={{ fontSize: "13px", color: "#FFFFFF", fontWeight: "600" }}>You're confirmed!</div>
                   <div style={{ fontSize: "12px", color: "rgba(255,255,255,0.3)", marginTop: "4px" }}>
-                    ₹{depositAmt} deposit held · refunded after you attend
+                    Looking forward to seeing you there!
                   </div>
                 </div>
               )}

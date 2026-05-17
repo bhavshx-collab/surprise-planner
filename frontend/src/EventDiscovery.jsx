@@ -100,7 +100,7 @@ export default function EventDiscovery({ onEventSelect, onBack, onCreateProfile,
             energy: e.energy || e.ai_plan?.activity_info?.energy || "medium",
             color: "#FFFFFF",
             bg: "rgba(255,255,255,0.06)",
-            price: e.deposit_amount || 49,
+            price: 0,
             teaser: e.description || e.ai_plan?.teaser || "A mystery event awaits.",
             tags: Array.isArray(e.tags) ? e.tags : [e.activity_type?.replace("_", " ")],
             host_name: e.host_name || "Anonymous",
@@ -175,7 +175,7 @@ export default function EventDiscovery({ onEventSelect, onBack, onCreateProfile,
               🌿 Have an adventure idea?
             </div>
             <div style={{ fontSize: "13px", color: "rgba(255,255,255,0.4)", lineHeight: "1.6" }}>
-              Host it for ₹49 deposit (refunded after completion). You set the activity, group size, date, and rules.
+              Host it for free! You set the activity, group size, date, and rules.
             </div>
           </div>
           <button onClick={user ? onHostAdventure : onCreateProfile} style={{
@@ -280,7 +280,7 @@ export default function EventDiscovery({ onEventSelect, onBack, onCreateProfile,
                     </div>
                     <div style={{ textAlign: "right" }}>
                       <div style={{ fontSize: "18px", fontWeight: "600", color: event.color }}>₹{event.price}</div>
-                      <div style={{ fontSize: "10px", color: "rgba(255,255,255,0.2)" }}>refundable deposit</div>
+                      <div style={{ fontSize: "10px", color: "rgba(255,255,255,0.2)" }}>100% Free</div>
                     </div>
                   </div>
                 </div>
@@ -292,7 +292,7 @@ export default function EventDiscovery({ onEventSelect, onBack, onCreateProfile,
         {/* Bottom note */}
         <div style={{ textAlign: "center", marginTop: "48px", padding: "24px", border: "1px solid rgba(255,255,255,0.05)", background: "rgba(255,255,255,0.015)" }}>
           <div style={{ fontSize: "13px", color: "rgba(255,255,255,0.3)", lineHeight: "1.75" }}>
-            🔒 Venue revealed 30 min before · ₹49 deposit refunded when you show up · Max group size set by host
+            🔒 Venue revealed 30 min before · 100% Free Community Event · Max group size set by host
           </div>
         </div>
       </div>

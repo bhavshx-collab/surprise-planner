@@ -186,7 +186,7 @@ export default function IntrovertLanding({ onJoin, onBrowse, onCreateProfile }) 
           onMouseEnter={e => { e.target.style.background = "#22d68a"; e.target.style.transform = "translateY(-3px)"; e.target.style.boxShadow = "0 12px 32px rgba(255,255,255,0.3)"; }}
           onMouseLeave={e => { e.target.style.background = "#FFFFFF"; e.target.style.transform = "translateY(0)"; e.target.style.boxShadow = "none"; }}
         >Find my people — it's free →</button>
-        <div style={{ marginTop: "20px", fontSize: "12px", color: "rgba(255,255,255,0.2)" }}>Free to join · Bangalore only · ₹99 deposit for events</div>
+        <div style={{ marginTop: "20px", fontSize: "12px", color: "rgba(255,255,255,0.2)" }}>Free to join · Bangalore only · 100% Free events</div>
       </section>
 
       <style>{`

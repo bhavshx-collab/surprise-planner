@@ -69,7 +69,7 @@ export default function HostAdventure({ user, onBack, onSuccess }) {
         host_user_id: user.id,
         host_name: user.user_metadata?.full_name || user.email?.split("@")[0] || "Anonymous",
         host_email: user.email,
-        deposit_amount: 49,
+        deposit_amount: 0,
       };
       const res = await fetch(`${API}/api/adventure/create`, {
         method: "POST",
@@ -94,7 +94,7 @@ export default function HostAdventure({ user, onBack, onSuccess }) {
             Adventure <span style={{ color: "#FFFFFF", fontStyle: "italic" }}>Published!</span>
           </div>
           <p style={{ fontSize: "15px", color: "rgba(255,255,255,0.45)", lineHeight: "1.8", marginBottom: "32px" }}>
-            Your adventure is now live. People can discover and join it. You'll get your ₹49 deposit back after the event is completed. 🙌
+            Your adventure is now live. People can discover and join it. 🙌
           </p>
           <div style={{ display: "flex", gap: "12px", justifyContent: "center", flexWrap: "wrap" }}>
             <button onClick={onSuccess} style={{ padding: "14px 32px", background: "#FFFFFF", border: "none", color: "#080808", fontSize: "13px", fontWeight: "700", letterSpacing: "0.1em", textTransform: "uppercase", cursor: "pointer", fontFamily: "DM Sans" }}>
@@ -128,7 +128,7 @@ export default function HostAdventure({ user, onBack, onSuccess }) {
         {/* Header */}
         <div style={{ marginBottom: "40px" }}>
           <div style={{ fontSize: "10px", letterSpacing: "0.3em", color: color, textTransform: "uppercase", marginBottom: "12px", transition: "color 0.4s" }}>
-            Create · ₹49 deposit · Refundable
+            Create · Free to host
           </div>
           <h1 style={{ fontFamily: "'Outfit', serif", fontSize: "clamp(32px,4vw,52px)", fontWeight: "300", lineHeight: "1.1", marginBottom: "12px" }}>
             Host an <span style={{ color, fontStyle: "italic", transition: "color 0.4s" }}>Adventure</span>
@@ -340,19 +340,14 @@ export default function HostAdventure({ user, onBack, onSuccess }) {
               )}
             </div>
 
-            {/* Deposit box */}
+            {/* Free Hosting Note */}
             <div style={{ padding: "24px", background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.08)", marginBottom: "24px", borderRadius: "4px" }}>
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "16px" }}>
                 <div>
-                  <div style={{ fontSize: "16px", fontWeight: "600" }}>Host deposit</div>
-                  <div style={{ fontSize: "12px", color: "rgba(255,255,255,0.3)", marginTop: "4px" }}>Fully refunded after your event completes</div>
+                  <div style={{ fontSize: "16px", fontWeight: "600" }}>Hosting is 100% Free</div>
+                  <div style={{ fontSize: "12px", color: "rgba(255,255,255,0.3)", marginTop: "4px" }}>Start building your community today.</div>
                 </div>
-                <div style={{ fontFamily: "'Outfit', serif", fontSize: "36px", color }}>₹49</div>
-              </div>
-              <div style={{ fontSize: "12px", color: "rgba(255,255,255,0.2)", lineHeight: "1.75" }}>
-                ✦ Deposit holds your commitment to host<br />
-                ✦ Refunded within 48h after marking event as complete<br />
-                ✦ If you cancel, deposit is non-refundable (but members are always refunded)
+                <div style={{ fontFamily: "'Outfit', serif", fontSize: "36px", color }}>₹0</div>
               </div>
             </div>
 
