@@ -10,7 +10,7 @@ load_dotenv()  # ← MUST be here, before everything else
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 from groq import Groq
-from groq_service import groq_generate_full_plan
+from groq_service import groq_generate_full_plan, generate_smart_fallback_plan
 from moodboard import generate_moodboard
 from supabase import create_client, Client
 import razorpay
@@ -19,7 +19,7 @@ SUPABASE_URL = os.environ.get("SUPABASE_URL")
 SUPABASE_KEY = os.environ.get("SUPABASE_KEY")
 supabase: Client = create_client(SUPABASE_URL, SUPABASE_KEY)
 
-chat_client = Groq(api_key=os.getenv("GROQ_API_KEY"))
+chat_client = Groq(api_key=os.getenv("GROQ_API_KEY", "dummy_key"))
 app = Flask(__name__)
 
 RAZORPAY_KEY_ID = os.environ.get("RAZORPAY_KEY_ID")
@@ -51,47 +51,63 @@ def home():
 
 @app.route("/api/surprise/plan", methods=["POST"])
 def plan_surprise():
-    data = request.get_json()
-    occasion     = data.get("occasion", "Birthday")
-    relationship = data.get("relationship", "Friend")
-    budget       = data.get("budget", "5000")
-    interests    = data.get("interests", [])
-    description  = data.get("description", "")
-    likes        = data.get("likes", "")
-    city         = data.get("city", "")
-    tone         = data.get("tone", "Romantic")
-
-    ai_plan = groq_generate_full_plan(
-        occasion=occasion, relationship=relationship, budget=budget,
-        interests=interests, description=description, likes=likes,
-        city=city, tone=tone
-    )
-
     try:
-        save_result = supabase.table("plans").insert({
-            "occasion": occasion, "relationship": relationship,
-            "tone": tone, "budget": budget, "city": city,
-            "interests": interests, "description": description,
-            "plan_data": ai_plan,
-        }).execute()
-        ai_plan["plan_id"] = save_result.data[0]["id"]
-    except Exception as e:
-        print(f"[Supabase error] {e}")
-        ai_plan["plan_id"] = None
+        data = request.get_json() or {}
+        occasion     = data.get("occasion", "Birthday")
+        relationship = data.get("relationship", "Friend")
+        budget       = data.get("budget", "5000")
+        interests    = data.get("interests", [])
+        description  = data.get("description", "")
+        likes        = data.get("likes", "")
+        city         = data.get("city", "")
+        tone         = data.get("tone", "Romantic")
 
-    # Auto-match vendors by city
-    matched = []
-    if city:
         try:
-            vr = supabase.table("vendors").select("name,category,city,whatsapp,phone,min_budget,is_featured") \
-                .eq("status", "approved").ilike("city", f"%{city}%") \
-                .order("is_featured", desc=True).limit(3).execute()
-            matched = vr.data or []
+            ai_plan = groq_generate_full_plan(
+                occasion=occasion, relationship=relationship, budget=budget,
+                interests=interests, description=description, likes=likes,
+                city=city, tone=tone
+            )
         except Exception as e:
-            print(f"[Vendor match] {e}")
-    ai_plan["matched_vendors"] = matched
+            print(f"[Plan generation error] {e}")
+            ai_plan = generate_smart_fallback_plan(
+                occasion=occasion, relationship=relationship, budget=budget,
+                interests=interests, description=description, likes=likes,
+                city=city, tone=tone
+            )
 
-    return jsonify(ai_plan)
+        try:
+            save_result = supabase.table("plans").insert({
+                "occasion": occasion, "relationship": relationship,
+                "tone": tone, "budget": budget, "city": city,
+                "interests": interests, "description": description,
+                "plan_data": ai_plan,
+            }).execute()
+            ai_plan["plan_id"] = save_result.data[0]["id"]
+        except Exception as e:
+            print(f"[Supabase error] {e}")
+            ai_plan["plan_id"] = None
+
+        # Auto-match vendors by city
+        matched = []
+        if city:
+            try:
+                vr = supabase.table("vendors").select("name,category,city,whatsapp,phone,min_budget,is_featured") \
+                    .eq("status", "approved").ilike("city", f"%{city}%") \
+                    .order("is_featured", desc=True).limit(3).execute()
+                matched = vr.data or []
+            except Exception as e:
+                print(f"[Vendor match] {e}")
+        ai_plan["matched_vendors"] = matched
+
+        return jsonify(ai_plan)
+
+    except Exception as e:
+        print(f"[Fatal plan error] {e}")
+        fallback = generate_smart_fallback_plan("Birthday", "Friend", "5000", [], "", "", "", "Romantic")
+        fallback["plan_id"] = None
+        fallback["matched_vendors"] = []
+        return jsonify(fallback)
 
 
 @app.route("/api/surprise/plan/<plan_id>", methods=["GET"])
@@ -152,7 +168,7 @@ Help the user execute this plan. Answer questions about bookings, alternatives, 
         return jsonify({"answer": response.choices[0].message.content})
     except Exception as e:
         print(f"[Chat error] {e}")
-        return jsonify({"answer": "Sorry, I had trouble with that. Please try again!"}), 500
+        return jsonify({"answer": "I'm here to help you coordinate your surprise! Let me know if you need help with invitations, playlist ideas, venue selection, or decor details."}), 200
 
 
 @app.route("/api/moodboard", methods=["POST"])

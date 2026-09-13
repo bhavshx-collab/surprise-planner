@@ -3,7 +3,7 @@ import json
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 from groq import Groq
-from groq_service import groq_generate_full_plan
+from groq_service import groq_generate_full_plan, generate_smart_fallback_plan
 from supabase import create_client, Client
 
 app = Flask(__name__)
@@ -13,10 +13,15 @@ CORS(app, resources={
         "origins": [
             "http://localhost:5173",
             "http://localhost:5174",
-            "https://your-vercel-app.vercel.app"
+            "https://surprise-planner-nu.vercel.app",
+            "https://surprise-planner-nu-*.vercel.app",
+            "https://surpriceplanner.in",
+            "https://www.surpriceplanner.in",
+            "http://surpriceplanner.in",
+            "http://www.surpriceplanner.in",
         ],
         "methods": ["GET", "POST", "OPTIONS"],
-        "allow_headers": ["Content-Type"]
+        "allow_headers": ["Content-Type", "Authorization"]
     }
 })
 
@@ -24,40 +29,54 @@ SUPABASE_URL = os.environ.get("SUPABASE_URL", "https://eokahkjzoajzrjvmhpzx.supa
 SUPABASE_KEY = os.environ.get("SUPABASE_KEY", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVva2Foa2p6b2FqenJqdm1ocHp4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM1MDE1MDcsImV4cCI6MjA4OTA3NzUwN30.gnzf7po9fgZiwP3K5VEEeh1QRB4Ph9l7L4XJ9tS_hFA")
 supabase: Client = create_client(SUPABASE_URL, SUPABASE_KEY)
 
-chat_client = Groq(api_key=os.getenv("GROQ_API_KEY"))
+chat_client = Groq(api_key=os.getenv("GROQ_API_KEY", "dummy_key"))
 
 
 @app.route("/api/surprise/plan", methods=["POST"])
 def plan_surprise():
-    data = request.get_json()
-    occasion     = data.get("occasion", "Birthday")
-    relationship = data.get("relationship", "Friend")
-    budget       = data.get("budget", "5000")
-    interests    = data.get("interests", [])
-    description  = data.get("description", "")
-    likes        = data.get("likes", "")
-    city         = data.get("city", "")
-    tone         = data.get("tone", "Romantic")
-
-    ai_plan = groq_generate_full_plan(
-        occasion=occasion, relationship=relationship, budget=budget,
-        interests=interests, description=description, likes=likes,
-        city=city, tone=tone
-    )
-
     try:
-        save_result = supabase.table("plans").insert({
-            "occasion": occasion, "relationship": relationship,
-            "tone": tone, "budget": budget, "city": city,
-            "interests": interests, "description": description,
-            "plan_data": ai_plan,
-        }).execute()
-        ai_plan["plan_id"] = save_result.data[0]["id"]
-    except Exception as e:
-        print(f"[Supabase error] {e}")
-        ai_plan["plan_id"] = None
+        data = request.get_json() or {}
+        occasion     = data.get("occasion", "Birthday")
+        relationship = data.get("relationship", "Friend")
+        budget       = data.get("budget", "5000")
+        interests    = data.get("interests", [])
+        description  = data.get("description", "")
+        likes        = data.get("likes", "")
+        city         = data.get("city", "")
+        tone         = data.get("tone", "Romantic")
 
-    return jsonify(ai_plan)
+        try:
+            ai_plan = groq_generate_full_plan(
+                occasion=occasion, relationship=relationship, budget=budget,
+                interests=interests, description=description, likes=likes,
+                city=city, tone=tone
+            )
+        except Exception as e:
+            print(f"[Root app plan generation fallback] {e}")
+            ai_plan = generate_smart_fallback_plan(
+                occasion=occasion, relationship=relationship, budget=budget,
+                interests=interests, description=description, likes=likes,
+                city=city, tone=tone
+            )
+
+        try:
+            save_result = supabase.table("plans").insert({
+                "occasion": occasion, "relationship": relationship,
+                "tone": tone, "budget": budget, "city": city,
+                "interests": interests, "description": description,
+                "plan_data": ai_plan,
+            }).execute()
+            ai_plan["plan_id"] = save_result.data[0]["id"]
+        except Exception as e:
+            print(f"[Supabase error] {e}")
+            ai_plan["plan_id"] = None
+
+        return jsonify(ai_plan)
+    except Exception as e:
+        print(f"[Fatal plan error] {e}")
+        fallback = generate_smart_fallback_plan("Birthday", "Friend", "5000", [], "", "", "", "Romantic")
+        fallback["plan_id"] = None
+        return jsonify(fallback)
 
 
 @app.route("/api/surprise/plan/<plan_id>", methods=["GET"])
